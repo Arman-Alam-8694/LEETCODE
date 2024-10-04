@@ -1,19 +1,26 @@
 class Solution:
     def dividePlayers(self, skill: List[int]) -> int:
+        count=Counter(skill)
         n=len(skill)
-        skill.sort()
-        desired=skill[-1]+skill[0]
+        minn=min(skill)
+        maxx=max(skill)
+        desired=minn+maxx
         result=0
         if n==2:
-            return skill[0]*skill[1]
+            return minn*maxx
         else:
-            last=n-1
-            first=0
-            while first<last:
-                if skill[first]+skill[last]!=desired:
-                    return -1
-                result+=skill[first]*skill[last]
-                last-=1
-                first+=1
+            for i in skill:
+                if i in count:
+                    b=desired-i
+                    if b in count:
+                        count[b]-=1
+                        count[i]-=1
+                        if count[b]==0:
+                            del count[b]
+                        if count[i]==0:
+                            del count[i]
+                        result+=i*b
+                    else:
+                        return -1
         return result
         
