@@ -6,21 +6,21 @@ class Solution:
         maxx=max(skill)
         desired=minn+maxx
         result=0
+        visited=set()
         if n==2:
             return minn*maxx
         else:
             for i in skill:
-                if i in count:
-                    b=desired-i
-                    if b in count:
-                        count[b]-=1
-                        count[i]-=1
-                        if count[b]==0:
-                            del count[b]
-                        if count[i]==0:
-                            del count[i]
-                        result+=i*b
-                    else:
+                if i not in visited:
+
+                    if count[i]!=count[desired-i]:
                         return -1
+                    if i!=desired-i:
+                        result+=(i*(desired-i))*count[i]
+                        visited.add(i)
+                        visited.add(desired-i)
+                    else:
+                        result+=(i*i)*(count[i]//2)
+                        visited.add(i)
         return result
         
