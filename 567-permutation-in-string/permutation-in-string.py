@@ -1,6 +1,8 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         size=len(s1)
+        if len(s1)>len(s2):
+            return False
         count=Counter(s1)
         windows=Counter(s2[:size])
         if count==windows:
