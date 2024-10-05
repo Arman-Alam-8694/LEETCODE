@@ -4,9 +4,6 @@ class Solution:
         if len(s1)>len(s2):
             return False
         count=Counter(s1)
-        print()
-        print()
-        print()
         windows={}
         for i in range(len(s1)):
             windows[s2[i]]=windows.get(s2[i],0)+1
