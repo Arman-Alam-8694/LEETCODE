@@ -4,7 +4,12 @@ class Solution:
         if len(s1)>len(s2):
             return False
         count=Counter(s1)
-        windows=Counter(s2[:size])
+        print()
+        print()
+        print()
+        windows={}
+        for i in range(len(s1)):
+            windows[s2[i]]=windows.get(s2[i],0)+1
         if count==windows:
             return True
         for i in range(1,len(s2)-size+1):
