@@ -11,7 +11,6 @@ class Solution:
                     stack.pop()
                     continue
             stack.append(i)
-        # print(stack)
         return len(stack)
 
         
