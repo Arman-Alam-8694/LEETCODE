@@ -1,16 +1,10 @@
 class Solution:
     def minSwaps(self, s: str) -> int:
-        opening=0
-        closing=0
-        steps=0
+        unmatched=0
         for i in s:
             if i=="[":
-                opening+=1
-            if i=="]":
-                closing+=1
-            if closing>opening:
-                steps+=1
-                closing-=1
-                opening+=1
-        return steps
+                unmatched+=1
+            elif unmatched>0:
+                unmatched-=1
+        return (unmatched+1)//2
         
