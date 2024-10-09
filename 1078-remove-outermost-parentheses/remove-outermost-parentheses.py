@@ -9,7 +9,7 @@ class Solution:
                 stack.pop()
                 stack.pop(0)
                 string="".join(stack)
-                print(string)
+    
                 result+=string
                 stack=[]
                 stack.append(i)
