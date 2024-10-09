@@ -7,14 +7,14 @@ class Solution:
                 if i<=days:
                     flowers+=1
                 else:
-                    flowers=0
-                if flowers%k==0:
                     bouquets+=flowers//k
                     flowers=0
+            
+            bouquets+=flowers//k
             return bouquets>=m
 
 
-            
+
         n=len(bloomDay)
         if n<(m*k):
             return -1
