@@ -35,17 +35,20 @@ class Solution:
             if start<min_leave:
 
                 if start==target[0]:
-
+                    #return available[0]
                     return heapq.heappop(available)
                 dictt[arrival[a][1]]=heapq.heappop(available)
+                #dictt[arrival[a][1]]=available[0]
+                #available.pop(0)
                 a+=1
             else:
                 f=leaving[l][1]
                 chair=dictt[f]
                 # pos=binary_insert(chair)
+                #available.insert(pos,chair)
                 heapq.heappush(available,chair)
                 l+=1
-        return 0
+       
             
             
         
