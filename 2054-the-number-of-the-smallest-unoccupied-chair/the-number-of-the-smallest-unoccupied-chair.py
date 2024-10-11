@@ -1,42 +1,54 @@
 class Solution:
     def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
-        def binary_search_insert(chairs, chair):
-            """Use binary search to insert chair in the sorted list of available chairs."""
-            left, right = 0, len(chairs)
-            while left < right:
-                mid = (left + right) // 2
-                if chairs[mid] < chair:
-                    left = mid + 1
+        def binary_insert(numm):
+            left=0
+            right=len(available)-1
+            while left<=right:
+                mid=(left+right)//2
+                if available[mid]>numm:
+                    right=mid-1
                 else:
-                    right = mid
-            chairs.insert(left, chair)  # Insert at the correct position
-        
-        
-        n = len(times)
-        # Step 1: Create events for arrivals and leavings
-        events = []
-        for i, (arrive, leave) in enumerate(times):
-            events.append((arrive, 'arrive', i))  # Arrival event
-            events.append((leave, 'leave', i))    # Leaving event
-        
-        # Step 2: Sort events by time (and prioritize 'leave' over 'arrive' if they have the same time)
-        events.sort(key=lambda x: (x[0], x[1] == 'arrive'))
-        
-        # Step 3: Initialize available chairs and a dictionary to track occupied chairs
-        available_chairs = list(range(n))  # Initially all chairs are available
-        occupied_chairs = {}
-        
-        # Step 4: Process each event
-        for time, event_type, friend_id in events:
-            if event_type == 'arrive':
-                # Binary search to find the smallest available chair (it's at index 0)
-                chair = available_chairs.pop(0)  # Remove the first element (smallest chair)
-                occupied_chairs[friend_id] = chair
-                if friend_id == targetFriend:
-                    return chair
+                    left=mid+1
+            return left
+
+        arrival=[]
+        leaving=[]
+        target=times[targetFriend]
+        for i,(a,l) in enumerate(times):
+            arrival.append((a,i))
+            leaving.append((l,i))
+        arrival.sort()
+        leaving.sort()
+        occupied=[]
+        dictt={}
+        available=[i for i in range(len(times))]
+        count=0
+        a=0
+        l=0
+        n=len(arrival)+len(leaving)
+        for i in range(n):
+            min_leave=leaving[l][0]
+            start=arrival[a][0]
+    
+
+            if start<min_leave:
+
+                if start==target[0]:
+
+                    return available[0]
+                occupied.append(available[0])
+                dictt[arrival[a][1]]=available[0]
+                available.pop(0)
+                a+=1
             else:
-                # Friend is leaving, add their chair back using binary search insert
-                chair = occupied_chairs[friend_id]
-                binary_search_insert(available_chairs, chair)
+                f=leaving[l][1]
+                chair=dictt[f]
+                pos=binary_insert(chair)
+                available.insert(pos,chair)
+                l+=1
+        return 0
+            
+            
         
-        return -1  # This should never be reached
+
+        
