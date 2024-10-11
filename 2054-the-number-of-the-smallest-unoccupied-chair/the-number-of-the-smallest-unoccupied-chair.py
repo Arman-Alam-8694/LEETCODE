@@ -19,7 +19,6 @@ class Solution:
             leaving.append((l,i))
         arrival.sort()
         leaving.sort()
-        occupied=[]
         dictt={}
         available=[i for i in range(len(times))]
         count=0
@@ -36,7 +35,6 @@ class Solution:
                 if start==target[0]:
 
                     return available[0]
-                occupied.append(available[0])
                 dictt[arrival[a][1]]=available[0]
                 available.pop(0)
                 a+=1
