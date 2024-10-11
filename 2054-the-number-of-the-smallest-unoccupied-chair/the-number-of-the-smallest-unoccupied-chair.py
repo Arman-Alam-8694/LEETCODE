@@ -1,15 +1,16 @@
+import heapq
 class Solution:
     def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
-        def binary_insert(numm):
-            left=0
-            right=len(available)-1
-            while left<=right:
-                mid=(left+right)//2
-                if available[mid]>numm:
-                    right=mid-1
-                else:
-                    left=mid+1
-            return left
+        # def binary_insert(numm):
+        #     left=0
+        #     right=len(available)-1
+        #     while left<=right:
+        #         mid=(left+right)//2
+        #         if available[mid]>numm:
+        #             right=mid-1
+        #         else:
+        #             left=mid+1
+        #     return left
 
         arrival=[]
         leaving=[]
@@ -21,6 +22,7 @@ class Solution:
         leaving.sort()
         dictt={}
         available=[i for i in range(len(times))]
+        heapq.heapify(available)
         count=0
         a=0
         l=0
@@ -34,15 +36,14 @@ class Solution:
 
                 if start==target[0]:
 
-                    return available[0]
-                dictt[arrival[a][1]]=available[0]
-                available.pop(0)
+                    return heapq.heappop(available)
+                dictt[arrival[a][1]]=heapq.heappop(available)
                 a+=1
             else:
                 f=leaving[l][1]
                 chair=dictt[f]
-                pos=binary_insert(chair)
-                available.insert(pos,chair)
+                # pos=binary_insert(chair)
+                heapq.heappush(available,chair)
                 l+=1
         return 0
             
