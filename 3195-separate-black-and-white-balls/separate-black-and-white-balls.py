@@ -6,10 +6,9 @@ class Solution:
         for right in s:
             if prev=="1" and right=="0":
                 if cont:
-            
                     swaps+=cont
-                    continue
-                swaps+=1
+                else:
+                    swaps+=1
                 prev="1"
             elif prev=="1" and right=="1":
                 if cont:
