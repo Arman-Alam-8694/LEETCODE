@@ -22,7 +22,6 @@ class Solution:
                 prev=right
         return swaps
 
-        #0100011
-        #010110101
+      
 
         
