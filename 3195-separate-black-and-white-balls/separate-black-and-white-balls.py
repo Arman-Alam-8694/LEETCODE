@@ -16,8 +16,8 @@ class Solution:
                     cont+=1
                 else:
                     cont+=2
-            elif prev=="0" and right=="1":
-                prev="1"
+            # elif prev=="0" and right=="1":
+            #     prev="1"
             else:
                 prev=right
         return swaps
