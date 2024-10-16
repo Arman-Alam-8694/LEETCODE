@@ -1,27 +1,20 @@
-import heapq
 class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
-        heap=[]
-        if a>0:
-            heap.append((-a,"a"))
-        if b>0:
-            heap.append((-b,"b"))
-        if c>0:
-            heap.append((-c,"c"))
-        heapq.heapify(heap)
-        result=[]
-        while heap:
-            count,char=heapq.heappop(heap)
-            if len(result)>=2 and result[-1]==result[-2]==char:
-                if not heap:
-                    break
-                count2,char2=heapq.heappop(heap)
-                result.append(char2)
-                if count2+1<0:
-                    heapq.heappush(heap,(count2+1,char2))
-                heapq.heappush(heap,(count,char))
-            else:
+        chars = sorted([('a', a), ('b', b), ('c', c)], key=lambda x: -x[1])
+        result = []
+        
+        while True:
+            for i, (char, count) in enumerate(chars):
+                if count == 0:
+                    continue
+                if len(result) >= 2 and result[-1] == result[-2] == char:
+                    continue
                 result.append(char)
-                if count+1<0:
-                    heapq.heappush(heap,(count+1,char))
-        return "".join(result)
+                chars[i] = (char, count - 1)
+                break
+            else:
+                break
+            
+            chars.sort(key=lambda x: -x[1])
+        
+        return ''.join(result)
