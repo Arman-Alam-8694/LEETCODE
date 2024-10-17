@@ -1,14 +1,14 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        d_ind={}
-        listt=list(map(int,str(num)))
-        n=len(listt)
-        for  i in range(n):
-            d_ind[listt[i]]=i
-        for i in range(n):
-            for j in range(9,listt[i],-1):
-                if (j in d_ind and j!=listt[i]) and i<d_ind[j]:
-                    listt[i],listt[d_ind[j]]=listt[d_ind[j]],listt[i]
-                    return int("".join(map(str,listt)))
-        return int("".join(map(str,listt)))
+        digits=list(str(num))
+        sl,sr=0,0
+        n=len(digits)-1
+        r=n
+        for l in range(n,-1,-1):
+            if digits[l]>digits[r]:
+                r=l
+            elif digits[l]<digits[r]:
+                sl,sr=l,r
+        digits[sl],digits[sr]=digits[sr],digits[sl]
+        return int("".join(digits))
         
