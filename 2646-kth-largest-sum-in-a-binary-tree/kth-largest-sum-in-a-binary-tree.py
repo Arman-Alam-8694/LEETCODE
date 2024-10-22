@@ -23,9 +23,7 @@ class Solution:
                     tstack.append(node.right)
             level_sum.append(temp)
             stack=tstack
-            level+=1
         if k>len(level_sum):
             return -1
         level_sum.sort()
-        print(level_sum)
         return level_sum[-k]
