@@ -8,13 +8,9 @@ class Solution:
     def flipEquiv(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
         lookup=set()
         lookup2=set()
-        if not root1:
-            if not root2:
-                return True
-            return False
-        if not root2:
-            if not root1:
-                return True
+        if not root1 and not root2:
+            return True
+        if not root2 or not root1:
             return False
         
         
