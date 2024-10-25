@@ -12,7 +12,6 @@ class Solution:
             # Check all prefixes of the current folder path
             while not prefix == "":
                 pos = prefix.rfind("/")
-                print(pos,prefix)
                 if pos == -1:
                     break
 
