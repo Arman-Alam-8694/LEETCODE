@@ -2,7 +2,7 @@ class Solution:
     def makeFancyString(self, s: str) -> str:
         count=0
         chr=""
-        result=""
+        result=[]
         i=0
         while i<len(s):
             if chr!=s[i]:
@@ -14,8 +14,7 @@ class Solution:
                 count-=1
                 i+=1
                 continue
-            result+=s[i]
+            result.append(chr)
             i+=1
-        return result
-
+        return "".join(result)
         
