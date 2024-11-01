@@ -1,7 +1,7 @@
 class Solution:
     def makeFancyString(self, s: str) -> str:
         count=0
-        chr=""
+        chr=None
         result=[]
         i=0
         while i<len(s):
