@@ -43,18 +43,19 @@ class Solution:
             return count
 
 
-        # sortedd=True
+        sortedd=True
         n=len(nums)
-        # for i in range(n-1):
-        #     if not nums[i]<=nums[i+1]:
-        #         sortedd=False
-        #         break
-        # if sortedd==True or n==1:
-        #     return True
+        for i in range(n-1):
+            if not nums[i]<=nums[i+1]:
+                sortedd=False
+                break
+        if sortedd==True or n==1:
+            return True
         result=[]
         prev=None
         minn=-1
         maxx=-1
+        right=0
         for i in range(n):
             digit=nums[i]
             bits=bitscount(digit)
@@ -67,13 +68,21 @@ class Solution:
                     maxx=digit
             elif prev and prev!=bits:
                 result.append([minn,maxx])
+                while right<len(result)-1 and len(result)!=1:
+                    if result[right][1]>result[right+1][0]:
+                        return False
+
+                    right+=1
+
+
                 minn,maxx=digit,digit
             prev=bits
         result.append([minn,maxx])
-        for i in range(len(result)-1):
-            if not result[i][1]<result[i+1][0]:
-                return False
+      
+        if len(result)!=1 and result[right][1]>result[right+1][0]:
+            return False
 
+        
         return True
 
 
