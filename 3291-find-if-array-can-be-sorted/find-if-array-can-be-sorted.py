@@ -43,16 +43,15 @@ class Solution:
             return count
 
 
-        sortedd=True
+        # sortedd=True
         n=len(nums)
-        for i in range(n-1):
-            if not nums[i]<=nums[i+1]:
-                sortedd=False
-                break
-        if sortedd==True or n==1:
-            return True
+        # for i in range(n-1):
+        #     if not nums[i]<=nums[i+1]:
+        #         sortedd=False
+        #         break
+        # if sortedd==True or n==1:
+        #     return True
         result=[]
-        dictt={}
         prev=None
         minn=-1
         maxx=-1
