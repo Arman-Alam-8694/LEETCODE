@@ -35,12 +35,12 @@ class Solution:
         #     else:
         #         if change==False:
         #             return False
-        def bitscount(i):
-            count=0
-            for j in range(0,11):
-                if 1<<j&i:
-                    count+=1
-            return count
+        # def bitscount(i):
+        #     count=0
+        #     for j in range(0,11):
+        #         if 1<<j&i:
+        #             count+=1
+        #     return count
 
 
         sortedd=True
@@ -58,7 +58,7 @@ class Solution:
         right=0
         for i in range(n):
             digit=nums[i]
-            bits=bitscount(digit)
+            bits=digit.bit_count()
             if not prev:
                 minn,maxx=digit,digit
             elif prev and prev==bits:
