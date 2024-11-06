@@ -43,14 +43,14 @@ class Solution:
             return count
 
 
-        sortedd=True
+        # sortedd=True
         n=len(nums)
-        for i in range(n-1):
-            if not nums[i]<=nums[i+1]:
-                sortedd=False
-                break
-        if sortedd==True or n==1:
-            return True
+        # for i in range(n-1):
+        #     if not nums[i]<=nums[i+1]:
+        #         sortedd=False
+        #         break
+        # if sortedd==True or n==1:
+        #     return True
         result=[]
         prev=None
         minn=-1
@@ -71,18 +71,12 @@ class Solution:
                 if right<len(result)-1 and len(result)!=1:
                     if result[right][1]>result[right+1][0]:
                         return False
-
                     right+=1
-
-
                 minn,maxx=digit,digit
             prev=bits
         result.append([minn,maxx])
-      
         if len(result)!=1 and result[right][1]>result[right+1][0]:
             return False
-
-        
         return True
 
 
