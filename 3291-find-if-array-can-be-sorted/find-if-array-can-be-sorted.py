@@ -68,7 +68,7 @@ class Solution:
                     maxx=digit
             elif prev and prev!=bits:
                 result.append([minn,maxx])
-                while right<len(result)-1 and len(result)!=1:
+                if right<len(result)-1 and len(result)!=1:
                     if result[right][1]>result[right+1][0]:
                         return False
 
