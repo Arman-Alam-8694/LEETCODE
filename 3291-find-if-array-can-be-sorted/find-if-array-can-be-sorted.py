@@ -69,7 +69,7 @@ class Solution:
             elif prev and prev!=bits:
                 result.append([minn,maxx])
                 if right<len(result)-1 and len(result)!=1:
-                    while result[right][1]>result[right+1][0]:
+                    if result[right][1]>result[right+1][0]:
                         return False
                     right+=1
                 minn,maxx=digit,digit
