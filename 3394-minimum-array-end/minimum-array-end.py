@@ -4,7 +4,7 @@ class Solution:
         n-=1
         mask=1
         while n>0:
-            if not (x&mask):
+            if (x&mask)==0:
                 result|=(n&1)*mask
                 n>>=1
             mask<<=1
