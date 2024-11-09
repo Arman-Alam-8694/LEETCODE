@@ -5,7 +5,7 @@ class Solution:
         mask=1
         while n>0:
             if not (x&mask):
-                result=result|(n&1)*mask
+                result|=(n&1)*mask
                 n>>=1
             mask<<=1
         return result
