@@ -1,17 +1,18 @@
 class Solution:
     def primeSubOperation(self, nums: List[int]) -> bool:
-        # Sieve of Eratosthenes for generating primes up to 1000
+        # Brute force prime generation O(n²)
         def generatePrimes(n):
-            sieve = [True] * (n + 1)
-            sieve[0] = sieve[1] = False
-            
-            for i in range(2, int(n ** 0.5) + 1):
-                if sieve[i]:
-                    # Mark all multiples as non-prime
-                    for j in range(i * i, n + 1, i):
-                        sieve[j] = False
-            
-            return [i for i in range(2, n + 1) if sieve[i]]
+            primes = []
+            for num in range(2, n + 1):
+                is_prime = True
+                # Check if num is divisible by any number up to num
+                for i in range(2, num):
+                    if num % i == 0:
+                        is_prime = False
+                        break
+                if is_prime:
+                    primes.append(num)
+            return primes
 
         primes = generatePrimes(1000)
         
