@@ -14,6 +14,7 @@ class Solution:
             return [i for i in range(2, n + 1) if sieve[i]]
 
         primes = generatePrimes(1000)
+       
         
         def binsearch(find, primes):
             length = len(primes)
@@ -34,8 +35,9 @@ class Solution:
         for i in range(len(nums) - 2, -1, -1):
             if nums[i] >= nums[i + 1]:
                 find = (nums[i] - nums[i + 1]) + 1
-                if find <= 0:
+                if find>997 or find<=0:
                     return False
+               
                 sub = binsearch(find, primes)
                 if sub >= nums[i] or sub == -1:
                     return False
