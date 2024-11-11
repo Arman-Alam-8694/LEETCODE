@@ -35,11 +35,11 @@ class Solution:
                 if find<=0:
                     return False
                 sub=binsearch(find,primes)
-                print(find,sub,nums[i])
+                # print(find,sub,nums[i])
                 if sub>=nums[i] or sub==-1:
                     return False
                 nums[i]=nums[i]-sub
-                print(nums)
+                # print(nums)
                
 
 
