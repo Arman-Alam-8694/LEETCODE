@@ -1,40 +1,31 @@
 class Solution:
-    def minimizedMaximum(self, n, quantities):
-        m = len(quantities)
+    def _solve_with_bin_search_by_value(self, n: int, q: List[int]) -> int:
+        # TC: O(m*log(m) + m*log(p)), where p := max(q)
+        q.sort(reverse=True)
+        m = len(q)
+        left, right = 1, q[0]
+        res = right
+        while left <= right:
+            free_slots = n - m
+            mid = (left + right) // 2
+            i = 0
+            while i < m and free_slots >= 0:
+                slots = math.ceil(q[i] / mid) - 1
+                if not slots:
+                    break
+                free_slots -= slots
+                i += 1
+            if free_slots < 0: #not enough slots
+                left = mid + 1
+            else:
+                right = mid - 1
+                res = mid
+        
+        return res
+            
 
-        # Create a list of tuples (-ratio, quantity, stores_assigned)
-        type_store_pairs = [(-q, q, 1) for q in quantities]
+    def minimizedMaximum(self, n: int, quantities: List[int]) -> int:
+        if n == len(quantities):
+            return max(quantities)
 
-        # Use heapq.heapify() to convert the list into a heap in O(m) time
-        heapq.heapify(type_store_pairs)
-
-        # Iterate over the remaining n - m stores
-        for _ in range(n - m):
-            # Pop the element with the maximum ratio (due to negative sign it's min-heap)
-            (
-                neg_ratio,
-                total_quantity_of_type,
-                stores_assigned_to_type,
-            ) = heapq.heappop(type_store_pairs)
-
-            # Calculate the new ratio after assigning one more store
-            new_stores_assigned_to_type = stores_assigned_to_type + 1
-            new_ratio = total_quantity_of_type / new_stores_assigned_to_type
-
-            # Push the updated pair back into the heap
-            heapq.heappush(
-                type_store_pairs,
-                (
-                    -new_ratio,
-                    total_quantity_of_type,
-                    new_stores_assigned_to_type,
-                ),
-            )
-
-        # Pop the first element to get the final ratio
-        _, total_quantity_of_type, stores_assigned_to_type = heapq.heappop(
-            type_store_pairs
-        )
-
-        # Return the maximum minimum ratio
-        return math.ceil(total_quantity_of_type / stores_assigned_to_type)
+        return self._solve_with_bin_search_by_value(n, quantities)
