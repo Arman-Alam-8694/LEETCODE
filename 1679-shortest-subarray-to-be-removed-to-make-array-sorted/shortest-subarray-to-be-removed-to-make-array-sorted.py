@@ -37,7 +37,7 @@ class Solution:
                 first-=1
                 continue
             count=min(count,(ind-first)-1)
-            print(first,ind,count)
+            # print(first,ind,count)
             first-=1
 
         return count if count!=float('inf') else 0
