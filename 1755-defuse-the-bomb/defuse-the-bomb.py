@@ -21,7 +21,7 @@ class Solution:
         for i in range(n):
             ans.append(prefix_array[i+k]-prefix_array[i])
 
-        print(ans)
+        
         if negative:
             return ans[::-1]
         
