@@ -11,11 +11,9 @@ class Solution:
                 del mapp[nums[left]]
                 left+=1
             
-            if nums[right] not in mapp:
-                summ+=nums[right]
-                mapp[nums[right]]=1
-            # print(summ)
-            # print(mapp)
+            summ+=nums[right]
+            mapp[nums[right]]=1
+
             if len(mapp)==k:
                 maxx=max(maxx,summ)
         return maxx
