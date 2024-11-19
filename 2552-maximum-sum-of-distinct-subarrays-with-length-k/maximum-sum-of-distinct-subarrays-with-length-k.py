@@ -6,7 +6,7 @@ class Solution:
         maxx=0
         summ=0
         for right in range(n):
-            while len(mapp)==k or (nums[right] in mapp):
+            while (nums[right] in mapp):
                 summ-=nums[left]
                 del mapp[nums[left]]
                 left+=1
@@ -16,6 +16,9 @@ class Solution:
 
             if len(mapp)==k:
                 maxx=max(maxx,summ)
+                summ-=nums[left]
+                del mapp[nums[left]]
+                left+=1
         return maxx
             
     
