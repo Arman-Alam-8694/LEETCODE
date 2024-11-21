@@ -9,14 +9,14 @@ class Solution:
         seen=set()
         ans=0
         rem=(m*n)-(len(walls)+len(guards))
-        for i in walls:
-            wallss.add(tuple(i))
-        for j in guards:
-            guardss.add(tuple(j))
-        # for a,b in walls:
-        #     wallss.add((a,b))
-        # for a,b in guards:
-        #     guards.add((a,b))
+        # for i in walls:
+        #     wallss.add(tuple(i))
+        # for j in guards:
+        #     guardss.add(tuple(j))
+        for a,b in walls:
+            wallss.add((a,b))
+        for a,b in guards:
+            guardss.add((a,b))
 
         for x,y in guards:
             for x1 in range(x-1,up-1,-1):
