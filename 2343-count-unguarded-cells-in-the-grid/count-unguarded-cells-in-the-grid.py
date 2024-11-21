@@ -13,12 +13,17 @@ class Solution:
             wallss.add(tuple(i))
         for j in guards:
             guardss.add(tuple(j))
+        # for a,b in walls:
+        #     wallss.add((a,b))
+        # for a,b in guards:
+        #     guards.add((a,b))
+
         for x,y in guards:
             for x1 in range(x-1,up-1,-1):
                 if (x1,y) in seen:
                     continue
                 elif (x1,y) not in wallss and (x1,y) not in guardss:
-                    ans+=1
+                    rem-=1
                     seen.add((x1,y))
                 else:
                     break
@@ -26,7 +31,7 @@ class Solution:
                 if (x1,y) in seen:
                     continue
                 elif (x1,y) not in wallss and (x1,y) not in guardss:
-                    ans+=1
+                    rem-=1
                     seen.add((x1,y))
                 else:
                     break
@@ -34,7 +39,7 @@ class Solution:
                 if (x,y1) in seen:
                     continue
                 elif (x,y1) not in wallss and (x,y1) not in guardss:
-                    ans+=1
+                    rem-=1
                     seen.add((x,y1))
                 else:
                     break
@@ -42,11 +47,11 @@ class Solution:
                 if (x,y1) in seen:
                     continue
                 elif (x,y1) not in wallss and (x,y1) not in guardss:
-                    ans+=1
+                    rem-=1
                     seen.add((x,y1))
                 else:
                     break
 
        
 
-        return rem-ans
+        return rem
