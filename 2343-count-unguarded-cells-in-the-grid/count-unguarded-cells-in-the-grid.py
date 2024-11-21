@@ -1,8 +1,7 @@
 class Solution:
     def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
         
-        wallss=set()
-        guardss=set()
+        obstacles=set()
         seen=set()
         ans=0
         rem=(m*n)-(len(walls)+len(guards))
@@ -11,16 +10,16 @@ class Solution:
         # for j in guards:
         #     guardss.add(tuple(j))
         for a,b in walls:
-            wallss.add((a,b))
+            obstacles.add((a,b))
         for a,b in guards:
-            guardss.add((a,b))
+            obstacles.add((a,b))
         direction=[(1,0),(-1,0),(0,1),(0,-1)]
         for x,y in guards:
             for dr,dc in direction:
                 r,c=x,y
                 while 0<=r+dr<m and 0<=c+dc<n:
                     new=(r+dr,c+dc)
-                    if new in wallss or new in guardss:
+                    if new in obstacles:
                         break
                     elif new not  in seen:
                         rem-=1
