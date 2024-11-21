@@ -1,29 +1,27 @@
 class Solution:
     def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
         
-        obstacles=set()
-        seen=set()
-        ans=0
         rem=(m*n)-(len(walls)+len(guards))
+        grid=[[0]*n for _ in range(m)]
         # for i in walls:
         #     wallss.add(tuple(i))
         # for j in guards:
         #     guardss.add(tuple(j))
         for a,b in walls:
-            obstacles.add((a,b))
+            grid[a][b]=1
         for a,b in guards:
-            obstacles.add((a,b))
+            grid[a][b]=1
         direction=[(1,0),(-1,0),(0,1),(0,-1)]
         for x,y in guards:
             for dr,dc in direction:
                 r,c=x,y
                 while 0<=r+dr<m and 0<=c+dc<n:
-                    new=(r+dr,c+dc)
-                    if new in obstacles:
+
+                    if grid[r+dr][c+dc]==1:
                         break
-                    elif new not  in seen:
+                    elif grid[r+dr][c+dc]!=2:
                         rem-=1
-                        seen.add(new) 
+                        grid[r+dr][c+dc]=2
                     r+=dr
                     c+=dc
                     
