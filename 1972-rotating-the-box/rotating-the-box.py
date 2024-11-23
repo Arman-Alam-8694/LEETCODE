@@ -18,10 +18,9 @@ class Solution:
                     candidatecol=j
                 elif box[i][j]==".":
                     if candidaterow!=None and candidatecol!=None:
-                        box[i][j]="#"
-                        box[candidaterow][candidatecol]="."
-                        result[j][row-i]=box[i][j]
-                        result[candidatecol][row-candidaterow]=box[candidaterow][candidatecol]
+    
+                        result[j][row-i]="#"
+                        result[candidatecol][row-candidaterow]="."
                         candidatecol+=1
                 elif box[i][j]=="*":
 
