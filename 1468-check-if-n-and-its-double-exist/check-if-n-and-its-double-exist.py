@@ -3,11 +3,7 @@ class Solution:
         mapp={}
         n=len(arr)
         for i in range(n):
-            number=(arr[i])/2
-            number1=(arr[i])*2
-            if number in mapp:
-                return True
-            elif number1 in mapp:
+            if (arr[i])/2 in mapp or (arr[i])*2 in mapp:
                 return True
             mapp[arr[i]]=i
         return False
