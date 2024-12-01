@@ -14,9 +14,7 @@ class Solution:
         lowest=min(list(mapp.values()))
         highest_count=list(mapp.values()).count(highest)
         lowest_count=list(mapp.values()).count(lowest)
-        # print(len(set(mapp.values())))
-        print(highest,lowest)
-        print(highest_count,lowest_count)
+       
         if highest==lowest:
             if highest!=1:
                 if len(set(word))==1:
