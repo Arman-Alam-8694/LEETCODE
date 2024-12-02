@@ -3,7 +3,7 @@ class Solution:
         words=sentence.split(" ")
         size=len(searchWord)
         for idx,word in enumerate(words):
-            if searchWord==word[:size]:
+            if word.startswith(searchWord):
                 return idx+1
         return -1
         
