@@ -4,22 +4,15 @@
  * @return {string}
  */
 var addSpaces = function(s, spaces) {
-    let answer=""
-    let start=0;
-    let space=0;
-    while(start<s.length){
-        if ((space<spaces.length) && (spaces[space]===start)){
-            answer+=" ";
-            space+=1;
-            continue
-            
-        }
-        else{
-            answer+=s[start];
-            start+=1;
-        }
+    let answer=[]
+    start=0
+    for(let space of  spaces){
+        answer.push(s.slice(start,space))
+        start=space
+
     }
-    return answer;
+    answer.push(s.slice(start))
+    return answer.join(" ")
 
     
 };
