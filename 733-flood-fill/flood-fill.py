@@ -1,11 +1,9 @@
 from collections import deque
 class Solution:
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
-
         original=image[sr][sc]
-
-        if original==color:
-            return image
+        # if original==color:
+        #     return image
         Queue=deque([[sr,sc]])
         lower=len(image)-1
         right=len(image[0])-1
@@ -18,7 +16,6 @@ class Solution:
                 if nr-1>=0:
                     if (nr-1,nc) not in visited:
                         Queue.append((nr-1,nc))
-
                 if nr+1<=lower:
                     if (nr+1,nc) not in visited:
                         Queue.append((nr+1,nc))
