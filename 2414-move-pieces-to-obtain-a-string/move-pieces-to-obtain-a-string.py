@@ -1,5 +1,7 @@
 class Solution:
     def canChange(self, start: str, target: str) -> bool:
+        if start==target:
+            return True
         left=0
         right=0
         for i in range(len(start)):
@@ -18,7 +20,5 @@ class Solution:
                     return False
                 else:
                     right-=1
-        if left or right:
-            return False
-        return True
+        return not (left or  right)
             
