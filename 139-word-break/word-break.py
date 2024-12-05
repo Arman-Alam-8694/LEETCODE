@@ -2,27 +2,22 @@ from collections import deque
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        def find(idx,queue,n):
-            for i in range(idx,n):
-                if s[idx:i+1] in lookup:
-                    queue.append(i)
-        queue=deque()
+        queue=deque([0])
         lookup=set(wordDict)
-
         n=len(s)
-        find(0,queue,n) 
         visited=set()  
-      
-        if not queue:
-            return False
+
         while queue:
             idx=queue.popleft()
-            if idx==n-1:
+            if idx==n:
                 return True
             if idx in visited:
                 continue
-            find(idx+1,queue,n)
+            for i in range(idx,n+1):
+                if s[idx:i] in lookup:
+                    queue.append(i)
             visited.add(idx)
+            
         return False
 
 
