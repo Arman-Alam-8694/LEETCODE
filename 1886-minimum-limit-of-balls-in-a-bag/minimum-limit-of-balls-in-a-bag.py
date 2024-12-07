@@ -2,8 +2,8 @@ class Solution:
     def minimumSize(self, nums: List[int], maxOperations: int) -> int:
         def possible(mid,nums,k):
             count=0
-            for i in range(len(nums)):
-                count+=(nums[i]-1)//mid
+            for num in nums:
+                count+=(num-1)//mid
                 if count>k:
                     return False
             return True
