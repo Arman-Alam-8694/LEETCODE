@@ -3,11 +3,7 @@ class Solution:
         def possible(mid,nums,k):
             count=0
             for i in range(len(nums)):
-                quot,rem=divmod(nums[i],mid)
-                if rem==0:
-                    count+=quot-1
-                else:
-                    count+=quot
+                count+=(nums[i]-1)//mid
                 if count>k:
                     return False
             return True
