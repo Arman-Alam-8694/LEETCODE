@@ -1,18 +1,13 @@
 class Solution:
-    def minimumSize(self, nums: List[int], O: int) -> int:
-        N = len(nums)
-        S = sum(nums)
-        G = N+O
-        if G >= S: return 1
-
-        def verify(v):
-            return sum(math.ceil(n/v) for n in nums) <= G
-        
-        l = math.ceil(S/G)-1
-        h = min(max(nums),math.floor(S/O))
-        
-        while l<h-1:
-            m = (h+l)//2
-            if verify(m): h=m
-            else: l=m
-        return h
+    def minimumSize(self, nums: List[int], maxOperations: int) -> int:
+        u = sum(nums)
+        b = maxOperations
+        splits = [max(n*b//u, 1) for n in nums]
+        heap = [(-1 * ((n+split-1)//split), n, split) for n, split in zip(nums, splits)]
+        heapq.heapify(heap)
+        for _ in range(maxOperations + len(nums) - sum(splits)):
+            item = heapq.heappop(heap)
+            _, n, split = item
+            num = (n+split)//(split+1)
+            heapq.heappush(heap, (-num, n, split+1))
+        return - heap[0][0]
