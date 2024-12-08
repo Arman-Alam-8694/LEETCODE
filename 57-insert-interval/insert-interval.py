@@ -10,19 +10,20 @@ class Solution:
                 right=mid-1
             else:
                 left=mid+1
-        # print(left,right)
+       
         intervals.insert(left,newInterval)
         n=len(intervals)
-        for i in range(0,left):
-            result.append(intervals[i])
-        # print(result,intervals)
-        start=left
-        if not result:
-            result=[intervals[0]]
-            start=1
-        for i in range(start,n):
+        # for i in range(0,left):
+        #     result.append(intervals[i])
+  
+        # start=left
+        # if not result:
+        #     result=[intervals[0]]
+        #     start=1
+        result=[intervals[0]]
+        for i in range(1,n):
             if result[-1][0]!=intervals[i][0] and result[-1][1]<intervals[i][0]:
-                # print("here")
+         
                 result.append(intervals[i])
             else:
                 srt,end=result.pop()
