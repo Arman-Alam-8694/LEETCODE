@@ -10,20 +10,32 @@ class Solution:
                 right=mid-1
             else:
                 left=mid+1
-       
-        intervals.insert(left,newInterval)
-        n=len(intervals)
-        # for i in range(0,left):
-        #     result.append(intervals[i])
-  
-        # start=left
+      
+        start=left
+        for i in range(0,left):
+            result.append(intervals[i])
+        if not result:
+            result=[newInterval]
+            start=0
+        else:
+            if result[-1][0]!=newInterval[0] and result[-1][1]<newInterval[0]:
+                # print("here")
+                result.append(newInterval)
+            else:
+                srt,end=result.pop()
+                nsrt=min(srt,newInterval[0])
+                nend=max(end,newInterval[1])
+                result.append([nsrt,nend])
+            start=left
+
+
+        
         # if not result:
         #     result=[intervals[0]]
         #     start=1
-        result=[intervals[0]]
-        for i in range(1,n):
+        for i in range(start,n):
             if result[-1][0]!=intervals[i][0] and result[-1][1]<intervals[i][0]:
-         
+                # print("here")
                 result.append(intervals[i])
             else:
                 srt,end=result.pop()
