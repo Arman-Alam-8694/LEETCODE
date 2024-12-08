@@ -8,18 +8,10 @@ class Solution:
         for next in range(1, n):
             if result[-1][1] >= arr[next][0]:
                 nstart = result[-1][0]
-                if result[-1][1] > arr[next][1]:
-                    nend = result[-1][1]
-                else:
-                    nend = arr[next][1]
+                nend = max(result[-1][1],arr[next][1])
                 new = [nstart, nend]
-                if not result:
-                    result.append(new)
-                elif result and new[0] == result[-1][0]:
-                    result.pop()
-                    result.append(new)
-                else:
-                    result.append(new)
+                result.pop()
+                result.append(new)
                 arr[next] = new
             else:
                 result.append(arr[next])
