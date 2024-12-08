@@ -19,7 +19,6 @@ class Solution:
             start=0
         else:
             if result[-1][0]!=newInterval[0] and result[-1][1]<newInterval[0]:
-                # print("here")
                 result.append(newInterval)
             else:
                 srt,end=result.pop()
@@ -27,15 +26,8 @@ class Solution:
                 nend=max(end,newInterval[1])
                 result.append([nsrt,nend])
             start=left
-
-
-        
-        # if not result:
-        #     result=[intervals[0]]
-        #     start=1
         for i in range(start,n):
             if result[-1][0]!=intervals[i][0] and result[-1][1]<intervals[i][0]:
-                # print("here")
                 result.append(intervals[i])
             else:
                 srt,end=result.pop()
