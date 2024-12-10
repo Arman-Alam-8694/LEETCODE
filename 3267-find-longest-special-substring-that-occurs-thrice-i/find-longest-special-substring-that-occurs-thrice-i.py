@@ -1,7 +1,7 @@
 class Solution:
     def maximumLength(self, s: str) -> int:
         def check(k,s):
-            stringg="abcdefghijklmnopqrstuvwxyz"
+            # stringg="abcdefghijklmnopqrstuvwxyz"
             for ch in stringg:
                 left=0
                 tcount=0
@@ -24,7 +24,11 @@ class Solution:
                     right+=1
             return False
 
-           
+        sset=set(s)
+        stringg=""
+        for i in sset:
+            stringg+=i
+
         answer=-1
         n=len(s)
         left=1
