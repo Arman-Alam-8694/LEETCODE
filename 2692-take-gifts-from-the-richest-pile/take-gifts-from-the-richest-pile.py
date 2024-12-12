@@ -2,8 +2,7 @@ import heapq
 import math
 class Solution:
     def pickGifts(self, gifts: List[int], k: int) -> int:
-        for i in range(len(gifts)):
-            gifts[i]=-1*gifts[i]
+        gifts=[-gift for gift in gifts]
         heapq.heapify(gifts)
 
    
@@ -17,9 +16,5 @@ class Solution:
             heapq.heappush(gifts,-nitem)
            
 
-        summ=0
-        for i in gifts:
-            summ+=abs(i)
-        return summ
-
+        return -sum(gifts)
         
