@@ -12,7 +12,7 @@ class Solution:
             if item==-1:
                 heapq.heappush(gifts,-1)
                 break
-            nitem=(math.floor((-item)**0.5))
+            nitem=int((-item)**0.5)
             
             heapq.heappush(gifts,-nitem)
            
