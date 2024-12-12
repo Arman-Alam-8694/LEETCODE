@@ -17,5 +17,9 @@ class Solution:
             heapq.heappush(gifts,-nitem)
            
 
-        return -sum(gifts)
+        summ=0
+        for i in gifts:
+            summ+=abs(i)
+        return summ
+
         
