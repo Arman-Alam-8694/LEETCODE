@@ -29,5 +29,36 @@ class Solution:
         #         seen.add(idx+1)
         # return score
 
+        #simple pointer
+        score=0
+        skip=False
+        prev=None
+        # 18 9 7 6 1 3 4 5
+        stack=[]
+        for i in range(len(nums)):
+            if skip==True:
+                continue
+            if not prev and nums[i]<=nums[i+1]:
+                score+=nums[i]
+                skip=True
+            elif prev and nums[i]<=nums[i+1]:
+                score+=nums[i]
+                skip=True
+                if not prev and stack:
+                    stack.pop()
+
+            elif nums[i]>nums[i+1]:
+                stack.append(nums[i])
+                prev=True
+        skip=False
+        while stack:
+            if not skip:
+                score+=stack.pop()
+                skip=True
+            if skip:
+                stack.pop()
+                skip=False
+        return score
+
 
 
