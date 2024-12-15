@@ -14,11 +14,7 @@ class Solution:
             (-answer,pstud,total))
         
         result=0
-        n=len(classes)
-        for cal,passs,total in heap:
-            result+=(passs/total)
-        return result/n
-
+        return sum((passs/total) for calc,passs,total in heap)/len(classes)
 
 
          
