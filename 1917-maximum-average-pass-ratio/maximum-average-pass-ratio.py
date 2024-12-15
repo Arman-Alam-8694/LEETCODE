@@ -17,9 +17,10 @@ class Solution:
         n=len(classes)
         while heap:
             cal,passs,total=heapq.heappop(heap)
-            result+=(passs/total)/n
+            result+=(passs/total)
+
       
-        return result
+        return result/n
 
 
 
