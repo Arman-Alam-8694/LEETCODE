@@ -15,11 +15,8 @@ class Solution:
         
         result=0
         n=len(classes)
-        while heap:
-            cal,passs,total=heapq.heappop(heap)
+        for cal,passs,total in heap:
             result+=(passs/total)
-
-      
         return result/n
 
 
