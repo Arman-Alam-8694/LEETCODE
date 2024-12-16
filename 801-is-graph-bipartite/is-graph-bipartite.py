@@ -2,7 +2,7 @@ from collections import deque
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
         def bfs(graph,start,colors):
-            colors={}
+        
             colors[start]=0
             order=deque([start])
             while order:
