@@ -3,6 +3,7 @@ class Solution:
     def repeatLimitedString(self, s: str, k: int) -> str:
         counts=Counter(s)
         ch=sorted(counts.items(),key=lambda x:x[0],reverse=True)
+        print(ch)
         check=[]
         for i in ch:
             check.append(list(i))
@@ -15,13 +16,12 @@ class Solution:
             while check[curr][1]==0:
                 curr+=1
                 if curr>=len(check):
+                    # print(answer)
                     return "".join(answer)
             if check[prev][1]==0:
                 prev=curr
             if prev==curr:
-                if check[curr][0]=="b":
-                    print(check)
-                answer.extend([check[curr][0]]*min(check[curr][1],k))
+                answer.append(check[curr][0]*min(check[curr][1],k))
                 check[curr][1]-=min(check[curr][1],k)
                 if check[curr][1]==0:
                     prev+=1
