@@ -3,7 +3,7 @@ class Solution:
     def repeatLimitedString(self, s: str, k: int) -> str:
         counts=Counter(s)
         ch=sorted(counts.items(),key=lambda x:x[0],reverse=True)
-        print(ch)
+        # print(ch)
         check=[]
         for i in ch:
             check.append(list(i))
