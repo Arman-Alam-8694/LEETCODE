@@ -2,11 +2,10 @@ from collections import Counter
 class Solution:
     def repeatLimitedString(self, s: str, k: int) -> str:
         counts=Counter(s)
-        ch=sorted(counts.items(),key=lambda x:x[0],reverse=True)
-        # print(ch)
-        check=[]
-        for i in ch:
-            check.append(list(i))
+        check=sorted(counts.items(),key=lambda x:x[0],reverse=True)
+        # check=[]
+        # for i in ch:
+        #     check.append(list(i))
         prev=0
         curr=0
         answer=[]
@@ -16,21 +15,25 @@ class Solution:
             while check[curr][1]==0:
                 curr+=1
                 if curr>=len(check):
-                    # print(answer)
+                   
                     return "".join(answer)
             if check[prev][1]==0:
                 prev=curr
             if prev==curr:
-                answer.append(check[curr][0]*min(check[curr][1],k))
-                check[curr][1]-=min(check[curr][1],k)
+                char,val=check[curr]
+                answer.append(char*min(val,k))
+                val-=min(val,k)
+                check[curr]=(char,val)
                 if check[curr][1]==0:
                     prev+=1
                     curr+=1
                 else:
                     curr+=1
             elif prev!=curr:
+                char,val=check[curr]
                 answer.append(check[curr][0])
-                check[curr][1]-=1
+            
+                check[curr]=(char,val-1)
                 curr=prev
 
 
