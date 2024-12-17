@@ -1,8 +1,8 @@
-from collections import Counter,deque
+from collections import Counter
 class Solution:
     def repeatLimitedString(self, s: str, k: int) -> str:
         counts=Counter(s)
-        ch=deque(sorted(counts.items(),key=lambda x:x[0],reverse=True))
+        ch=sorted(counts.items(),key=lambda x:x[0],reverse=True)
         check=[]
         for i in ch:
             check.append(list(i))
