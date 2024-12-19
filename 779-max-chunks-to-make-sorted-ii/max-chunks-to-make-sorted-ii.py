@@ -51,6 +51,5 @@ class Solution:
                 
                 
          
-        print(quant)
         return chunks
         
