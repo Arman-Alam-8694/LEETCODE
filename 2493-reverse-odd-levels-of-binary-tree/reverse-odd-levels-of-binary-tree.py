@@ -7,7 +7,6 @@
 from collections import deque
 class Solution:
     def reverseOddLevels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        storee={}
         store=[]
         queue=deque([(root,0)])
         temp=deque()
@@ -16,7 +15,6 @@ class Solution:
             node,level=queue.popleft()
             if level&1:
                 if curr!=None and level!=curr:
-                    storee[curr]=temp
                     store.append(temp)
                     temp=deque()
                 curr=level
@@ -28,7 +26,6 @@ class Solution:
                 queue.append((node.right,level+1))
         if temp:
             store.append(temp)
-            storee[curr]=temp
         store=deque(store)
      
         queue=deque([(root,0)])
