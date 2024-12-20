@@ -1,29 +1,30 @@
-from collections import deque
+from collections import deque 
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        def bfs(graph,start,colors):
-        
-            colors[start]=0
-            order=deque([start])
-            while order:
-                node=order.popleft()
-                for sons in graph[node]:
-                    if sons not in colors:
-                        colors[sons]=1-colors[node]
-                        order.append(sons)
+        def check(start,visited,graph,mapp):
+            queue=deque([start])
+            mapp[start]=0
+            
+
+            while queue:
+                node=queue.popleft()
+                visited.add(node)
+                for son in graph[node]:
+                    if son not in visited:
+                        queue.append(son)
+                        mapp[son]=1-mapp[node]
                     else:
-                        if colors[sons]==colors[node]:
+                        if mapp[node]==mapp[son]:
                             return False
-
+            
             return True
-        colors={}
+       
+        mapp={}
+        visited=set()
         for i in range(len(graph)):
-            if i not in colors:
-                if not bfs(graph,i,colors):
+            if i not in visited:
+                if not check(i,visited,graph,mapp):
                     return False
+
         return True
-
-
-
-        
         
