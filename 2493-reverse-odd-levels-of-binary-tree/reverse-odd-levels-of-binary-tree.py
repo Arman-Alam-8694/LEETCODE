@@ -26,18 +26,22 @@ class Solution:
                 queue.append((node.right,level+1))
         if temp:
             store.append(temp)
-        store=deque(store)
      
         queue=deque([(root,0)])
         curr=None
+        storep=0
+        start=0
         while queue:
             node,level=queue.popleft()
             if level&1:
+                
                 if curr!=None and level!=curr:
-                    store.popleft()
+                    storep+=1
+                    start=0
                 curr=level
             if curr!=None and (level&1 and curr&1):
-                node.val=store[0].popleft()
+                node.val=store[storep][start]
+                start+=1
             
             if node.left:
                 queue.append((node.left,level+1))
