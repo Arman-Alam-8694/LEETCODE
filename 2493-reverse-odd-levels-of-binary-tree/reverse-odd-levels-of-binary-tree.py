@@ -12,9 +12,10 @@ class Solution:
         temp=[]
         while queue:
             node,level=queue.popleft()
-            if level&1:
-                temp.append(node)
-            if temp and level%2==0:
+            if node.left:
+                queue.append((node.left,level+1))
+                queue.append((node.right,level+1))
+            if level%2==0:
                 start=0
                 end=len(temp)-1
                 while start<end:
@@ -22,9 +23,8 @@ class Solution:
                     start+=1
                     end-=1
                 temp=[]
-            if node.left:
-                queue.append((node.left,level+1))
-                queue.append((node.right,level+1))
+            else:
+                temp.append(node)
         if temp:
             start=0
             end=len(temp)-1
