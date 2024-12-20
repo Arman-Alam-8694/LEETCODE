@@ -9,46 +9,31 @@ class Solution:
     def reverseOddLevels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         store=[]
         queue=deque([(root,0)])
-        temp=deque()
-        curr=None
+        temp=[]
         while queue:
             node,level=queue.popleft()
             if level&1:
-                if curr!=None and level!=curr:
-                    store.append(temp)
-                    temp=deque()
-                curr=level
-            if curr!=None and (level&1 and curr&1):
-                temp.appendleft(node.val)
+                temp.append(node)
+            if temp and level%2==0:
+                start=0
+                end=len(temp)-1
+                while start<end:
+                    temp[start].val,temp[end].val=temp[end].val,temp[start].val
+                    start+=1
+                    end-=1
+                temp=[]
             if node.left:
                 queue.append((node.left,level+1))
             if node.right:
                 queue.append((node.right,level+1))
         if temp:
-            store.append(temp)
-     
-        queue=deque([(root,0)])
-        curr=None
-        storep=0
-        start=0
-        while queue:
-            node,level=queue.popleft()
-            if level&1:
-                
-                if curr!=None and level!=curr:
-                    storep+=1
-                    start=0
-                curr=level
-            if curr!=None and (level&1 and curr&1):
-                node.val=store[storep][start]
+            start=0
+            end=len(temp)-1
+            while start<end:
+                temp[start].val,temp[end].val=temp[end].val,temp[start].val
                 start+=1
-            
-            if node.left:
-                queue.append((node.left,level+1))
-            if node.right:
-                queue.append((node.right,level+1))
+                end-=1
 
-        
         return root
 
 
