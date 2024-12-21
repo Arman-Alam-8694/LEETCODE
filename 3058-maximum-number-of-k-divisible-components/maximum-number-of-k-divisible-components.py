@@ -1,26 +1,25 @@
+from collections import defaultdict
+
 class Solution:
     def maxKDivisibleComponents(self, n: int, edges: List[List[int]], values: List[int], k: int) -> int:
         def dfs(node, parent):
-            csumm=values[node]
-            divisiblecnt=0
+            csumm = values[node]
             for son in graph[node]:
-                if son!=parent:
-                    summ,cnt=dfs(son,node)
-                    csumm+=summ
-                    divisiblecnt+=cnt
-     
-            if csumm%k==0:
-                divisiblecnt+=1
-                return [0,divisiblecnt]
-            else:
-                return [csumm,divisiblecnt]
+                if son != parent:
+                    csumm += dfs(son, node)
 
-        # Build the graph from edges
-        graph = {i: [] for i in range(n)}
+            # If the sum is divisible by k, reset it to 0 and increment the count
+            if csumm % k == 0:
+                self.divisible_count += 1
+                return 0
+            return csumm
+
+        # Build the graph
+        graph = defaultdict(list)
         for u, v in edges:
             graph[u].append(v)
             graph[v].append(u)
 
-        # Start DFS from node 0
-        _, cntt = dfs(0, -1)
-        return cntt
+        self.divisible_count = 0
+        dfs(0, -1)
+        return self.divisible_count
