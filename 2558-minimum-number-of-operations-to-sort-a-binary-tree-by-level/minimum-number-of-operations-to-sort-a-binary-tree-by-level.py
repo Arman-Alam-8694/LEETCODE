@@ -1,64 +1,62 @@
 class Solution:
     def minimumOperations(self, root: Optional[TreeNode]) -> int:
-        
-        # Minimum operations
+        from collections import deque
+        import heapq
+
+        # Minimum operations counter
         minOperations = 0
         
-        # Queue, initially with the root node
-        queue = deque()
-        queue.append(root)
+        # BFS for level order traversal
+        queue = deque([root])
         
-        # While the queue is not empty
         while queue:
-            
-            # How many nodes are in the current level
-            nodesInCurrentLevel = len(queue)
-            
-            # To keep track of the index
-            i = 0
-            
-            # List of values and their indices
+            # Collect values at the current level
+            level_size = len(queue)
             values = []
             
-            # Iterate over all the nodes in the current level
-            while nodesInCurrentLevel > 0:
-                
-                # Pop the node in front of the queue
+            for i in range(level_size):
                 node = queue.popleft()
-                
-                # Add to the list of values
-                values.append([node.val, i])
-                i += 1
-                
-                # If the node has a left child, push it to the queue
-                if node.left: queue.append(node.left)
-                    
-                # If the node has a right child, push it to the queue
-                if node.right: queue.append(node.right)
-                    
-                # Update the count
-                nodesInCurrentLevel -= 1
-            print(values) 
-            # Sorted list of indices based on the values
-            sortedIndices = [i for val, i in sorted(values)]
-            print(sortedIndices)
+                if node:  # Only include non-null nodes
+                    values.append([-node.val, i])  # Negative for max-heap simulation
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
             
-            # Calculate the minimum operations required
-            # Here, we will use Swap Sort or Cycle Sort
-            for i in range(len(sortedIndices)):
+            if len(values) == 0:
+                continue
+            
+            # Create a copy of the original order
+            original = values[:]
+            
+            # Build a min-heap for sorting
+            heapq.heapify(values)
+            last = len(values) - 1
+            
+            # Set to track already swapped nodes
+            swapped = set()
+            
+            # Sorting logic using heap
+            while last > 0 :
+              
+            
+                val, idx = heapq.heappop(values)
                 
-                # We need to make sure that a value "x" in "sortedIndices"
-                # Is at the index "i"
-                # If it is not, we need to place it at its correct place
-                # And that will require one operation
-                while sortedIndices[i] != i:
-                    
-                    # Swap
-                    sortedIndices[sortedIndices[i]], sortedIndices[i] = sortedIndices[i], sortedIndices[sortedIndices[i]]
-                    
-                    # Upadate operation count
+                if (val, idx) in swapped:
+                   
+                    continue
+                
+                pval, pidx = original[last]
+                
+                if idx == last:
+                    last -= 1
+                else:
+                    swapped.add((pval, last))
+                    original[idx], original[last] = original[last], original[idx]
+                    heapq.heappush(values, [pval, idx])
                     minOperations += 1
-                    
-                 
-        # Return the minimum operations to sort each level
+                    last-=1
+                # print(minOperations)
+                # print(original)
+        
         return minOperations
