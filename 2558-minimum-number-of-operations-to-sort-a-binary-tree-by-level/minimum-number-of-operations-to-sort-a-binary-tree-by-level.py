@@ -1,62 +1,33 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def minimumOperations(self, root: Optional[TreeNode]) -> int:
-        from collections import deque
-        import heapq
-
-        # Minimum operations counter
-        minOperations = 0
-        
-        # BFS for level order traversal
-        queue = deque([root])
-        
-        while queue:
-            # Collect values at the current level
-            level_size = len(queue)
-            values = []
-            
-            for i in range(level_size):
-                node = queue.popleft()
-                if node:  # Only include non-null nodes
-                    values.append([-node.val, i])  # Negative for max-heap simulation
+        swaps = 0
+        nodes = [root]
+        while nodes:
+            next_nodes = []
+            pos, el, heap = {}, {}, []
+            for idx, node in enumerate(nodes):
                 if node.left:
-                    queue.append(node.left)
+                    next_nodes.append(node.left)
                 if node.right:
-                    queue.append(node.right)
-            
-            if len(values) == 0:
-                continue
-            
-            # Create a copy of the original order
-            original = values[:]
-            
-            # Build a min-heap for sorting
-            heapq.heapify(values)
-            last = len(values) - 1
-            
-            # Set to track already swapped nodes
-            swapped = set()
-            
-            # Sorting logic using heap
-            while last > 0 :
-              
-            
-                val, idx = heapq.heappop(values)
-                
-                if (val, idx) in swapped:
-                   
+                    next_nodes.append(node.right)
+                pos[idx] = node.val
+                el[node.val] = idx
+                heapq.heappush(heap, node.val) 
+            for i in range(len(heap)):
+                curr = heapq.heappop(heap)
+                if pos[i] == curr:
                     continue
-                
-                pval, pidx = original[last]
-                
-                if idx == last:
-                    last -= 1
-                else:
-                    swapped.add((pval, last))
-                    original[idx], original[last] = original[last], original[idx]
-                    heapq.heappush(values, [pval, idx])
-                    minOperations += 1
-                    last-=1
-                # print(minOperations)
-                # print(original)
+                swap = pos[i]
+                idx = el[curr]
+                pos[idx] = swap
+                el[swap] = idx
+                swaps += 1
+            nodes = next_nodes
+        return swaps            
         
-        return minOperations
