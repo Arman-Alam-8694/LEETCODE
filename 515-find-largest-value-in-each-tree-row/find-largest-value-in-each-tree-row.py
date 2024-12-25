@@ -14,7 +14,7 @@ class Solution:
         while queue:
             cntinlevel=len(queue)
             maxx=float('-inf')
-            while cntinlevel:
+            for i in range(cntinlevel):
                 node=queue.popleft()
                 maxx=max(maxx,node.val)
                 if node.left:
@@ -22,7 +22,6 @@ class Solution:
                 if node.right:
                     queue.append(node.right)
 
-                cntinlevel-=1
             result.append(maxx)
         return result
 
