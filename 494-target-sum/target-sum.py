@@ -1,13 +1,10 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        d = defaultdict(int)
-        d[0] = 1
+        mapp=[defaultdict(int) for _ in range(len(nums)+1)]
+        mapp[0][0]=1
+        for i in range(len(nums)):
+            for k,v in mapp[i].items():
+                mapp[i+1][k+nums[i]]+=v
+                mapp[i+1][k-nums[i]]+=v
 
-        for num in nums:
-            dp = defaultdict(int)
-            for k, v in d.items():
-                dp[k + num] += v
-                dp[k - num] += v
-            d = dp
-
-        return d[target]
+        return mapp[len(nums)][target]
