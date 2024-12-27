@@ -1,0 +1,28 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n=len(nums)
+        # if n==1:
+        #     return nums[0]
+        # if n==2:
+        #     return max(nums[0],nums[1])
+        size=len(nums)
+        dp=[-1]*(n+1)
+        temp=float('-inf')
+        def recur(n,size):
+            nonlocal temp
+            if n<=0:
+                return 0
+            if dp[n]!=-1:
+                return dp[n]
+            temp=float('-inf')
+            for i in range(2,size+2):
+                temp=max(temp,recur(n-i,size)+nums[n-1])
+                # print(temp,n)
+
+            dp[n]=temp
+            return dp[n]
+        
+        recur(n,size)
+        recur(n-1,size)
+        return max(dp[n-1],dp[n])
+        
