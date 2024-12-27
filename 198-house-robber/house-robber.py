@@ -3,9 +3,7 @@ class Solution:
         n=len(nums)
         size=len(nums)
         dp=[-1]*(n+1)
-        temp=float('-inf')
         def recur(n,size):
-            nonlocal temp
             if n<=0:
                 return 0
             if dp[n]!=-1:
@@ -15,7 +13,6 @@ class Solution:
                 if n-i>=-1:
                     temp=max(temp,recur(n-i,size)+nums[n-1])
                 # print(temp,n)
-
             dp[n]=temp
             return dp[n]
         
