@@ -1,10 +1,6 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         n=len(nums)
-        # if n==1:
-        #     return nums[0]
-        # if n==2:
-        #     return max(nums[0],nums[1])
         size=len(nums)
         dp=[-1]*(n+1)
         temp=float('-inf')
@@ -16,7 +12,8 @@ class Solution:
                 return dp[n]
             temp=float('-inf')
             for i in range(2,size+2):
-                temp=max(temp,recur(n-i,size)+nums[n-1])
+                if n-i>=-1:
+                    temp=max(temp,recur(n-i,size)+nums[n-1])
                 # print(temp,n)
 
             dp[n]=temp
