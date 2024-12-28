@@ -1,37 +1,51 @@
 class Solution:
-
     def maxSumOfThreeSubarrays(self, nums: List[int], k: int) -> List[int]:
-        n = len(nums)
+        # Number of possible subarray starting positions
+        n = len(nums) - k + 1
 
-        # Prefix sum array to calculate sum of any subarray in O(1) time
-        prefix_sum = [0] * (n + 1)
-        for i in range(1, n + 1):
-            prefix_sum[i] = prefix_sum[i - 1] + nums[i - 1]
+        # Calculate sum of all possible k-length subarrays
+        sums = [sum(nums[:k])]
+        for i in range(k, len(nums)):
+            sums.append(sums[-1] - nums[i - k] + nums[i])
 
-        # Arrays to store the best sum and starting indices for up to 3 subarrays
-        best_sum = [[0] * (n + 1) for _ in range(4)]
-        best_index = [[0] * (n + 1) for _ in range(4)]
+        # memo[i][j]: max sum possible starting from index i with j subarrays remaining
+        memo = [[-1] * 4 for _ in range(n)]
+        indices = []
 
-        # Compute the best sum and indices for 1, 2, and 3 subarrays
-        for t in range(1, 4):
-            for i in range(k * t, n + 1):
-                current_sum = (
-                    prefix_sum[i] - prefix_sum[i - k] + best_sum[t - 1][i - k]
-                )
+        # First find optimal sum using DP
+        self._dp(sums, k, 0, 3, memo)
 
-                # Check if the current configuration gives a better sum
-                if current_sum > best_sum[t][i - 1]:
-                    best_sum[t][i] = current_sum
-                    best_index[t][i] = i - k
-                else:
-                    best_sum[t][i] = best_sum[t][i - 1]
-                    best_index[t][i] = best_index[t][i - 1]
+        # Then reconstruct the path to find indices
+        self._dfs(sums, k, 0, 3, memo, indices)
 
-        # Trace back the indices of the three subarrays
-        result = [0] * 3
-        end = n
-        for t in range(3, 0, -1):
-            result[t - 1] = best_index[t][end]
-            end = result[t - 1]
+        return indices
 
-        return result
+    def _dp(self, sums, k, idx, rem, memo):
+        if rem == 0:
+            return 0
+        if idx >= len(sums):
+            return float("-inf") if rem > 0 else 0
+
+        if memo[idx][rem] != -1:
+            return memo[idx][rem]
+
+        # Try taking current subarray vs skipping it
+        with_current = sums[idx] + self._dp(sums, k, idx + k, rem - 1, memo)
+        skip_current = self._dp(sums, k, idx + 1, rem, memo)
+
+        memo[idx][rem] = max(with_current, skip_current)
+        return memo[idx][rem]
+
+    def _dfs(self, sums, k, idx, rem, memo, indices):
+        if rem == 0 or idx >= len(sums):
+            return
+
+        with_current = sums[idx] + self._dp(sums, k, idx + k, rem - 1, memo)
+        skip_current = self._dp(sums, k, idx + 1, rem, memo)
+
+        # Choose path that gave optimal result in DP
+        if with_current >= skip_current:  # Take current subarray
+            indices.append(idx)
+            self._dfs(sums, k, idx + k, rem - 1, memo, indices)
+        else:  # Skip current subarray
+            self._dfs(sums, k, idx + 1, rem, memo, indices)
