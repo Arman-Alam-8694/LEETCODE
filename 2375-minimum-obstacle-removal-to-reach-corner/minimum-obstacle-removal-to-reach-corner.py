@@ -1,29 +1,26 @@
+from heapq import heappop, heappush
+
 class Solution:
     def minimumObstacles(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up
+        heap = [(0, 0, 0)]  # (obstacles, x, y)
+        visited = set()
         
-        # Deque for 0-1 BFS: (x, y, obstacles_removed)
-        deque_ = deque([(0, 0, 0)])  # Start at (0, 0) with 0 obstacles removed
-        visited = [[False] * n for _ in range(m)]
-        visited[0][0] = True
-        
-        while deque_:
-            x, y, obstacles_removed = deque_.popleft()
-            
-            # If we reach the bottom-right corner
-            if x == m - 1 and y == n - 1:
-                return obstacles_removed
+        while heap:
+            obs, i, j = heappop(heap)
+            if (i, j) == (m - 1, n - 1):  # Reached the bottom-right corner
+                return obs
+            if (i, j) in visited:
+                continue
+            visited.add((i, j))
             
             for dx, dy in directions:
-                nx, ny = x + dx, y + dy
-                
-                if 0 <= nx < m and 0 <= ny < n and not visited[nx][ny]:
-                    visited[nx][ny] = True
-                    if grid[nx][ny] == 0:
-                        deque_.appendleft((nx, ny, obstacles_removed))  # No obstacle to remove
+                newx, newy = i + dx, j + dy
+                if 0 <= newx < m and 0 <= newy < n and (newx, newy) not in visited:
+                    if grid[newx][newy] == 0:
+                        heappush(heap, (obs, newx, newy))  # No additional obstacle
                     else:
-                        deque_.append((nx, ny, obstacles_removed + 1))  # Remove the obstacle
+                        heappush(heap, (obs + 1, newx, newy))  # Remove an obstacle
         
-        # If no path exists (problem constraints guarantee at least one path exists)
-        return -1
+        return -1  # If there's no valid path
