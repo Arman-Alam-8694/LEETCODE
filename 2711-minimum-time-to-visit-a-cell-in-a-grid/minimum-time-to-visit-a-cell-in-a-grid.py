@@ -8,8 +8,8 @@ class Solution:
         visited=set()
         while ways:
             cur_time,i,j=heappop(ways)
-            if (i,j) in visited:
-                continue
+            # if (i,j) in visited:
+            #     continue
             if i==row-1 and j==col-1:
                 return cur_time
             visited.add((i,j))
@@ -19,6 +19,7 @@ class Solution:
                 if 0<=r<row and 0<=c<col and ((r,c) not in visited):
                     wait=1 if ((grid[r][c]-cur_time)%2==0) else 0
                     heappush(ways,(max(wait+grid[r][c],cur_time+1),r,c))
+                    visited.add((r,c))
         
 
 
