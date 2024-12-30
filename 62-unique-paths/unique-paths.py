@@ -5,16 +5,19 @@ class Solution:
             if 0<=x<m and 0<=y<n:
                 return True
             return False
-        @cache
+        memo={}
         def recur(i,j):
             if i==m-1 and j==n-1:
                 return 1
+            if (i,j) in memo:
+                return memo[(i,j)]
             ways=0
             for u,v in dir:
                 x=i+u
                 y=j+v
                 if is_valid(x,y):
                     ways+=recur(x,y)
-            return ways
+            memo[(i,j)]=ways
+            return memo[(i,j)]
         return recur(0,0)
         
