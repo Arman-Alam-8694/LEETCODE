@@ -3,18 +3,15 @@ class Solution:
         string=""
         result=[]
        
-        def recur(n,opencnt,string):
-            if opencnt==0 and len(string)==2*n:
+        def recur(opencnt,closecnt,string):
+            if len(string)==2*n:
                 result.append(string)
-            if len(string)>2*n:
-                return
-            
-            if opencnt==0:
-                recur(n,opencnt+1,string+"(")    
-            else:
-                recur(n,opencnt-1,string+")")   
-                recur(n,opencnt+1,string+"(")         
+                return 
+            if opencnt<n:
+                recur(opencnt+1,closecnt,string+"(")    
+            if opencnt>closecnt:
+                recur(opencnt,closecnt+1,string+")")        
 
-        recur(n,0,"")
+        recur(0,0,"")
         return result
         
