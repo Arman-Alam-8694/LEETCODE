@@ -8,17 +8,12 @@ class Solution:
                 result.append(string)
             if len(string)>2*n:
                 return
-            if not string:
-                recur(n,opencnt+1,string+"(")
-            elif string[-1]=="(":
-                recur(n,opencnt+1,string+"(")
-                recur(n,opencnt-1,string+")")
+            
+            if opencnt==0:
+                recur(n,opencnt+1,string+"(")    
             else:
-                if opencnt==0:
-                    recur(n,opencnt+1,string+"(")    
-                else:
-                    recur(n,opencnt-1,string+")")   
-                    recur(n,opencnt+1,string+"(")         
+                recur(n,opencnt-1,string+")")   
+                recur(n,opencnt+1,string+"(")         
 
         recur(n,0,"")
         return result
