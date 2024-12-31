@@ -2,6 +2,7 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         string=""
         result=[]
+        @cache
         def recur(n,opencnt,string):
             if opencnt==0 and len(string)==2*n:
                 result.append(string)
