@@ -21,12 +21,10 @@ class Solution:
         # return maxx
 
         maxx=float('-inf')
-        ones=0
+        ones=s.count("1")
         zero=0
         n=len(s)
-        for i in s:
-            if i=="1":
-                ones+=1
+     
         for i in range(n-1):
             zero+=1 if s[i]=="0" else 0
             ones+=0 if s[i]=="0" else -1
