@@ -1,12 +1,10 @@
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
-        chrr=set(s)
         res=0
         n=len(s)
-        for i in chrr:
-            first,last=s.index(i),s.rindex(i)
-            middle=set()
-            for i in range(first+1,last):
-                middle.add(s[i])
-            res+=len(middle)
+        for i in "abcdefghijklmnopqrstuvwxyz":
+            first,last=s.find(i),s.rfind(i)
+        
+            if first!=-1 and last!=-1 and first<last:
+                res+=len(set(s[first+1:last]))
         return res
