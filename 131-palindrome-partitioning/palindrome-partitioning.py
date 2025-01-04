@@ -1,11 +1,18 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        if not s:
-            return [[]]
-            
-        result = []
-        for i in range(1, len(s) + 1):
-            if s[:i] == s[:i][::-1]:  # if first i chars form palindrome
-                for rest in self.partition(s[i:]):  # recursively partition rest
-                    result.append([s[:i]] + rest)
+        n=len(s)
+        result=[]
+        path=[]
+        def recur(idx,path):
+            if idx==n:
+                result.append(path.copy())
+                return 
+            for i in range(idx,n):
+                if s[idx:i+1][::-1]==s[idx:i+1]:
+                    path.append(s[idx:i+1])
+                    recur(i+1,path)
+                    path.pop()
+
+        recur(0,path)
         return result
+        
