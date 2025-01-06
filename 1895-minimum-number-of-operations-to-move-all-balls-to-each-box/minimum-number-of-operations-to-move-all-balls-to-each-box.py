@@ -17,6 +17,8 @@ class Solution:
         #     result.append(total)
         # return result
 
+
+        #2pass O(n) using prefix and suffix and adding them up for the result
         boxes=list(map(int,boxes))
         n=len(boxes)
         res=[0]*n
@@ -35,6 +37,5 @@ class Solution:
                 right_ball+=1
                 suf+=1
 
-    
         return res
         
