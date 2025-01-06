@@ -1,40 +1,79 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        path = [["."] * n for _ in range(n)]
+        visited = set()
+        path = [["."]*n for _ in range(n)]
         result = []
-
-        def dfs(row, cnt, visited):
-            if cnt == n:
-                result.append(["".join(row) for row in path])
-                return
-
+        
+        def make_invalid(x, y,visited):
             for i in range(n):
-                if (row, i) not in visited:
-                    # Place the queen
+                visited.add((x,i))
+                visited.add((i,y))
+            dl = dr = y
+            row = x
+            while row < n:
+                row += 1
+                dl -= 1
+                dr += 1
+                if dl >= 0:
+                    visited.add((row,dl))
+                if dr < n:
+                    visited.add((row,dr))
+            dl = dr = y
+            row = x
+            while row > -1:
+                row -= 1
+                dl -= 1
+                dr += 1
+                if dl >= 0:
+                    visited.add((row,dl))
+                if dr < n:
+                    visited.add((row,dr))
+
+        # def make_valid(x, y):
+        #     for i in range(n):
+        #         if (x,i) in visited:
+        #             visited.remove((x,i))
+        #         if (i,y) in visited:
+        #             visited.remove((i,y))
+        #     dl = dr = y
+        #     row = x
+        #     while row < n:
+        #         row += 1
+        #         dl -= 1
+        #         dr += 1
+        #         if dl >= 0:
+        #             if (row,dl) in visited:
+        #                 visited.remove((row,dl))
+        #         if dr < n:
+        #             if (row,dr) in visited:
+        #                 visited.remove((row,dr))
+        #     dl = dr = y
+        #     row = x
+        #     while row > -1:
+        #         row -= 1
+        #         dl -= 1
+        #         dr += 1
+        #         if dl >= 0:
+        #             if (row,dl) in visited:
+        #                 visited.remove((row,dl))
+        #         if dr < n:
+        #             if (row,dr) in visited:
+        #                 visited.remove((row,dr))
+
+        def dfs(row, cnt,visited):
+            if cnt == n:
+              
+                result.append(["".join(row) for row in path])
+              
+                return
+            for i in range(n):
+                if (row,i) not in visited:
+                    new_visited=visited.copy()
                     path[row][i] = "Q"
-
-                    # Make a copy of the visited set
-                    new_visited = visited.copy()
-                    for j in range(n):
-                        # Mark row and column
-                        new_visited.add((row, j))
-                        new_visited.add((j, i))
-                        # Mark diagonals
-                        if row + j < n and i + j < n:
-                            new_visited.add((row + j, i + j))
-                        if row + j < n and i - j >= 0:
-                            new_visited.add((row + j, i - j))
-                        if row - j >= 0 and i + j < n:
-                            new_visited.add((row - j, i + j))
-                        if row - j >= 0 and i - j >= 0:
-                            new_visited.add((row - j, i - j))
-
-                    # Recursive call to the next row
-                    dfs(row + 1, cnt + 1, new_visited)
-
-                    # Backtrack
+                    make_invalid(row,i,new_visited)
+                    dfs(row+1, cnt+1,new_visited)
                     path[row][i] = "."
-
-        # Initial call with an empty visited set
-        dfs(0, 0, set())
+        
+        dfs(0,0,visited)
+     
         return result
