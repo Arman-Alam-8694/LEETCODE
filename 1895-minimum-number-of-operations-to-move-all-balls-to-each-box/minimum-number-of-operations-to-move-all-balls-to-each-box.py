@@ -1,11 +1,11 @@
 class Solution:
     def minOperations(self, boxes: str) -> List[int]:
+        boxes=list(map(int,boxes))
         mapp={}
         n=len(boxes)
         for i in range(n):
-            val=int(boxes[i])
-            if val>0:
-                mapp[i]=val
+            if boxes[i]>0:
+                mapp[i]=boxes[i]
         result=[]
         for i in range(n):
             total=0
