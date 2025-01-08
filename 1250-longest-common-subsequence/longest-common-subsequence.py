@@ -10,7 +10,7 @@ class Solution:
                 return dp[a][b]
             if text1[a]==text2[b]:
                 dp[a][b]=1+recur(a-1,b-1)
-                return dp[a][b]
-            dp[a][b]=max(recur(a-1,b),recur(a,b-1))
+            else:
+                dp[a][b]=max(recur(a-1,b),recur(a,b-1))
             return dp[a][b]
         return recur(n-1,m-1)
