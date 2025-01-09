@@ -25,5 +25,6 @@ class Solution:
     def prefixCount(self, words: List[str], pref: str) -> int:
         p=PrefixTree()
         for w in words:
-            p.add(w)
+            if len(w)>=len(pref):
+                p.add(w)
         return p.find(pref)
