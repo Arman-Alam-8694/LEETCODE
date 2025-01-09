@@ -16,22 +16,22 @@
 
         
 class Solution:
-    class TrieNode:
-        def __init__(self):
-            self.children={}
-            self.count=0
-
+   
 
     class Trie:
+        class TrieNode:
+            def __init__(self):
+                self.children={}
+                self.count=0
         def __init__(self):
-            self.root=Solution.TrieNode()
+            self.root=self.TrieNode()
 
         def insert(self, word: str) -> None:
             curr=self.root
             temp=0
             for a in word:
                 if a not in curr.children:
-                    curr.children[a]=Solution.TrieNode()
+                    curr.children[a]=self.TrieNode()
                 curr=curr.children[a]
                 curr.count+=1
 
