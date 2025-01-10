@@ -6,16 +6,29 @@
 #         self.right = right
 class Solution:
     def countNodes(self, root: Optional[TreeNode]) -> int:
-        def dfs(node):
-            nonlocal count
-            if node.left:
+        def recur(node):
+            if not node:
+                return 0
+            lh=dfsleft(node)
+            rh=dfsright(node)
+            if lh==rh:
+                return 2**lh-1
+            return 1+recur(node.left)+recur(node.right)
+
+
+        def dfsleft(node):
+            count=1
+            while node.left:
                 count+=1
-                dfs(node.left)
-            if node.right:
+                node=node.left
+            return count
+        
+
+        def dfsright(node):
+            count=1
+            while node.right:
                 count+=1
-                dfs(node.right)
-        count=1
-        if not root:
-            return 0
-        dfs(root)
-        return count
+                node=node.right
+            return count
+
+        return recur(root)
