@@ -9,10 +9,6 @@ class Solution:
         def dfs(node,count):
             if node is None:
                 return 1
-            count=0
-            count+=dfs(node.left,count)
-            count+=dfs(node.right,count)
-            return count
-
+            return dfs(node.left,count)+dfs(node.right,count)
 
         return dfs(root,0)-1
