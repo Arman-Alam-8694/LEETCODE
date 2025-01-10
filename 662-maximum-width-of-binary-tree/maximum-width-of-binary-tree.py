@@ -21,10 +21,10 @@ class Solution:
 
                 # Add left child to stack (if exists)
                 if node.left:
-                    stack.append((2 * (idx-1)+1, node.left))
+                    stack.append((2 *idx, node.left))
 
                 # Add right child to stack (if exists)
                 if node.right:
-                    stack.append((2 * (idx-1) + 2, node.right))
+                    stack.append((2 *idx+1, node.right))
 
         return max_width
