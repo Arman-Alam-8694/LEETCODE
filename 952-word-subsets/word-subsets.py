@@ -5,13 +5,16 @@ class Solution:
             temp=Counter(w)
             for i in temp:
                 wtwo[i]=max(wtwo[i],temp[i])
-        
-        result=[]
-        for w in words1:
+        indx=defaultdict(dict)
+        for i,w in enumerate(words1):
             temp=Counter(w)
-            for i in wtwo:
-                if temp[i]<wtwo[i]:
+            indx[i]=temp
+        result=[]
+        for i,k in indx.items():
+            for j in wtwo:
+                if wtwo[j]>k[j]:
                     break
             else:
-                result.append(w)
+                result.append(words1[i])
+      
         return result
