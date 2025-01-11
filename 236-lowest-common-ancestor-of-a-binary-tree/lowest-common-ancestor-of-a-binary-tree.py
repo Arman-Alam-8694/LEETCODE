@@ -52,27 +52,17 @@ class Solution:
         self.answer=False
         
         def dfs(node):
-            if not node:
-                return False, False
-            
-            left_p_found, left_q_found = dfs(node.left)
-            right_p_found, right_q_found = dfs(node.right)
-            
-            # Check if the current node is either p or q
-            current_p = (node == p)
-            current_q = (node == q)
-            
-            # p and q found in left or right subtree or at the current node
-            p_found = left_p_found or right_p_found or current_p
-            q_found = left_q_found or right_q_found or current_q
-            
-            # If current node is the LCA
-            if p_found and q_found and not self.answer:
-                self.answer = node
-            
-            return p_found, q_found
+            if node is None or node==p or node==q:
+                return node
+            lf=dfs(node.left)
+            rf=dfs(node.right)
+            if lf and rf:
+                return node
+            elif not lf:
+                return rf
+            else:
+                return lf
         
-        dfs(root)
-        return self.answer
+        return dfs(root)
 
         
