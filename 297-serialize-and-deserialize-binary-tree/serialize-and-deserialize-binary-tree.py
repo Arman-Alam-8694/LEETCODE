@@ -23,7 +23,6 @@ class Codec:
     def deserialize(self, data):
         data=data.split(",")
         idx=0
-        print(data)
         def dfs(idx):
             
             if idx>len(data):
