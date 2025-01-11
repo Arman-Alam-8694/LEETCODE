@@ -25,15 +25,13 @@ class Codec:
         self.idx=0
         def dfs():
             
-            if self.idx>len(data):
-                return None
             num=data[self.idx]
             if num=="N":
+                self.idx+=1
                 return None
             Node=TreeNode(num)
             self.idx+=1
             Node.left=dfs()
-            self.idx+=1
             Node.right=dfs()
             return Node
         return dfs()
