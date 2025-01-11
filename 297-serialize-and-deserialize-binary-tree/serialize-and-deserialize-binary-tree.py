@@ -22,21 +22,21 @@ class Codec:
 
     def deserialize(self, data):
         data=data.split(",")
-        idx=0
-        def dfs(idx):
+        self.idx=0
+        def dfs():
             
-            if idx>len(data):
-                return idx
-            num=data[idx]
+            if self.idx>len(data):
+                return None
+            num=data[self.idx]
             if num=="N":
-                return None,idx
+                return None
             Node=TreeNode(num)
-            idx+=1
-            Node.left,idx=(dfs(idx))
-            idx+=1
-            Node.right,idx=(dfs(idx))
-            return Node,idx
-        return dfs(0)[0]
+            self.idx+=1
+            Node.left=dfs()
+            self.idx+=1
+            Node.right=dfs()
+            return Node
+        return dfs()
         
         
 
