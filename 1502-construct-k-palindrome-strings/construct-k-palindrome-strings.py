@@ -30,10 +30,9 @@ class Solution:
             return False
         if k==len(s):
             return True
-        mapp=Counter(s)
         odd_count=0
-        for i,v in mapp.items():
-            if v&1:
+        for i in set(s):
+            if s.count(i)&1:
                 odd_count+=1
         if odd_count>k:
             return False
