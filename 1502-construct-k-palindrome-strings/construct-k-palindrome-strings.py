@@ -28,8 +28,8 @@ class Solution:
 
         if k>len(s):
             return False
-        if k==len(s):
-            return True
+        # if k==len(s):
+        #     return True
         odd_count=0
         for i in set(s):
             if s.count(i)&1:
