@@ -1,9 +1,9 @@
 class Solution:
     def canConstruct(self, s: str, k: int) -> bool:
-        # if k>len(s):
-        #     return False
-        # if k==len(s):
-        #     return True
+        if k>len(s):
+            return False
+        if k==len(s):
+            return True
         mapp=Counter(s)
         odd_count,even_count=0,0
         odd_sum,even_sum=0,0
