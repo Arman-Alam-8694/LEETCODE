@@ -10,7 +10,7 @@ class Solution:
         def dfs(root):
             if not root:
                 return 0
-            lt,rt=0,0
+        
             lt=dfs(root.left)
             rt=dfs(root.right)
             self.maxx=max(self.maxx,lt+rt)
