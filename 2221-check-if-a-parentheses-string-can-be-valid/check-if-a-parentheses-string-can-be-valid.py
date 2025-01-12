@@ -22,23 +22,22 @@ class Solution:
                         return False
                 else:
                     return False
-        sr=s[::-1]
-        lockedr=locked[::-1]
+        
         stack=[]
         visited=set()
-        for i in range(n):
-            if sr[i]=="(" and lockedr[i]=="1":
+        for i in range(n-1,-1,-1):
+            if s[i]=="(" and locked[i]=="1":
                 visited.add(i)
-                if i-1>=0 and (sr[i-1]==")" or lockedr[i-1]=="0"):
-                    if i-2 not in visited:
-                        stack.append(i-2)
+                if i+1<n and (s[i+1]==")" or locked[i+1]=="0"):
+                    if i+2 not in visited:
+                        stack.append(i+2)
                     continue
                 elif stack:
 
                     idx=stack.pop()
-                    if idx>=0 and (sr[idx]==")" or lockedr[idx]=="0"):
-                        if idx-1 not in visited:
-                            stack.append(idx-1)
+                    if idx<n and (s[idx]==")" or locked[idx]=="0"):
+                        if idx+1 not in visited:
+                            stack.append(idx+1)
                         continue
                     else:
                         return False
