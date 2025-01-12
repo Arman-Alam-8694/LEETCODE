@@ -42,7 +42,6 @@ class Solution:
                             stack.append(i-2)
                         continue
                     else:
-                      
                         return False
                 elif i-1>=0 and (sr[i-1]==")" or lockedr[i-1]=="0"):
                     if i-2 not in visited:
