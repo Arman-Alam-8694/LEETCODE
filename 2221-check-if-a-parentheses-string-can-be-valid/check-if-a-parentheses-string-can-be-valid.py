@@ -6,9 +6,7 @@ class Solution:
             return False
         stack=[]
         visited=set()
-      
         for i in range(n):
-           
             if s[i]==")" and locked[i]=="1":
                 visited.add(i)
                 if not stack:
@@ -30,12 +28,8 @@ class Solution:
                             stack.append(idx-1)
                         continue
                     else:
-                        print(i,stack)
                         return False
-
-       
         sr=s[::-1]
-       
         lockedr=locked[::-1]
         stack=[]
         visited=set()
@@ -48,7 +42,7 @@ class Solution:
                             stack.append(i-2)
                         continue
                     else:
-                        print(i,stack)
+                      
                         return False
                 elif i-1>=0 and (sr[i-1]==")" or lockedr[i-1]=="0"):
                     if i-2 not in visited:
