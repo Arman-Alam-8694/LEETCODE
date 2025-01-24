@@ -1,31 +1,30 @@
+from typing import List
+
 class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        visited=set()
-        nodes=len(graph)
-        terminal_nodes=set([x for x in range(nodes) if graph[x]==[]])
-        @cache
+        nodes = len(graph)
+        safe_nodes = set(x for x in range(nodes) if graph[x] == [])
+        visited = set()  # Used to detect cycles in the current DFS traversal
+
         def dfs(start):
-          
-            if start in visited:
+            if start in visited:  # Cycle detected
                 return False
-            visited.add(start)
-            if start in terminal_nodes:
+            if start in safe_nodes:  # Already confirmed safe
                 return True
-            answer=True
-            for i in graph[start]:
-           
-                answer=answer&dfs(i)
-            return answer
-            
-         
 
-        result=[]
+            visited.add(start)  # Mark as visiting
+            for neighbor in graph[start]:
+                if not dfs(neighbor):  # If any neighbor is unsafe
+                    visited.remove(start)  # Backtrack before returning
+                    return False
+
+            visited.remove(start)  # Backtrack
+            safe_nodes.add(start)  # Mark as safe
+            return True
+
+        result = []
         for i in range(nodes):
-
             if dfs(i):
                 result.append(i)
-              
 
-        return result
-
-        
+        return sorted(result)  # Safe nodes should be returned in sorted order
