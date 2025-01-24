@@ -5,7 +5,7 @@ class Solution:
         nodes = len(graph)
         safe_nodes = set(x for x in range(nodes) if graph[x] == [])
         visited = set()  # Used to detect cycles in the current DFS traversal
-
+        @cache
         def dfs(start):
             if start in visited:  # Cycle detected
                 return False
