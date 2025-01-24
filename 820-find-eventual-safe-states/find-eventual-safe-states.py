@@ -10,18 +10,15 @@ class Solution:
             visited.add(start)
             if start in terminal_nodes:
                 return True
-            answer=True
             for i in graph[start]:
                 if not dfs(i):
                     return False
-            return answer
+            return True
             
         result=[]
         for i in range(nodes):
             if dfs(i):
                 result.append(i)
-              
-
         return result
 
         
