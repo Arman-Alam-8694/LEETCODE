@@ -2,7 +2,7 @@ class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
         visited=set()
         nodes=len(graph)
-        terminal_nodes=set([x for x in range(nodes) if graph[x]==[]])
+        terminal_nodes=set()
         @cache
         def dfs(start):
             if start in visited:
@@ -13,6 +13,7 @@ class Solution:
             for i in graph[start]:
                 if not dfs(i):
                     return False
+            terminal_nodes.add(start)
             return True
             
         result=[]
