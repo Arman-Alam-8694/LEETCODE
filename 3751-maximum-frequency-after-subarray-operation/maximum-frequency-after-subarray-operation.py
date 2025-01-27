@@ -14,10 +14,9 @@ class Solution:
         prefix_ones = [0] * (n + 1)
         commulative = defaultdict(int)
         start = 0
-        end = n - 1
-    
+        end = n
         totalOnes=0
-        for i in range(start,end+1):
+        for i in range(start,end):
             if nums[i] == k :
                 prefix_ones[i+1]=prefix_ones[i]+1
                 totalOnes+=1
@@ -30,8 +29,8 @@ class Solution:
         cumulative_max =0
         individual = defaultdict(int)
         
-        for i in range(start, end + 2):
-            if i==end+1  or (nums[i] == k ):
+        for i in range(start, end + 1):
+            if i==end or nums[i] == k :
                 com_max=0
                 com_start=0
                 com_max_item=None
