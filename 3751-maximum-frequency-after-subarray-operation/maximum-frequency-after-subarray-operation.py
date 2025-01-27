@@ -1,21 +1,13 @@
-# from collections import defaultdict,Counter
-# from typing import List
-
-
-
 class Solution:
-    def maxFrequency(self, A: List[int], k: int) -> int:
-        count = Counter(A)
-        def kadane(b):
-            res = cur = 0
-            for a in A:
-                if a == k:
-                    cur -= 1
-                if a == b:
-                    cur += 1
-                if cur < 0:
-                    cur = 0
-                res = max(res, cur)
-            return res
-        res = max(kadane(b) for b in count)
-        return count[k] + res
+    def maxFrequency(self, nums, k):
+        cnt = [0] * 51  # Initialize a list of 51 zeros
+        res = 0
+        cnt_k = 0
+
+        for n in nums:
+            cnt[n] = max(cnt[n], cnt_k) + 1
+            res += (n == k)  # Equivalent to res += 1 if n == k else 0
+            cnt_k += (n == k)
+            res = max(res, cnt[n])
+
+        return res
