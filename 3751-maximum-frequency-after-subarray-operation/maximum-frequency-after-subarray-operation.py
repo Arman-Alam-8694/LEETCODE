@@ -1,55 +1,21 @@
-from collections import defaultdict,Counter
-from typing import List
+# from collections import defaultdict,Counter
+# from typing import List
 
 
 
 class Solution:
-    def maxFrequency(self, nums: List[int], k: int) -> int:
-        if len(set(nums))==1:
-            if nums[0]==k:
-                return len(nums)
-
-        n = len(nums)
-        start_map = {}
-        prefix_ones = [0] * (n + 1)
-        commulative = defaultdict(int)
-        start = 0
-        end = n
-        totalOnes=0
-        for i in range(start,end):
-            if nums[i] == k :
-                prefix_ones[i+1]=prefix_ones[i]+1
-                totalOnes+=1
-            else:
-                prefix_ones[i+1]=prefix_ones[i]
-            if nums[i] not in start_map:
-                start_map[nums[i]] = i
-
-        max_freq = float('-inf')
-        cumulative_max =0
-        individual = defaultdict(int)
-        
-        for i in range(start, end + 1):
-            if i==end or nums[i] == k :
-                com_max=0
-                com_start=0
-                com_max_item=None
-                rem=0
-                for elem, freq in commulative.items():
-                    rem=totalOnes
-                    start=start_map[elem]
-                    count_k_in_range = prefix_ones[i] - prefix_ones[start]
-                    if (freq-count_k_in_range)>com_max:
-                        com_max=(freq-count_k_in_range)
-                        rem-=count_k_in_range
-                max_freq=max(max_freq,rem+com_max)
-        
-            elif nums[i]!=k:
-                start=start_map[nums[i]]
-                count_k_in_range = prefix_ones[i+1] - prefix_ones[start]
-                if count_k_in_range>=commulative[nums[i]]:
-                    start_map[nums[i]]=i
-                    commulative[nums[i]]=0
-                commulative[nums[i]] += 1
-
-        return max_freq
+    def maxFrequency(self, A: List[int], k: int) -> int:
+        count = Counter(A)
+        def kadane(b):
+            res = cur = 0
+            for a in A:
+                if a == k:
+                    cur -= 1
+                if a == b:
+                    cur += 1
+                if cur < 0:
+                    cur = 0
+                res = max(res, cur)
+            return res
+        res = max(kadane(b) for b in count)
+        return count[k] + res
