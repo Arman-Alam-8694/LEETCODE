@@ -29,18 +29,9 @@ class Solution:
         max_freq = float('-inf')
         cumulative_max =0
         individual = defaultdict(int)
-        inbetween = 0
-  
         
         for i in range(start, end + 2):
             if i==end+1  or (nums[i] == k ):
-                if individual:
-                    individual_max = max(individual.values())
-                else:
-                    individual_max=0
-
-                max_freq = max(max_freq, individual_max+totalOnes)
-                individual = defaultdict(int)
                 com_max=0
                 com_start=0
                 com_max_item=None
@@ -50,10 +41,8 @@ class Solution:
                     start=start_map[elem]
                     count_k_in_range = prefix_ones[i] - prefix_ones[start]
                     if (freq-count_k_in_range)>com_max:
-        
                         com_max=(freq-count_k_in_range)
                         rem-=count_k_in_range
-
                 max_freq=max(max_freq,rem+com_max)
         
             elif nums[i]!=k:
@@ -62,8 +51,6 @@ class Solution:
                 if count_k_in_range>=commulative[nums[i]]:
                     start_map[nums[i]]=i
                     commulative[nums[i]]=0
-             
                 commulative[nums[i]] += 1
-                individual[nums[i]] += 1
 
         return max_freq
