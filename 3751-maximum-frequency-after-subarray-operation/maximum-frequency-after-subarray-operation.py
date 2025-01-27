@@ -1,26 +1,31 @@
 class Solution:
     def maxFrequency(self, nums: List[int], k: int) -> int:
-        freq,first,last = [0]*51,[-1]*51,[-1]*51
-        res = 0
+        c = Counter(nums)
+        # Default maximum answer will always be how many "k" integers already exist
+        ans = c[k]
+        # Only need 1-50 as per the restraints
+        for i in range(51):
+            # We've already considered i == k in our default answer, and don't care if i not in nums
+            if i not in c or i == k:
+                continue
 
-        # prefix sum occurences of k
-        ps = [0]
-        for a in nums: ps.append(ps[-1] + (1 if a ==k else 0)) #i + 1 is number of ks at or before index i
+            start_sub, score, ks = 0, 0, 0
+            while start_sub < len(nums):
+                # Current subarray +1
+                if nums[start_sub] == i:
+                    score += 1
+                # Current subarray -1
+                elif nums[start_sub] == k:
+                    ks += 1
 
-        # for each value you can target, find first, last occurence, and ks inbetween
-        for i in range(len(nums)): 
-            v = nums[i]
-            if v == k: continue
-            freq[v] += 1
-            if first[v] == -1: first[v] = i
-            last[v] = i
+                # Restart if score is negative
+                if ks > score:
+                    score, ks = 0, 0
 
-            #now calculate if removing ks is worth it
-            numberOfKs = ps[last[v]+1] - ps[first[v]+1]#number of ks between first and last occurence
-            net = freq[v] - numberOfKs
-            if net <= 0: 
-                first[v] = i
-                freq[v] = 1
-            res = max(res,net)
+                # Subtract number of "k" integers in our subarray from total number that occur
+                ans = max(ans, score + (c[k] - ks))
+                start_sub += 1
 
-        return res + ps[-1]
+        return ans
+                
+            
