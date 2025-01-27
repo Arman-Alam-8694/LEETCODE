@@ -1,89 +1,26 @@
-from collections import defaultdict,Counter
-from typing import List
-
-
-
 class Solution:
     def maxFrequency(self, nums: List[int], k: int) -> int:
-        if len(set(nums))==1:
-            if nums[0]==k:
-                return len(nums)
-        n = len(nums)
-        start_map = {}
-        prefix_ones = [0] * (n + 1)
-        commulative = defaultdict(int)
-       
-        start = 0
-        corners=0
-        while start < n and nums[start] == k:
-            start += 1
-            corners+=1
-        
-        end = n - 1
-        while end >= 0 and nums[end] == k:
-            end -= 1
-            corners+=1
-    
-        totalOnes=0
-        for i in range(start,end+1):
-            if nums[i] == k :
-                prefix_ones[i+1]=prefix_ones[i]+1
-                totalOnes+=1
-            else:
-                prefix_ones[i+1]=prefix_ones[i]
-            if nums[i] not in start_map:
-                start_map[nums[i]] = i
+        freq,first,last = [0]*51,[-1]*51,[-1]*51
+        res = 0
 
-        totalOnes=totalOnes+corners
-        max_freq = float('-inf')
-        cumulative_max =0
-        individual = defaultdict(int)
-        inbetween = 0
-  
-        
-        for i in range(start, end + 1):
-            if nums[i] == k and individual:
-                individual_max = max(individual.values())
-                max_freq = max(max_freq, individual_max+totalOnes)
-                individual = defaultdict(int)
-                com_max=0
-                com_start=0
-                com_max_item=None
-                for elem, freq in commulative.items():
-                    rem=totalOnes
-                    start=start_map[elem]
-                    count_k_in_range = prefix_ones[i] - prefix_ones[start]
-                    if (freq-count_k_in_range)>com_max:
-        
-                        com_max=(freq-count_k_in_range)
-                        rem-=count_k_in_range
+        # prefix sum occurences of k
+        ps = [0]
+        for a in nums: ps.append(ps[-1] + (1 if a ==k else 0)) #i + 1 is number of ks at or before index i
 
-                max_freq=max(max_freq,rem+com_max)
-        
-            elif nums[i]!=k:
-                start=start_map[nums[i]]
-                count_k_in_range = prefix_ones[i+1] - prefix_ones[start]
-                if count_k_in_range>=commulative[nums[i]]:
-                    start_map[nums[i]]=i
-                    commulative[nums[i]]=0
-             
-                commulative[nums[i]] += 1
-                individual[nums[i]] += 1
+        # for each value you can target, find first, last occurence, and ks inbetween
+        for i in range(len(nums)): 
+            v = nums[i]
+            if v == k: continue
+            freq[v] += 1
+            if first[v] == -1: first[v] = i
+            last[v] = i
 
-        if individual and commulative:
-            individual_max = max(individual.values())
-            max_freq = max(max_freq, individual_max+totalOnes)
-            individual = defaultdict(int)
-            com_max=0
-            com_start=0
-            com_max_item=None
-            for elem, freq in commulative.items():
-                rem=totalOnes
-                start=start_map[elem]
-                count_k_in_range = prefix_ones[i+1] - prefix_ones[start]
-                if (freq-count_k_in_range)>com_max:
-                    com_max=(freq-count_k_in_range)
-                    rem-=count_k_in_range
+            #now calculate if removing ks is worth it
+            numberOfKs = ps[last[v]+1] - ps[first[v]+1]#number of ks between first and last occurence
+            net = freq[v] - numberOfKs
+            if net <= 0: 
+                first[v] = i
+                freq[v] = 1
+            res = max(res,net)
 
-            max_freq=max(max_freq,rem+com_max)
-        return max_freq
+        return res + ps[-1]
