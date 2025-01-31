@@ -3,10 +3,8 @@ class Solution:
         row=len(grid)
         dir=[(1,0),(0,1),(-1,0),(0,-1)]
         col=len(grid[0])
-        summ=0
-        for i in range(row):
-            for j in range(col):
-                summ+=grid[i][j]
+     
+        summ = sum(sum(row) for row in grid)
         if summ==row*col:
             return row*col
         elif summ==0:
