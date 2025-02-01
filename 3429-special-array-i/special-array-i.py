@@ -25,7 +25,7 @@ class Solution:
         # return True
 
 
-        return True if all(nums[i]&1!=nums[i+1]&1 for i in range(len(nums)-1)) else False
+        return False if any(nums[i]&1==nums[i+1]&1 for i in range(len(nums)-1)) else True
                 
 
 
