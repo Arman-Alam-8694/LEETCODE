@@ -12,8 +12,9 @@ class Solution:
                     mapp[mult]+=1
       
         for key,val in mapp.items():
-            temp=(val*(val-1))*4
-            total+=temp
+            if val>1:
+                temp=(val*(val-1))*4
+                total+=temp
 
         return total
                 
