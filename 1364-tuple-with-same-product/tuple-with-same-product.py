@@ -10,7 +10,7 @@ class Solution:
                     mapp[mult]=1
                 else:
                     mapp[mult]+=1
-        print(mapp)
+      
         for key,val in mapp.items():
             temp=(val*(val-1))*4
             total+=temp
