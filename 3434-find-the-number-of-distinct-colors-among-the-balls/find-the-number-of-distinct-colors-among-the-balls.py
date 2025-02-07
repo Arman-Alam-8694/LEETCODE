@@ -12,16 +12,10 @@ class Solution:
                 colors[prev_color]-=1
                 if colors[prev_color]==0:
                     del colors[prev_color]
-                    distinct-=1
-                if color not in colors:
-                    distinct+=1
-                mapp[ball_no]=color
-            else:
-                if color not in colors:
-                    distinct+=1
-                mapp[ball_no]=color
-
+            
             colors[color]+=1
+            distinct=len(colors)
+            mapp[ball_no]=color
             result.append(distinct)
         return result
             
