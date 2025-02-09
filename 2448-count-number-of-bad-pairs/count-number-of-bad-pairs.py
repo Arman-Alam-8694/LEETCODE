@@ -9,16 +9,15 @@ class Solution:
         #PAIRS  the equation could be nums[i]-i==nums[j]-j for good pairs
 
         count=defaultdict(int)
-        n=len(nums)
+        n=len(nums)-1
         totalPairs=(n*(n+1))//2
-        tp=0
         goodPairs=0
+        n+=1
         for i in range(n):
-            tp+=i
             slope=nums[i]-i
             goodPairs+=count[slope]
             count[slope]+=1
-        return tp-goodPairs
+        return totalPairs-goodPairs
 
 
         
