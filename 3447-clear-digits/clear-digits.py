@@ -6,6 +6,6 @@ class Solution:
                 stack.append(i)
             else:
                 stack.pop()
-        res=''.join(stack)
-        return res
+        return ''.join(stack)
+    
         
