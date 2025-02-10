@@ -4,10 +4,7 @@ class Solution:
         stack=[]
         for i in range(n):
             if s[i].isdigit():
-                if stack:
-                    stack.pop()
-                else:
-                    res.append(s[i])
+                stack.pop()
             else:
                 stack.append(s[i])
         return "".join(stack)
