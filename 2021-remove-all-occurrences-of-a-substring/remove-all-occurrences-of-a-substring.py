@@ -6,6 +6,7 @@ class Solution:
             stack.append(i)
             if i==part[-1] and len(stack)>=part_size:
                 if stack[-part_size:]==list(part):
-                    del stack[-part_size:]
+                    for i in range(part_size):
+                        stack.pop()
 
         return "".join(stack)        
