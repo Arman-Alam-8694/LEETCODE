@@ -4,8 +4,9 @@ class Solution:
         part_size=len(part)
         for i in s:
             stack.append(i)
-            if "".join(stack[-part_size:])==part:
-                for i in range(part_size):
-                    stack.pop()
+            if i==part[-1]:
+                if "".join(stack[-part_size:])==part:
+                    for i in range(part_size):
+                        stack.pop()
 
         return "".join(stack)        
