@@ -4,7 +4,7 @@ class Solution:
         part_size=len(part)
         for i in s:
             stack.append(i)
-            if i==part[-1]:
+            if i==part[-1] and len(stack)>=part_size:
                 
                 if stack[-part_size:]==list(part):
                     del stack[-part_size:]
