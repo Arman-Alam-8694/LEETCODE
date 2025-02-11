@@ -5,7 +5,7 @@ class Solution:
         for i in s:
             stack.append(i)
             if i==part[-1]:
-                if "".join(stack[-part_size:])==part:
+                if stack[-part_size:]==list(part):
                     for i in range(part_size):
                         stack.pop()
 
