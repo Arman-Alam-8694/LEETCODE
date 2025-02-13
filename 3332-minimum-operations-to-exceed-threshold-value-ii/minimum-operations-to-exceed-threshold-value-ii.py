@@ -6,14 +6,5 @@ class Solution:
             op+=1
             a=heappop(nums)
             b=heappop(nums)
-            if a>b:
-                part1=a
-                part2=b*2
-            else:
-                part2=b
-                part1=a*2
-            heappush(nums,part1+part2)
-
-        
-
+            heappush(nums,a*2+b)
         return op
