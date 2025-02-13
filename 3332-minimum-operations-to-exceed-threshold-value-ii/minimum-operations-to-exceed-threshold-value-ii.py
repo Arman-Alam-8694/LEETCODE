@@ -6,7 +6,14 @@ class Solution:
             op+=1
             a=heappop(nums)
             b=heappop(nums)
-            addition=(min(a,b)*2)+max(a,b)
-            heappush(nums,addition)
+            if a>b:
+                part1=a
+                part2=b*2
+            else:
+                part2=b
+                part1=a*2
+            heappush(nums,part1+part2)
+
+        
 
         return op
