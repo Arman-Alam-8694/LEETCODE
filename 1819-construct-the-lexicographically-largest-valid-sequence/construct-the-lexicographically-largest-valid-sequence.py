@@ -2,13 +2,13 @@ class Solution:
     def constructDistancedSequence(self, n: int) -> List[int]:
         listt=[-1]*((n-1)*2+1)
         numbers=[i for i in range(n,0,-1)]
-        print(numbers)
+     
      
 
         def largest_form(numbers,curr_pos,listt):
-            print(listt)
+           
             if not numbers:
-                print(listt)
+           
                 return True
             backtrack=False
             while listt[curr_pos]!=-1:
