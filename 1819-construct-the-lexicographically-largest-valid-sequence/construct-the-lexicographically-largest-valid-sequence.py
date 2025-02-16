@@ -2,52 +2,56 @@ from typing import List
 
 class Solution:
     def constructDistancedSequence(self, n: int) -> List[int]:
-        # The length of the sequence is (n-1)*2 + 1
-        length = (n - 1) * 2 + 1
-        sequence = [-1] * length
-        used = [False] * (n + 1)  # To track which numbers have been used
+        # Initialize the sequence with -1 (empty positions)
+        listt = [-1] * ((n - 1) * 2 + 1)
+        # Initialize the list of numbers in descending order
+        numbers = [i for i in range(n, 0, -1)]
 
-        def backtrack(index: int) -> bool:
-            if index == length:
-                return True  # All positions are filled
+        def largest_form(numbers, curr_pos, listt):
+            # If all numbers are placed, return True
+            if not numbers:
+                return True
 
-            if sequence[index] != -1:
-                return backtrack(index + 1)  # Move to the next position
+            # Skip filled positions
+            while curr_pos < len(listt) and listt[curr_pos] != -1:
+                curr_pos += 1
 
-            # Try placing the largest possible number first
-            for num in range(n, 0, -1):
-                if used[num]:
-                    continue  # Skip if the number is already used
+            # If we've gone past the end, backtrack
+            if curr_pos >= len(listt):
+                return False
 
-                if num == 1:
-                    # Place 1 in the current position
-                    sequence[index] = 1
-                    used[1] = True
-
-                    if backtrack(index + 1):
-                        return True
-
-                    # Backtrack
-                    sequence[index] = -1
-                    used[1] = False
+            # Try placing each number in descending order
+            for i in numbers:
+                if i == 1:
+                    right_pos = curr_pos  # For 1, only one position is needed
                 else:
-                    # For numbers greater than 1, check if the second position is available
-                    second_pos = index + num
-                    if second_pos < length and sequence[second_pos] == -1:
-                        sequence[index] = num
-                        sequence[second_pos] = num
-                        used[num] = True
+                    right_pos = curr_pos + i  # For numbers > 1, check the second position
 
-                        if backtrack(index + 1):
-                            return True
+                # Check if the placement is valid
+                if right_pos < len(listt) and listt[right_pos] == -1:
+                    # Place the number
+                    listt[curr_pos] = i
+                    if i != 1:
+                        listt[right_pos] = i
 
-                        # Backtrack
-                        sequence[index] = -1
-                        sequence[second_pos] = -1
-                        used[num] = False
+                    # Remove the number from the list of available numbers
+                    numbers.remove(i)
 
-            return False  # No valid number could be placed
+                    # Recursively try to place the next number
+                    if largest_form(numbers, curr_pos + 1, listt):
+                        return True  # If successful, return True
 
-        backtrack(0)
-        return sequence
+                    # Backtrack: Remove the number and try the next one
+                    listt[curr_pos] = -1
+                    if i != 1:
+                        listt[right_pos] = -1
+                    numbers.append(i)  # Reinsert the number into the list
+                    numbers.sort(reverse=True)  # Maintain the descending order
+
+            # If no number can be placed, return False
+            return False
+
+        # Start the backtracking process
+        largest_form(numbers, 0, listt)
+        return listt
 
