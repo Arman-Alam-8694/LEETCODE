@@ -3,6 +3,9 @@ class Solution:
     def numTilePossibilities(self, tiles: str) -> int:
         unique_numbers=list(set(tiles))
         available=Counter(tiles)
+        # print(unique_numbers)
+        # print(available)
+        
 
         result=set()
         def backtrack(cur_list,available,result):
@@ -15,13 +18,10 @@ class Solution:
                     if stringg not in result:
                         result.add(stringg)
                     available[i]-=1
-                    if available[i]==0:
-                        del available[i]
+                   
                     backtrack(cur_list,available,result)
-                    if i in available:
-                        available[i]+=1
-                    else:
-                        available[i]=1
+                    available[i]+=1
+                 
 
         backtrack([],available,result)
         # print(result)
