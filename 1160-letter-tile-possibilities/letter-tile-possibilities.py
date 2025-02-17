@@ -17,6 +17,8 @@ class Solution:
                     stringg="".join(cur_list)
                     if stringg not in result:
                         result.add(stringg)
+                    else:
+                        return
                     available[i]-=1
                    
                     backtrack(cur_list,available,result)
