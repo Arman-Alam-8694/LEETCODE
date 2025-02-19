@@ -8,7 +8,7 @@ class Solution:
            
             if len(stringg)==n:
                 cnt+=1
-                print(stringg,cnt)
+
           
                 return stringg
             for i in candidates:
