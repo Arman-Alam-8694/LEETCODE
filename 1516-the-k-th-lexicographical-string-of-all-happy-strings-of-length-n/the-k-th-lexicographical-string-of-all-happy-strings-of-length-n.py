@@ -4,12 +4,8 @@ class Solution:
         cnt=0
         def backtrack(stringg):
             nonlocal cnt
-     
-           
             if len(stringg)==n:
                 cnt+=1
-
-          
                 return stringg
             for i in candidates:
                 if not stringg or stringg[-1]!=i:
@@ -19,7 +15,6 @@ class Solution:
                         return return_val
                     stringg.pop()
                     
-
         result=backtrack([])
         if result:
             return "".join(result)
