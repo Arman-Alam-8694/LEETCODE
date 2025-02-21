@@ -9,8 +9,7 @@ class FindElements:
         while target>0:
             path.append("L" if target%2 else "R")
             target=(target-1)//2 if target%2 else (target-2)//2
-        path.reverse()
-        return path
+        return reversed(path)
 
         # reverse_array=[]
         # for i in range(-1,(-1*len(path))-1,-1):
