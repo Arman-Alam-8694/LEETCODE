@@ -13,12 +13,9 @@ class FindElements:
     def populatelist(self,node,val):
         self.findelements.add(val)
         if node.left:
-            new_val=val*2+1
-
-            self.populatelist(node.left,new_val)
+            self.populatelist(node.left,val*2+1)
         if node.right:
-            new_val=val*2+2
-            self.populatelist(node.right,new_val)
+            self.populatelist(node.right,val*2+2)
 
         
 
