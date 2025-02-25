@@ -9,6 +9,10 @@ class Solution:
         # prev_even_sum=0
         # prev_odd_sum=0
         # result = 0
+        #IN THIS ONE THE IDEA IS TO USE THE INDEXES OF THE ODD NUMBER TO FIND THE SUBARRAY WE FIRST AT EACH ODD INDEX CALCULATE THE POSSIBLE SUBARRAY INLCUDING 
+        #JUST THAT ELEMENT AND THEN WE TRY TO FORM THE ODD NUMBER OF PAIRS OF ODD NUMBERS BECAUSE ODD NUMBER OF ODD'S NUMBER WILL ONLY YEILD US ODD SUM FOR 
+        #EXAMPLE 1 ,1+3 NOT GIVES US ODD, 1+3+5 GIVES US ODD ,1+3+5+7+9 AGAIN ODD
+        #THIS SOLUTION IS SLOW ALSO TAKES THE MORE AMOUNT OF SPACE COMPARED TO THE BELOW SOLUTION 
 
         # for i in range(k):
         #     result+=1
@@ -43,6 +47,14 @@ class Solution:
         #         result+=(prev_odd_sum*b)
         #         prev_odd_sum+=(1+a)
         # return result%MOD
+
+
+        #prefix subarray sum using the counts of even and odds sum of the array to determine the odd coutn
+        #for example we have even runsum then we have to remove the oddCnts to get the odd sum of the   array
+        #3+3=6 we can remove the 3 subarray with odd sum to get the odd sum again 
+        #4+2=6 we cant' form any odd sum subarray because there is no odd sub array to be removed
+        #similarly for the odd runsum we have to remove the evenCnts to get the odd sum of the array
+        #3+4=7 we have to remove the 4 to get the odd
         oddCnts=0
         evenCnts=0
         runsum=0
