@@ -1,7 +1,7 @@
 class Solution {
     public int numOfSubarrays(int[] arr) {
         int n=arr.length;
-        System.out.println(n);
+   
         long MOD = 1000000007; 
         long result=0;
         int evenCnts=0;
