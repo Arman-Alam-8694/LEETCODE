@@ -9,7 +9,6 @@ class Solution:
         prev_even_sum=0
         prev_odd_sum=0
         result = 0
-        # print(odd_indices)
 
         for i in range(k):
             result+=1
@@ -33,12 +32,12 @@ class Solution:
                     b=(right-cur_idx)
             result+=(a+b)
             result+=(a*b)
-            # print(f"we are at {i} index having element {odd_indices[i]} having a={a} and b={b} and prev_sum:{prev_even_sum} result={result}")
+
             if i%2==0:
                 result+=prev_even_sum
                 result+=(prev_even_sum*b)
                 prev_even_sum+=(1+a)
-            # print(f"after updateing dp result {result} and prev_sum={prev_even_sum}")
+      
             else:
                 result+=prev_odd_sum
                 result+=(prev_odd_sum*b)
