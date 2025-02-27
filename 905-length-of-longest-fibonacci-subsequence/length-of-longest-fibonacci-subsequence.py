@@ -1,29 +1,45 @@
 class Solution:
-    def lenLongestFibSubseq(self, arr: list[int]) -> int:
-        n = len(arr)
-        # dp[prev][curr] stores length of Fibonacci sequence ending at indexes prev,curr
-        dp = [[0] * n for _ in range(n)]
-        max_len = 0
+    def lenLongestFibSubseq(self, arr: List[int]) -> int:
+        n=len(arr)
+        maxx=0
+        indexes={j:i for i,j in enumerate(arr)}
+        mapp={}  
+        # def dp(prev,prev1,length):
+        #     if (prev,prev1) in mapp:
+        #         return mapp[(prev,prev1)]
+        #     temp=arr[prev]+arr[prev1]
+        #     if temp in indexes:
+        #         i=indexes[temp]
+        #         ansss=dp(i,prev,length+1)
+        #         mapp[(prev,prev1)]=ansss
+        #         return ansss
+        #     return length
 
-        # Find all possible pairs that sum to arr[curr]
-        for curr in range(2, n):
-            # Use two pointers to find pairs that sum to arr[curr]
-            start = 0
-            end = curr - 1
 
-            while start < end:
-                pair_sum = arr[start] + arr[end]
+        # for i in range(n):
+        #     for j in range(:
+        #         ans=dp(j,i,2)
+        #         maxx=max(maxx,0 if ans==2 else ans )
+        # return maxx
 
-                if pair_sum > arr[curr]:
-                    end -= 1
-                elif pair_sum < arr[curr]:
-                    start += 1
-                else:
-                    # Found a valid pair, update dp
-                    dp[end][curr] = dp[start][end] + 1
-                    max_len = max(dp[end][curr], max_len)
-                    end -= 1
-                    start += 1
+        for j in range(n):
+            for i in range(j):
+                prev=arr[j]-arr[i]
+                if prev in indexes and indexes[prev]<i:
+                    k=indexes[prev]
+                    mapp[(i,j)]=mapp.get((k,i),2)+1
+                    maxx=max(maxx,mapp[(i,j)])
+        return maxx
+            
+            
+            
+                
 
-        # Add 2 to include first two numbers, or return 0 if no sequence found
-        return max_len + 2 if max_len else 0
+
+
+
+
+
+
+
+        
