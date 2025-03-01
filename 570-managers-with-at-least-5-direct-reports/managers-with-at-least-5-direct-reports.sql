@@ -1,0 +1,2 @@
+# Write your MySQL query statement bel
+select e.name from Employee as e join  (select managerId,count(managerId) as cnt from Employee group by managerId having cnt>=5) as newtable on newtable.managerId=e.id;
