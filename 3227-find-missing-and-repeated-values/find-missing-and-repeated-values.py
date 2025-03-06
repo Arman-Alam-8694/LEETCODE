@@ -4,7 +4,7 @@ class Solution:
         result=[0,0]
         m=len(grid)
         sett=set([i for i in range(1,m*m+1)])
-        print(sett)
+        # print(sett)
         for i in range(m):
             for j in range(m):
                 curr=grid[i][j]
