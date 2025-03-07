@@ -26,8 +26,8 @@ class Solution:
                     result[0]=listt[j]
                     result[1]=listt[j+1]
                     minimum_dist=listt[j+1]-listt[j]
-                if minimum_dist==2:
-                    return result
+                # if minimum_dist==2:
+                #     return result
 
         return result
 
