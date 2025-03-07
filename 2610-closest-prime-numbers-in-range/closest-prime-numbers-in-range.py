@@ -2,16 +2,16 @@ import math
 class Solution:
     def closestPrimes(self, left: int, right: int) -> List[int]:
 
-        def generate_primes(right):
+        def generate_primes(right,left):
             listt=[True]*(right+1)
             listt[0],listt[1]=False,False
             for i in range(2,int(right*0.5)+1):
                 if listt[i]:
                     for j in range(i*i,right+1,i):
                         listt[j]=False
-            return [p for p in range(len(listt)) if listt[p]]
+            return [p for p in range(len(listt)) if listt[p] and p>=left]
 
-        listt=generate_primes(right)
+        listt=generate_primes(right,left)
         
                 
         minimum_dist=float('inf')
@@ -21,13 +21,13 @@ class Solution:
         n=len(listt)
 
         for j in range(n-1):
-            if listt[j]>=left:
-                if listt[j+1]-listt[j]<minimum_dist:
-                    result[0]=listt[j]
-                    result[1]=listt[j+1]
-                    minimum_dist=listt[j+1]-listt[j]
-                if minimum_dist==2:
-                    return result
+         
+            if listt[j+1]-listt[j]<minimum_dist:
+                result[0]=listt[j]
+                result[1]=listt[j+1]
+                minimum_dist=listt[j+1]-listt[j]
+                # if minimum_dist==2:
+                #     return result
 
         return result
 
