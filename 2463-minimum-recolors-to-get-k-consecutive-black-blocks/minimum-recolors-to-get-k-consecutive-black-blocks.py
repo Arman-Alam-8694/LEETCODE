@@ -12,13 +12,12 @@ class Solution:
             
             if ((right-left)+1)==k:
                 result=min(result,wcnts)
-            if ((right-left)+1)>k:
                 if blocks[left]=="W":
                     wcnts-=1
                 else:
                     bcnts-=1
                 left+=1
-                result=min(result,wcnts)
+
         return result
             
 
