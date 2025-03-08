@@ -9,7 +9,6 @@ class Solution:
                 wcnts+=1
             else:
                 bcnts+=1
-            
             if ((right-left)+1)==k:
                 result=min(result,wcnts)
                 if blocks[left]=="W":
