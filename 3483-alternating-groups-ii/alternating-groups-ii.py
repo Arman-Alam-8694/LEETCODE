@@ -10,7 +10,7 @@ class Solution:
             if (right-left+1)<k:
                 right+=1
                 left=right
-            elif (right-left+1)==k:
+            else:
                 result+=1
                 left+=1
         return result
