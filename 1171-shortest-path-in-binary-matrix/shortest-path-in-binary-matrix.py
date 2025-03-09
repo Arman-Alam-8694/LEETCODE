@@ -19,7 +19,7 @@ class Solution:
             for x,y in directions:
                 a=x+i
                 b=y+j
-                if 0<=a<n and 0<=b<n  and grid[a][b]!=1:
+                if 0<=a<n and 0<=b<n and dist[a][b]==float('inf') and grid[a][b]!=1:
                     if plength<dist[a][b]:
                         pq.append((plength,a,b))
                         dist[a][b]=plength
