@@ -4,7 +4,7 @@ class Solution:
         cons=0
         size=5+k
         n=len(word)
-        vow=["a","e","i","o","u"]
+        vow=set(["a","e","i","o","u"])
         vow_map={}
         temp=0
         tvow={}
