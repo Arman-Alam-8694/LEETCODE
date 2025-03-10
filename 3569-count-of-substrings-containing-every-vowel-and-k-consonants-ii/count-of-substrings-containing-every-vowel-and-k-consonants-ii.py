@@ -8,6 +8,7 @@ class Solution:
         vow_map={}
         temp=0
         tvow={}
+        tcons=0
         left=0
         result=0
         for right in range(n):
@@ -27,11 +28,9 @@ class Solution:
                         else:
                             tcons-=1
                         temp+=1
-            
             else:
                 cons+=1
-         
-            
+                tcons+=1
             while cons>k:
                 if word[left] in vow:
                     vow_map[word[left]]-=1
@@ -54,24 +53,7 @@ class Solution:
                     temp+=1
             
             if temp>left:
-           
                 result+=(temp-left)
-
-
-
-        # print(left,right)
-        # while cons==k and len(vow_map)==5:
-        #     if word[left] in vow:
-        #         vow_map[word[left]]-=1
-        #         if vow_map[word[left]]==0:
-        #             del vow_map[word[left]]
-        #     else:
-        #         cons-=1
-        #     left+=1
-        #     if len(vow_map)==5 and cons==k:
-        #         result+=1
-
-
         return result
 
         
