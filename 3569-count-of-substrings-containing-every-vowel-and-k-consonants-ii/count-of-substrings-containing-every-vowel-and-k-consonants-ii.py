@@ -32,17 +32,34 @@ class Solution:
                 cons+=1
                 tcons+=1
             while cons>k:
-                if word[left] in vow:
+                if temp==left:
+                    if word[left] in vow:
+                        vow_map[word[left]]-=1
+                        if vow_map[word[left]]==0:
+                            del vow_map[word[left]]
+                        tvow[word[temp]]-=1
+                        if tvow[word[temp]]==0:
+                            del tvow[word[temp]]
+                        
+                    
+                    else:
+                        cons-=1
+                        tcons-=1
+                    
+                    temp+=1
+
+                    
+                elif word[left] in vow:
                     vow_map[word[left]]-=1
                     if vow_map[word[left]]==0:
                         del vow_map[word[left]]
+                    
                 else:
                     cons-=1
+                
+                
                 left+=1
             if temp<=left:
-                tcons=cons
-                tvow=vow_map.copy()
-                temp=left
                 while temp<right and len(tvow)==5 and tcons==k:
                     if word[temp] in vow:
                         tvow[word[temp]]-=1
