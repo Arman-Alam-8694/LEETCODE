@@ -53,11 +53,17 @@
 
 class Solution:
     def numberOfSubstrings(self, s: str) -> int:
-        last = { 'a': -1, 'b': -1, 'c': -1 }
+        lasta,lastb,lastc=None,None,None
         result = 0
         
         for right, char in enumerate(s):
-            last[char] = right  # Update last seen index
-            result += min(last.values()) + 1  # Count valid substrings
+            if char=="a":
+                lasta=right
+            elif char=="b":
+                lastb=right
+            else:
+                lastc=right
+            if None not in (lasta,lastb,lastc):
+                result += min(lasta,lastb,lastc) + 1  # Count valid substrings
             
         return result
