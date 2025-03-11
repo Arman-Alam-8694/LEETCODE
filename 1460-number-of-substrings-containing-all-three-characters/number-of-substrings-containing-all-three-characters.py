@@ -1,13 +1,13 @@
-# class Solution:
-#     def numberOfSubstrings(self, s: str) -> int:
-#         n=len(s)
-#         left=0
-#         Found=False
-#         sett={}
-#         result=0
-#         lasta=-1
-#         lastb=-1
-#         lastc=-1
+class Solution:
+    def numberOfSubstrings(self, s: str) -> int:
+        n=len(s)
+        # left=0
+        # Found=False
+        # sett={}
+        result=0
+        lasta=None
+        lastb=None
+        lastc=None
 #         # for right in range(n):
 #         #     if Found:
 #         #         if s[right] not in sett:
@@ -36,34 +36,34 @@
 #         #             result+=(left-(-1))
 #         #             Found=True
 
-#         for right in range(n):
-#             if s[right]=="a":
-#                 lasta=right
-#             elif s[right]=="b":
-#                 lastb=right
-#             else:
-#                 lastc=right
-#             if lasta is not None and lastb is not None and lastc is not None:
-#                 temp=min(lasta,lastb,lastc)
-#                 result+=temp-(-1)
-
-
-#         return result
-
-
-class Solution:
-    def numberOfSubstrings(self, s: str) -> int:
-        lasta,lastb,lastc=None,None,None
-        result = 0
-        
-        for right, char in enumerate(s):
-            if char=="a":
+        for right in range(n):
+            if s[right]=="a":
                 lasta=right
-            elif char=="b":
+            elif s[right]=="b":
                 lastb=right
             else:
                 lastc=right
-            if None not in (lasta,lastb,lastc):
-                result += min(lasta,lastb,lastc) + 1  # Count valid substrings
-            
+            if lasta is not None and lastb is not None and lastc is not None:
+                temp=min(lasta,lastb,lastc)
+                result+=temp+1
+
+
         return result
+
+
+# class Solution:
+#     def numberOfSubstrings(self, s: str) -> int:
+#         lasta,lastb,lastc=None,None,None
+#         result = 0
+        
+#         for right, char in enumerate(s):
+#             if char=="a":
+#                 lasta=right
+#             elif char=="b":
+#                 lastb=right
+#             else:
+#                 lastc=right
+#             if None not in (lasta,lastb,lastc):
+#                 result += min(lasta,lastb,lastc) + 1  # Count valid substrings
+            
+#         return result
