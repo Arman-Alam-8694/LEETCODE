@@ -1,11 +1,33 @@
 class Solution:
     def maximumCount(self, nums: List[int]) -> int:
-        maxp=0
-        maxn=0
-        for i in nums:
-            if i<0:
-                maxn+=1
-            elif i>0:
-                maxp+=1
-        return max(maxn,maxp)
-        
+        maxx=0
+        n=len(nums)
+        def binSearch():
+            left=0
+            right=len(nums)-1
+            while left<=right:
+                mid=(left+right)//2
+                # print(mid)
+                if nums[mid]<0:
+                    left=mid+1
+                else:
+                    right=mid-1
+            return left
+
+        def binSearchh():
+            left=0
+            right=len(nums)-1
+            while left<=right:
+                mid=(left+right)//2
+                # print(mid)
+                if nums[mid]<=0:
+                    left=mid+1
+                else:
+                    right=mid-1
+
+            # print(left)
+            return 0 if left==len(nums) else len(nums)-left
+
+        return max(binSearch(),binSearchh())
+
+
