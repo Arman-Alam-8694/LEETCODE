@@ -8,14 +8,15 @@ class Solution:
             while left<=right:
                 mid=(left+right)//2
                 # print(mid)
+
                 if nums[mid]<0:
                     left=mid+1
                 else:
                     right=mid-1
             return left
 
-        def binSearchh():
-            left=0
+        def binSearchh(nl):
+            left=nl
             right=len(nums)-1
             while left<=right:
                 mid=(left+right)//2
@@ -28,6 +29,8 @@ class Solution:
             # print(left)
             return 0 if left==len(nums) else len(nums)-left
 
-        return max(binSearch(),binSearchh())
+        nl=binSearch()
+        maxx=binSearchh(nl)
+        return max(maxx,nl)
 
 
