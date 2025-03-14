@@ -1,7 +1,8 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
-        left=0
+        left=1
         right=max(candies)
+        res=0
         def ifPossible(midd,k):
             temp=0
             for i in candies:
@@ -13,9 +14,10 @@ class Solution:
 
         while left<=right:
             mid=(left+right)//2
-            if mid==0 or ifPossible(mid,k):
+            if ifPossible(mid,k):
+                res=mid
                 left=mid+1
             else:
                 right=mid-1
-        return right
+        return res
         
