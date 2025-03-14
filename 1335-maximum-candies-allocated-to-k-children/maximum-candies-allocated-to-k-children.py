@@ -4,23 +4,16 @@ class Solution:
         right=sum(candies)
         def ifPossible(midd,k):
             temp=k
-            # print(midd)
             for i in candies:
                 temp-=(i//midd)
-                # print(temp)
                 if temp<=0:
-                    # print("true")
                     return True
             return False 
             
 
         while left<=right:
             mid=(left+right)//2
-            if mid==0:
-                left=mid+1
-
-            elif ifPossible(mid,k):
-                # print('here',mid)
+            if mid==0 or ifPossible(mid,k):
                 left=mid+1
             else:
                 right=mid-1
