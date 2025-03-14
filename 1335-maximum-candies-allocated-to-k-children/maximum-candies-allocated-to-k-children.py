@@ -1,7 +1,7 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
         left=0
-        right=sum(candies)
+        right=max(candies)
         def ifPossible(midd,k):
             temp=k
             for i in candies:
