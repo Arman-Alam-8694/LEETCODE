@@ -3,10 +3,10 @@ class Solution:
         left=0
         right=max(candies)
         def ifPossible(midd,k):
-            temp=k
+            temp=0
             for i in candies:
-                temp-=(i//midd)
-                if temp<=0:
+                temp+=(i//midd)
+                if temp>=k:
                     return True
             return False 
             
