@@ -1,25 +1,29 @@
+from typing import List
+
 class Solution:
     def minCapability(self, nums: List[int], k: int) -> int:
-        sorted_nums = sorted(nums)
-        left = 0
-        right = len(sorted_nums) - 1
-        answer = float('inf')
-        
-        while left <= right:
-            mid = (left + right) // 2
-            x = sorted_nums[mid]
-            # Check if we can select at least k non-adjacent houses with values <= x
-            dp_prev_prev = 0
-            dp_prev = 0
-            for num in nums:
-                if num <= x:
-                    current = max(dp_prev, dp_prev_prev + 1)
-                else:
-                    current = dp_prev
-                dp_prev_prev, dp_prev = dp_prev, current
-            if dp_prev >= k:
-                answer = x
-                right = mid - 1
+        left,right=min(nums),max(nums)
+        n=len(nums)
+        def canRob(cap):
+            count=0
+            i=0
+            while i<n:
+                if nums[i]<=cap:
+                    count+=1
+                    i+=1
+                i+=1
+
+                if count>=k:
+                    return True
+            return False
+
+
+        res=0
+        while left<=right:
+            mid=(left+right)//2
+            if canRob(mid):
+                res=mid
+                right=mid-1
             else:
-                left = mid + 1
-        return answer
+                left=mid+1
+        return res
