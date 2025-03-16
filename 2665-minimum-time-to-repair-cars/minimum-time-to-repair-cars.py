@@ -1,24 +1,18 @@
 class Solution:
     def repairCars(self, ranks: List[int], cars: int) -> int:
-        left=1
-        right=max(ranks)*cars*cars
-        n=len(ranks)
-        lookup=[0]*101
-        for i in ranks:
-            lookup[i]+=1
-        def isPossible(mid):
-            count=0
-            for i in range(1,len(lookup)):
-                count+=(int(math.sqrt(mid//i))*lookup[i])
-                if count>=cars:
-                    return True
-            return False
+        # The minimum possible time is 1,
+        # and the maximum possible time is when the slowest mechanic (highest rank) repairs all cars.
+        low, high = 1, cars * cars * ranks[0]
 
-  
-        while left<=right:
-            mid=(left+right)//2
-            if isPossible(mid):
-                right=mid-1
+        # Perform binary search to find the minimum time required.
+        while low < high:
+            mid = (low + high) // 2
+            cars_repaired = sum(int((mid / rank) ** 0.5) for rank in ranks)
+
+            # If the total cars repaired is less than required, increase the time.
+            if cars_repaired < cars:
+                low = mid + 1
             else:
-                left=mid+1
-        return left
+                high = mid  # Otherwise, try a smaller time.
+
+        return low
