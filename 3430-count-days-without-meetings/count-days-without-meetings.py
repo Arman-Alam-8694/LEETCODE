@@ -31,7 +31,7 @@ class Solution:
                     right=e
         run=0
         timing.append((left,right))
-        print(timing)
+        # print(timing)
         for t in range(1,len(timing)):
             run+=(timing[t][1]-timing[t][0])+1
         return days-run
