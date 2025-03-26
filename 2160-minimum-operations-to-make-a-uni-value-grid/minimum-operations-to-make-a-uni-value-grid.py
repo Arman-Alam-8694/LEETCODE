@@ -29,10 +29,9 @@ class Solution:
         # array.pop(0)
         # array.pop()
         # print(array)
-        # if odd!=0 and odd!=m*n and x!=1:
-        #     if odd!=even:
-        #         print("here")
-        #         return -1
+        if odd!=0 and odd!=m*n and x!=1:
+            if not x&1:
+                return -1
 
         start=0
         end=len(array)-1
