@@ -35,8 +35,8 @@ class Solution:
         mid=len(array)//2
         median1=None
         median=array[mid]
-        # if len(array)%2==0:
-        #     median1=array[mid+1]
+        if len(array)%2==0:
+            median1=array[mid-1]
 
 
         # start = 0
@@ -59,8 +59,8 @@ class Solution:
                 cnt+=temp//x
             return cnt
         mini=float("inf")
-        # if median1 is not None:
-        #     mini=check(median1,array)
+        if median1 is not None:
+            mini=check(median1,array)
         mini=min(mini,check(median,array))
 
         
