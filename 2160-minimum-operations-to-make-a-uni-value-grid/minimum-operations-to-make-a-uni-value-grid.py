@@ -4,16 +4,19 @@ class Solution:
         array = []
         m = len(grid)
         n = len(grid[0])
+        base_remainder = grid[0][0] % x
         for i in range(m):
             for j in range(n):
+                if grid[i][j]%x!=base_remainder:
+                    return -1
                 array.append(grid[i][j])
         
         # Check congruence modulo x
-        if len(array) > 1:  # Only check if more than one element
-            base_remainder = array[0] % x
-            for num in array[1:]:
-                if num % x != base_remainder:
-                    return -1
+        # if len(array) > 1:  # Only check if more than one element
+        #     base_remainder = array[0] % x
+        #     for num in array[1:]:
+        #         if num % x != base_remainder:
+        #             return -1
         
         # If congruent, proceed with binary search
         def check(midd, array):
