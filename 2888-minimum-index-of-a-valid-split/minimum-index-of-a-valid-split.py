@@ -2,14 +2,15 @@ class Solution:
     def minimumIndex(self, nums: List[int]) -> int:
         dictt={}
         item=0
-        maxx=float("-inf")
+        cnt=0
         for i in nums:
-            if i not in dictt:
-                dictt[i]=0
-            dictt[i]+=1
-            maxx=max(maxx,dictt[i])
-            if dictt[i]==maxx:
+            if cnt==0:
                 item=i
+            if item==i:
+                cnt+=1
+            else:
+                cnt-=1
+        maxx=nums.count(item)
 
         # item=0
 
@@ -18,8 +19,8 @@ class Solution:
         #         item=k
         #         break
         n=len(nums)
-        if n == maxx * 2 - 1:
-            return -1
+        # if n == maxx * 2 - 1:
+        #     return -1
         run=0
         for i in range(len(nums)-1):
             if nums[i]==item:
