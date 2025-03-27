@@ -18,6 +18,8 @@ class Solution:
         #         item=k
         #         break
         n=len(nums)
+        if n == maxx * 2 - 1:
+            return -1
         run=0
         for i in range(len(nums)-1):
             if nums[i]==item:
