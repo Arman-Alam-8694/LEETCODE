@@ -18,9 +18,8 @@ class Solution:
             if nums[i]==item:
                 run+=1
                 maxx-=1
-            if run*2>(i+1):
-                if (n-1)-i<maxx*2:
-                    return i
+            if run*2>(i+1) and (n-1)-i<maxx*2:
+                return i
         return -1
  
             
