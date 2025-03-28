@@ -1,35 +1,30 @@
+from collections import defaultdict, deque
+from typing import List
+
 class Solution:
-    def findAllRecipes(
-        self,
-        recipes: list[str],
-        ingredients: list[list[str]],
-        supplies: list[str],
-    ) -> list[str]:
-        # Track available ingredients and recipes
-        available = set(supplies)
+    def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+        count = {}  # number of ingredients each recipe needs
+        graph = defaultdict(list)  # maps ingredient -> list of recipes that require it
 
-        # Queue to process recipe indices
-        recipe_queue = deque(range(len(recipes)))
-        created_recipes = []
-        last_size = -1  # Tracks last known available count
+        # Build the graph and count dependencies
+        for i, recipe in enumerate(recipes):
+            count[recipe] = len(ingredients[i])
+            for ing in ingredients[i]:
+                graph[ing].append(recipe)
+        
+        avail = set(supplies)
+        queue = deque(supplies)  # start with initial supplies
+        result = []
 
-        # Continue while we keep finding new recipes
-        while len(available) > last_size:
-            last_size = len(available)
-            queue_size = len(recipe_queue)
-
-            # Process all recipes in current queue
-            while queue_size > 0:
-                queue_size -= 1
-                recipe_idx = recipe_queue.popleft()
-                if all(
-                    ingredient in available
-                    for ingredient in ingredients[recipe_idx]
-                ):
-                    # Recipe can be created - add to available items
-                    available.add(recipes[recipe_idx])
-                    created_recipes.append(recipes[recipe_idx])
-                else:
-                    recipe_queue.append(recipe_idx)
-
-        return created_recipes
+        while queue:
+            ing = queue.popleft()
+            # For each recipe that depends on this ingredient
+            for recipe in graph[ing]:
+                count[recipe] -= 1  # reduce the dependency count
+                if count[recipe] == 0:
+                    # All ingredients are available, so add the recipe
+                    result.append(recipe)
+                    avail.add(recipe)
+                    queue.append(recipe)
+        
+        return result
