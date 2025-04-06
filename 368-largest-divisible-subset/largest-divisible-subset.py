@@ -1,32 +1,27 @@
 class Solution:
     def largestDivisibleSubset(self, nums: List[int]) -> List[int]:
         nums.sort()
-        dictt = {}
-        for i in nums:
-            dictt[i] = []
-            for j in nums:
-                if j % i == 0 and j != i:
-                    dictt[i].append(j)
-
+        n = len(nums)
         memo = {}
 
-        def dfs(num):
-            if num in memo:
-                return memo[num]
+        def dfs(prev_index, curr_index):
+            key = (prev_index, curr_index)
+            if curr_index == n:
+                return []
 
-            max_path = []
-            for neighbor in dictt[num]:
-                path = dfs(neighbor)
-                if len(path) > len(max_path):
-                    max_path = path
+            if key in memo:
+                return memo[key]
 
-            memo[num] = [num] + max_path
-            return memo[num]
+            # Option 1: skip current number
+            without = dfs(prev_index, curr_index + 1)
 
-        result = []
-        for num in nums:
-            path = dfs(num)
-            if len(path) > len(result):
-                result = path
+            # Option 2: take current number if divisible
+            with_curr = []
+            if prev_index == -1 or nums[curr_index] % nums[prev_index] == 0:
+                with_curr = [nums[curr_index]] + dfs(curr_index, curr_index + 1)
 
-        return result
+            # Choose the longer subset
+            memo[key] = with_curr if len(with_curr) > len(without) else without
+            return memo[key]
+
+        return dfs(-1, 0)
