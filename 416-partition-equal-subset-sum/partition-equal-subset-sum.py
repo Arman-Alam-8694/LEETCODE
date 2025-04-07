@@ -14,10 +14,8 @@ class Solution:
             if idx==n or sum==target:
                 return sum==target
             if subsetpartition(idx+1,sum+nums[idx]) :
-                mapp[(idx,sum)]=True
                 return True
             if subsetpartition(idx+1,sum):
-                mapp[(idx,sum)]=True
                 return True
             mapp[(idx,sum)]=False
             return mapp[idx,sum]
