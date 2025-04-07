@@ -1,28 +1,24 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        n=len(nums)
         total=sum(nums)
         if total&1:
             return False
-        totall=total//2
-        map={}
-        def subset(sum,start,n,totall):
-            if (sum,start) in map:
-                return map[(sum,start)]
-          
-            if sum>totall:
+        target=total//2
+        mapp={}
+        n=len(nums)
+        def subsetpartition(idx,sum):
+            if (idx,sum) in mapp:
+                return mapp[(idx,sum)]
+            if sum>target:
                 return False
-            if sum==totall:
+            if idx==n or sum==target:
+                return sum==target
+            if subsetpartition(idx+1,sum+nums[idx]) :
+                mapp[(idx,sum)]=True
                 return True
-            if start>=n:
-                return False
-            result=subset(sum+nums[start],start+1,n,totall) or subset(sum,start+1,n,totall)
-            map[(sum,start)]=result
-            return map[(sum,start)]
-            
-
-        return subset(0,0,n,totall)
-       
-
-
-        
+            if subsetpartition(idx+1,sum):
+                mapp[(idx,sum)]=True
+                return True
+            mapp[(idx,sum)]=False
+            return mapp[idx,sum]
+        return subsetpartition(0,0)
