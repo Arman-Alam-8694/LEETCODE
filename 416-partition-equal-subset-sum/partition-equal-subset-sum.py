@@ -18,5 +18,5 @@ class Solution:
             if subsetpartition(idx+1,sum):
                 return True
             mapp[(idx,sum)]=False
-            return mapp[idx,sum]
+            return mapp[(idx,sum)]
         return subsetpartition(0,0)
