@@ -33,6 +33,10 @@ class Solution:
         n=len(nums)
         for right in range(n-1,-1,-1):
             if nums[right] in seen:
-                return right//3+1
+                if (right+1)%3==0:
+                    return (right+1)//3
+
+                else:
+                    return (right+1)//3+1
             seen.add(nums[right])
         return 0
