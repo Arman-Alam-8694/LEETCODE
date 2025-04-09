@@ -14,11 +14,10 @@ class Solution:
         sett=set()
         smallest=float("inf")
         for i in nums:
-            smallest=min(smallest,i)
             if i<k:
                 return -1
             sett.add(i)
         # print(smallest)
-        return len(sett)-1 if smallest==k else len(sett)
+        return len(sett)-1 if k in sett else len(sett)
 
         
