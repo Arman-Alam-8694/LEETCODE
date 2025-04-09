@@ -11,6 +11,7 @@ class Solution:
         #         steps+=1
         #         temp=nums[i]
         # return steps+1 if temp>k else steps
+
         # sett=set()
         # smallest=float("inf")
         # for i in nums:
@@ -19,6 +20,7 @@ class Solution:
         #     sett.add(i)
         # # print(smallest)
         # return len(sett)-1 if k in sett else len(sett)
+        
         return -1 if min(nums)<k else len(set(filter(lambda n:n>k,nums)))
 
         
