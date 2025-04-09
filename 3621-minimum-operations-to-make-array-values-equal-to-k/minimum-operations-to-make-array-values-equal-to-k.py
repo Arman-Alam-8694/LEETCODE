@@ -11,13 +11,14 @@ class Solution:
         #         steps+=1
         #         temp=nums[i]
         # return steps+1 if temp>k else steps
-        sett=set()
-        smallest=float("inf")
-        for i in nums:
-            if i<k:
-                return -1
-            sett.add(i)
-        # print(smallest)
-        return len(sett)-1 if k in sett else len(sett)
+        # sett=set()
+        # smallest=float("inf")
+        # for i in nums:
+        #     if i<k:
+        #         return -1
+        #     sett.add(i)
+        # # print(smallest)
+        # return len(sett)-1 if k in sett else len(sett)
+        return -1 if min(nums)<k else len(set(filter(lambda n:n>k,nums)))
 
         
