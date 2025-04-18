@@ -1,8 +1,7 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
-        def recur(time,num):
-            if time==n:
-                return num
+        num="1"
+        while n!=1:
             temp=""
             times=1
             prev=None
@@ -16,11 +15,12 @@ class Solution:
                     temp+=prev
                     prev=i
                     times=1
-            # print(temp,times)
+         
             temp+=str(times)
             temp+=i
-            return recur(time+1,temp)
-        return recur(1,"1")
+            num=temp
+            n-=1
+        return num
                 
             
 
