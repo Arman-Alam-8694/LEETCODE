@@ -1,7 +1,7 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
         num="1"
-        while n!=1:
+        for i in range(n-1):
             temp=""
             times=1
             prev=None
