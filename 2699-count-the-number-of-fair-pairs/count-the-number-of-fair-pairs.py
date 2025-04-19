@@ -3,38 +3,34 @@ from typing import List
 class Solution:
     def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
         nums.sort()
-        result = 0
         n = len(nums)
+        res = 0
 
-        def bisect_left(num):
-            left, right = 0, n - 1
-            while left <= right:
-                mid = (left + right) // 2
+        def bisect_left(num, start):
+            low, high = start, n - 1
+            while low <= high:
+                mid = (low + high) // 2
                 if nums[mid] < num:
-                    left = mid + 1
+                    low = mid + 1
                 else:
-                    right = mid - 1
-            return left
+                    high = mid - 1
+            return low
 
-        def bisect_right(num):
-            left, right = 0, n - 1
-            while left <= right:
-                mid = (left + right) // 2
+        def bisect_right(num, start):
+            low, high = start, n - 1
+            while low <= high:
+                mid = (low + high) // 2
                 if nums[mid] <= num:
-                    left = mid + 1
+                    low = mid + 1
                 else:
-                    right = mid - 1
-            return left
+                    high = mid - 1
+            return low
 
         for i in range(n):
             low = lower - nums[i]
             high = upper - nums[i]
-            l = bisect_left(low)
-            r = bisect_right(high)
-            result += r - l
+            left = bisect_left(low, i + 1)
+            right = bisect_right(high, i + 1)
+            res += right - left
 
-            # Exclude self-pairing (i == j)
-            if low <= nums[i] <= high:
-                result -= 1
-
-        return result // 2  # each pair counted twice
+        return res
