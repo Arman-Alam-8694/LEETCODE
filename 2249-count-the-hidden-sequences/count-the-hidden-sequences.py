@@ -1,5 +1,5 @@
-class Solution:
-    def numberOfArrays(self, differences: List[int], lower: int, upper: int) -> int:
+# class Solution:
+#     def numberOfArrays(self, differences: List[int], lower: int, upper: int) -> int:
         # n=len(differences)
 
         #find the valid sequence such that the max element is least as possible it can be
@@ -33,19 +33,39 @@ class Solution:
         #             return 1+(upper-ans)
         # return 0
 
-        prefix=0
-        minn=0
-        maxx=0
-        for d in differences:
-            prefix+=d
-            minn=min(prefix,minn)
-            maxx=max(prefix,maxx)
-            if maxx-minn>upper-lower:
-                return 0
-        return (upper-maxx)+(minn-lower)+1
+        # prefix=0
+        # minn=0
+        # maxx=0
+        # for d in differences:
+        #     prefix+=d
+        #     minn=min(prefix,minn)
+        #     maxx=max(prefix,maxx)
+        #     if maxx-minn>upper-lower:
+        #         return 0
+        # return (upper-maxx)+(minn-lower)+1
 
                    
                 
+class Solution:
+    def numberOfArrays(self, differences: List[int], lower: int, upper: int) -> int:
+        n = len(differences)
+
+        for start in range(lower, upper + 1):
+            curr = start
+            maxx = start
+            valid = True
+
+            for diff in differences:
+                curr += diff
+                if not (lower <= curr <= upper):
+                    valid = False
+                    break
+                maxx = max(maxx, curr)
+
+            if valid:
+                return 1 + (upper - maxx)
+
+        return 0
 
 
 
