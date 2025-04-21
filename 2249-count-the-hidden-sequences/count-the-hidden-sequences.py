@@ -40,7 +40,9 @@ class Solution:
             prefix+=d
             minn=min(prefix,minn)
             maxx=max(prefix,maxx)
-        return max(0,(upper-maxx)+(minn-lower)+1)
+            if maxx-minn>upper-lower:
+                return 0
+        return (upper-maxx)+(minn-lower)+1
 
                    
                 
