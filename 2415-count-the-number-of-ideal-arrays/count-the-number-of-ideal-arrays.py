@@ -1,41 +1,25 @@
-MOD = 10**9 + 7
-MAX_N = 10**4 + 10
-MAX_P = 15  # 最多 15 个质因子
-
-sieve = [0] * MAX_N  # 最小质因子
-
-for i in range(2, MAX_N):
-    if sieve[i] == 0:
-        for j in range(i, MAX_N, i):
-            sieve[j] = i
-
-ps = [[] for _ in range(MAX_N)]
-
-for i in range(2, MAX_N):
-    x = i
-    while x > 1:
-        p = sieve[x]
-        cnt = 0
-        while x % p == 0:
-            x //= p
-            cnt += 1
-        ps[i].append(cnt)
-
-c = [[0] * (MAX_P + 1) for _ in range(MAX_N + MAX_P)]
-
-c[0][0] = 1
-for i in range(1, MAX_N + MAX_P):
-    c[i][0] = 1
-    for j in range(1, min(i, MAX_P) + 1):
-        c[i][j] = (c[i - 1][j] + c[i - 1][j - 1]) % MOD
-
-
-class Solution:
-    def idealArrays(self, n: int, maxValue: int) -> int:
-        ans = 0
-        for x in range(1, maxValue + 1):
-            mul = 1
-            for p in ps[x]:
-                mul = mul * c[n + p - 1][p] % MOD
-            ans = (ans + mul) % MOD
-        return ans
+class Solution(object):
+    def idealArrays(self, n, maxi):
+        mod = 10**9 + 7
+        m = min(n, 14)
+        dp = [[0] * (m+1) for _ in range(maxi+1)]
+        for i in range(1, maxi+1):
+            dp[i][1] = 1
+            j = 2
+            while i * j <= maxi:
+                for k in range(1, m):
+                    dp[i*j][k+1] += dp[i][k]
+                j += 1
+        fact = [1] * n
+        for i in range(1, n):
+            fact[i] = fact[i-1] * i % mod
+        invfact = [1] * n
+        invfact[n-1] = pow(fact[n-1], mod-2, mod)
+        for i in range(n-1, 0, -1):
+            invfact[i-1] = invfact[i] * i % mod
+        res = 0
+        f_n1 = fact[n-1]
+        for i in range(1, maxi+1):
+            for k in range(1, m+1):
+                res = (res + dp[i][k] * f_n1 % mod * invfact[k-1] % mod * invfact[n-k] % mod) % mod
+        return res
