@@ -3,10 +3,10 @@ class Solution:
         res,left,summ,cnt=0,0,0,0
         for right in range(len(nums)):
             summ+=nums[right]
-            cnt+=1
-            while summ*cnt>=k and left<=right:
+            # cnt+=1
+            while summ*(right-left+1)>=k and left<=right:
                 summ-=nums[left]
-                cnt-=1
+                # cnt-=1
                 left+=1
             res+=(right+1)-left 
         return res
