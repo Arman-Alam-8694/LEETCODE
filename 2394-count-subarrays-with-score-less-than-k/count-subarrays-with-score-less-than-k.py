@@ -8,16 +8,11 @@ class Solution:
             summ+=nums[right]
             cnt+=1
             temp=summ*cnt
-            # print(temp)
-            if temp<k:
-                res+=(right+1)-left
-            else:
-                while summ*cnt>=k and left<=right:
-                    summ-=nums[left]
-                    cnt-=1
-                    left+=1
-                # print("exceeded",left,right,cnt,summ)
-                res+=(right+1)-left 
+            while summ*cnt>=k and left<=right:
+                summ-=nums[left]
+                cnt-=1
+                left+=1
+            res+=(right+1)-left 
         
             
 
