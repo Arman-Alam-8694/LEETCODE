@@ -11,8 +11,7 @@ class Solution:
                 if nums[left]==maxx:
                     times-=1
                 left+=1
-            if times==k-1:
-                res+=(left)
+            res+=(left)
         return res
 
         
