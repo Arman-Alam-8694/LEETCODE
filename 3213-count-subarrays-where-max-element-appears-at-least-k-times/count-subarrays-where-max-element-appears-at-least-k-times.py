@@ -7,7 +7,7 @@ class Solution:
         for right in range(len(nums)):
             if nums[right]==maxx:
                 times+=1
-            while times>=k and left<=right:
+            while times==k and left<=right:
                 if nums[left]==maxx:
                     times-=1
                 left+=1
