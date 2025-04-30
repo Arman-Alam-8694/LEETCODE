@@ -1,10 +1,11 @@
 class Solution:
     def countSubarrays(self, nums: List[int]) -> int:
-        result=0
-        for right in range(2,len(nums)):
-            if (nums[right]+nums[right-2])*2==(nums[right-1]):
-                result+=1
-        return result
-
-        # return sum([1 if (nums[right]+nums[right-2])*2==(nums[right-1]) else 0  for right in range(2,len(nums))])
+        count=0
+        for i in range(len(nums) - 2):
+            a, b, c = nums[i], nums[i + 1], nums[i + 2]
+            if a + c == b / 2:
+                count += 1
+        return count
+        
+    
         
