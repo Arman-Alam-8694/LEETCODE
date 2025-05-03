@@ -17,13 +17,11 @@ class Solution:
                 if mapp[j]>=n:
                     candidates.add(j)
             
-        print(candidates)
+        # print(candidates)
         if not candidates:
             return -1
         minn=n
         for c in candidates:
             temp=max(tops.count(c),bottoms.count(c))
             minn=min(minn,n-temp)
-
-
         return minn
