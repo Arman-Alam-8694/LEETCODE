@@ -8,4 +8,11 @@ class Solution:
                 heapq.heappop(stack)
         return [key for v,key in stack]
 
+        # mapp=Counter(nums)
+        # new =sorted(mapp.items(),key=lambda x:x[1],reverse=True)
+        # result=[]
+        # for i in range(k):
+        #     result.append(new[i][0])
+        # return result  
+
         
