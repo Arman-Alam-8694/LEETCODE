@@ -9,12 +9,14 @@ class Solution:
             time,x,y=heapq.heappop(heap)
             if x==row-1 and y==col-1:
                 return time
-            # seen.add((x,y))
+            if (x,y) in seen:
+                continue
+            seen.add((x,y))
             for dx,dy in direction:
                 nx=x+dx
                 ny=y+dy
                 if (nx,ny) not in seen and 0<=nx<row and 0<=ny<col:
-                    seen.add((nx,ny))
+                    # seen.add((nx,ny))
                     if time<=moveTime[nx][ny]:
                         heapq.heappush(heap,(moveTime[nx][ny]+1,nx,ny))
                     else:
