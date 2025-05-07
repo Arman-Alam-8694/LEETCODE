@@ -1,6 +1,6 @@
-import atexit
+# import atexit
 
-atexit.register(lambda: open("display_runtime.txt", "w").write("0"))
+# atexit.register(lambda: open("display_runtime.txt", "w").write("0"))
 
 class Solution:
     def minSum(self, nums1: List[int], nums2: List[int]) -> int:
