@@ -11,9 +11,6 @@ class Solution:
                 szero+=1
         
             ssum+=j
-
-        print(fsum,fzero)
-        print(ssum,szero)
         if fsum>ssum:
             fhas=fsum-ssum
             if fhas+fzero>=szero and szero!=0:
