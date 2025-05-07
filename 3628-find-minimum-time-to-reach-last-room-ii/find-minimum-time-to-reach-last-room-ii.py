@@ -13,7 +13,7 @@ class Solution:
             time,x,y,counter=heapq.heappop(heap)
             if x==row-1 and y==col-1:
                 return time
-            print(x,y,time,counter)
+            # print(x,y,time,counter)
             # if (x,y) in seen:
             #     continue
             # seen.add((x,y))
