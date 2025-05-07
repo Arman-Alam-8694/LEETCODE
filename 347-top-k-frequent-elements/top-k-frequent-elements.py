@@ -23,13 +23,13 @@ class Solution:
         #form the buckets
         n=len(nums)
         buckets=[[] for i in range(n+1)]
-        print(mapp)
+
         #go throught he mapp for each number and it's frequency add the 
         #same number to their respective bucket size (frequency)
         for key,v in mapp.items():
             buckets[v].append(key)    
         result=[]
-        print(buckets)
+    
         #traverse backward of the bucket for most frequencies 
         for b in range(n,-1,-1):
             for key in buckets[b]:
