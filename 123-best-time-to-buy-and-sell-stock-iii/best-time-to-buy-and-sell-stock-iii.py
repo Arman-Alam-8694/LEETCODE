@@ -10,14 +10,14 @@ class Solution:
         for i in range(len(prices)-1,-1,-1):
             greater[i]=rmax
             rmax=max(rmax,prices[i])
-        print(greater)
+        # print(greater)
         for i in range(len(prices)):
             if sminn!=float("-inf") and prices[i]>sminn:
                 if one!=float("-inf"):
                     # print(f"one={one},fmin={fminn},fmaxx={fmaxx},sminn={sminn},profit={profit}")
                     temp=prices[i]-sminn
                     temp1=greater[i]-sminn
-                    profit=max(profit,one+temp,one+temp1,one+temp)
+                    profit=max(profit,one+temp,one+temp1)
             if prices[i]<fminn:
                 fminn=prices[i]
                 sminn=min(sminn,prices[i])
@@ -33,7 +33,7 @@ class Solution:
                 sminn=prices[i]
         
         profit=max(profit,one)
-        print(profit)
+        # print(profit)
         return profit if profit!=float("-inf") else 0
 
         
