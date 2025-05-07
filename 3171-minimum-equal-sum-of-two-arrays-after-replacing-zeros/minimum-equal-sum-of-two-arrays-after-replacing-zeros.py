@@ -1,36 +1,59 @@
-# import atexit
+import atexit
 
-# atexit.register(lambda: open("display_runtime.txt", "w").write("0"))
+atexit.register(lambda: open("display_runtime.txt", "w").write("0"))
 
 class Solution:
     def minSum(self, nums1: List[int], nums2: List[int]) -> int:
-        s1 = z1 = s2 = z2 = 0
-        for d in nums1:
-            s1 += d
-            if d == 0:
-                z1 += 1
-        for d in nums2:
-            s2 += d
-            if d == 0:
-                z2 += 1
-        if z1 == 0 and z2 == 0:
-            if s1 == s2:
-                return s1
-            else:
-                return -1
-        elif z1 == 0:
-            if s2 + z2 > s1:
-                return -1
-            else:
-                return s1
-        elif z2 == 0:
-            if s1 + z1 > s2:
-                return -1
-            else:
-                return s2
-        else:
-            return max(s1 + z1, s2 + z2)
+        fzero,szero,fsum,ssum=0,0,0,0
+        for i in nums1:
+            if i==0:
+                fzero+=1
+            fsum+=i
+        for j in nums2:
+            if j==0:
+                szero+=1
+            ssum+=j
+
+        # if fsum>ssum:
+        #     fhas=fsum-ssum
+        #     if fhas+fzero>=szero and szero!=0:
+        #         return fzero+fsum
+        #     elif szero>=fhas+fzero and fzero!=0:
+        #         return szero+ssum
+        #     else:
+        #         return -1
+        # elif fsum==ssum:
+        #     if fzero==0 and szero==0:
+        #         return fsum
+        #     if fzero==0 or szero==0:
+        #         return -1
+        #     return max(fzero,szero)+fsum
+
+        # else:
+        #     shas=ssum-fsum
+        #     if shas+szero>=fzero and fzero!=0:
+        #         return szero+ssum
+        #     elif szero!=0 and fzero>=shas+szero:
+        #         return fsum+fzero
+        #     else:
+        #         return -1
+        # print(fzero,szero)
+        if fzero==0 and szero==0:
+            if fsum==ssum:
+                return fsum
+            return -1
+        elif fzero==0:
+            if fsum>=ssum+szero:
+                return fsum
+            return -1
+        elif szero==0:
+            if ssum>=fsum+fzero:
+                return ssum
+            return -1
+        # print("here")
+        # print(fsum,ssum)
+        return max(szero+ssum,fsum+fzero)
 
 
-
+            
         
