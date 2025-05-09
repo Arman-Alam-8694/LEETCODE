@@ -26,10 +26,10 @@ class Solution:
         fact    = [1]*(n+1)
         invfact = [1]*(n+1)
         for i in range(1, n+1):
-            fact[i] = fact[i-1] * i 
+            fact[i] = fact[i-1] * i % MOD
         invfact[n] = pow(fact[n], MOD-2,MOD)
         for i in range(n, 0, -1):
-            invfact[i-1] = invfact[i] * i
+            invfact[i-1] = invfact[i] * i % MOD
 
         @lru_cache(None)
         def dfs(digit, slots_left, sum_left):
@@ -50,7 +50,7 @@ class Solution:
                 # **new**: number of ways to pick *which* `use` copies of this digit
                 choose = fact[counts[digit]]
                 choose = choose * invfact[use] % MOD
-                choose = choose * invfact[counts[digit] - use]
+                choose = choose * invfact[counts[digit] - use] % MOD
 
                 ways = (ways +
                         choose *
