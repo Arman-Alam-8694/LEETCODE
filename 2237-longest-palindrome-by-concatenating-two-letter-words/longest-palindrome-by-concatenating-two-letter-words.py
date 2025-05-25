@@ -1,27 +1,21 @@
 class Solution:
     def longestPalindrome(self, words: List[str]) -> int:
-        result=0
-        mapp={}
-        sett=set()
-        for i,w in enumerate(words):
-            rev=w[::-1]
-            same=False
-            if rev==w:
-                same=True
-            if rev in mapp:
-                result+=4
-                mapp[rev]-=1
-                if mapp[rev]==0:
-                    if same and rev in sett:
-                        sett.remove(rev)
-                    del mapp[rev]
+        count = defaultdict(int)
+        result = 0
+        has_center = False
+
+        for w in words:
+            rev = w[::-1]
+            if count[rev] > 0:
+                result += 4
+                count[rev] -= 1
             else:
-                if w not in mapp:
-                    mapp[w]=0
-                if same:
-                    sett.add(rev)
-                mapp[w]+=1
-        # print(sett)
-        return result if len(sett)==0 else result+2
-    
-        
+                count[w] += 1
+
+        # Check for a central word like "gg" that can sit in the middle
+        for w in count:
+            if w[0] == w[1] and count[w] > 0:
+                has_center = True
+                break
+
+        return result + 2 if has_center else result
