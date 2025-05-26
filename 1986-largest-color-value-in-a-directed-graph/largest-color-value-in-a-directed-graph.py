@@ -1,51 +1,39 @@
 class Solution:
     def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
-        seen=set()
+        visited=set()
+        currentbranch=set()
         n=len(colors)
-        route=defaultdict(list)
-
-        for i in range(len(edges)):
-
-            route[edges[i][0]].append(edges[i][1])
-            # route[edges[i][0]].append(colors[i])
-
-        # print(route)
-        visited = set()
-        rec_stack = set()
-
-        def dfs(node):
-            if node in rec_stack:
+        routes=defaultdict(list)
+        for start,end in edges:
+            routes[start].append(end)
+        
+        def iscycle(node):
+            if node in currentbranch:
                 return True
             if node in visited:
                 return False
             visited.add(node)
-            rec_stack.add(node)
-            for neighbor in route[node]:
-                if dfs(neighbor):
+            currentbranch.add(node)
+            for child in routes[node]:
+                if iscycle(child):
                     return True
-            rec_stack.remove(node)
+            currentbranch.remove(node)
             return False
 
-        for i in range(n):
-            if dfs(i):
+        for nd in range(n):
+            if iscycle(nd):
                 return -1
-        @cache  
+        @cache
         def dfs(node):
-            # temp=defaultdict(int)
             branch=defaultdict(int)
-            # if node==0:
-            #     temp[colors[0]]=1
-            for child in route[node]:
+            for child in routes[node]:
                 calc=dfs(child)
                 for k,v in calc.items():
                     branch[k]=max(branch[k],calc[k])
-                # print(child,c,branch)
             branch[colors[node]]+=1
             return branch
-                
-
-        maxx=float("-inf")
-        for i in range(n):
-            res=dfs(i)
-            maxx=max(maxx,max(res.values()))
+        maxx=0
+        for nd in range(n):
+            calc=dfs(nd)
+            maxx=max(maxx,max(calc.values()))
         return maxx
