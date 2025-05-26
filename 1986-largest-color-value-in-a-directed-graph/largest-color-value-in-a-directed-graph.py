@@ -1,44 +1,51 @@
 class Solution:
     def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
-        queue = deque()
-        dic = {}
-        n = len(colors)
-        indegree = [0] * n
-        count = [{} for _ in range(n)]
-        max_count = 0
+        seen=set()
+        n=len(colors)
+        route=defaultdict(list)
 
-        for x, y in edges:
-            if y in dic:
-                dic[y].append(x)
-            else:
-                dic[y] = [x]
-            indegree[x] += 1
-        
+        for i in range(len(edges)):
+
+            route[edges[i][0]].append(edges[i][1])
+            # route[edges[i][0]].append(colors[i])
+
+        # print(route)
+        visited = set()
+        rec_stack = set()
+
+        def dfs(node):
+            if node in rec_stack:
+                return True
+            if node in visited:
+                return False
+            visited.add(node)
+            rec_stack.add(node)
+            for neighbor in route[node]:
+                if dfs(neighbor):
+                    return True
+            rec_stack.remove(node)
+            return False
+
         for i in range(n):
-            if indegree[i] == 0:
-                queue.append(i)
-
-        while queue:
-            cur = queue.popleft()
-            
-            color = colors[cur]
-            if color in count[cur]:
-                count[cur][color] += 1
-            else:
-                count[cur][color] = 1
-            max_count = max(max_count, count[cur][color])
-            if cur in dic:
-                for neighbor in dic[cur]:
-                    for key, val in count[cur].items():
-                        if key in count[neighbor]:
-                            count[neighbor][key] = max(val, count[neighbor][key])
-                        else:
-                            count[neighbor][key] = val
-                    indegree[neighbor] -= 1
-                    if indegree[neighbor] == 0:
-                        queue.append(neighbor)
-        
-        for i in indegree:
-            if i != 0:
+            if dfs(i):
                 return -1
-        return max_count
+        @cache  
+        def dfs(node):
+            # temp=defaultdict(int)
+            branch=defaultdict(int)
+            # if node==0:
+            #     temp[colors[0]]=1
+            for child in route[node]:
+                calc=dfs(child)
+                for k,v in calc.items():
+                    branch[k]=max(branch[k],calc[k])
+                # print(child,c,branch)
+            branch[colors[node]]+=1
+            return branch
+                
+
+        maxx=float("-inf")
+        for i in range(n):
+            res=dfs(i)
+            maxx=max(maxx,max(res.values()))
+        return maxx
