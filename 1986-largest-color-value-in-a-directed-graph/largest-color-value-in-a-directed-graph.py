@@ -6,7 +6,7 @@ class Solution:
 
         for i in range(len(edges)):
 
-            route[edges[i][0]].append((edges[i][1],colors[edges[i][1]]))
+            route[edges[i][0]].append(edges[i][1])
             # route[edges[i][0]].append(colors[i])
 
         # print(route)
@@ -20,7 +20,7 @@ class Solution:
                 return False
             visited.add(node)
             rec_stack.add(node)
-            for neighbor,c in route[node]:
+            for neighbor in route[node]:
                 if dfs(neighbor):
                     return True
             rec_stack.remove(node)
@@ -35,7 +35,7 @@ class Solution:
             branch=defaultdict(int)
             # if node==0:
             #     temp[colors[0]]=1
-            for child,c in route[node]:
+            for child in route[node]:
                 calc=dfs(child)
                 for k,v in calc.items():
                     branch[k]=max(branch[k],calc[k])
