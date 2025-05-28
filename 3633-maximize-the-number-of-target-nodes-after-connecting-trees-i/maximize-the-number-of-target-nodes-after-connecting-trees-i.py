@@ -29,7 +29,7 @@ class Solution:
                         if child not in seen:
                             queue.append((child,reached+1))
             return count
-        print(n,m)
+        # print(n,m)
         second=0
         result=[]
         if k==0:
@@ -37,7 +37,7 @@ class Solution:
         else:
             for i in range(m+1):
                 second=max(second,bfs(i,k-1,tree_two))
-        print("second",second)
+        # print("second",second)
         for i in range(n+1):
             val=bfs(i,k,tree_one)
             result.append(val+second)
