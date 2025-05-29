@@ -17,8 +17,6 @@ class Solution:
             bluecnt=0
             while queue:
                 node,prevcolor=queue.popleft()
-                # if node in seen:
-                #     continue
                 seen.add(node)
                 if prevcolor=="red":
                     redcnt+=1
@@ -29,8 +27,6 @@ class Solution:
                 for child in tree[node]:
                     if child not in seen:
                         queue.append((child,"blue" if prevcolor=="red" else "red"))
-                        seen.add(child)
-
             if save:
                 return redcnt,bluecnt
             else:
@@ -40,9 +36,7 @@ class Solution:
         fast={"red":r,"blue":b}
         result=[]
         smax=colour(0,treetwo,False)
-        # smax=max(sred,sblue)
         n=max(treeone.keys())
-        # print(smax)
         for i in range(n+1):
             result.append(fast[nodeclr[i]]+smax)
 
