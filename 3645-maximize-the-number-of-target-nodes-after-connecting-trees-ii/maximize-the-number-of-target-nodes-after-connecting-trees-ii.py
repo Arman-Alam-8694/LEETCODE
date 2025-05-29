@@ -35,10 +35,7 @@ class Solution:
         fast={"red":r,"blue":b}
         result=[]
         sred,sblue=colour(0,treetwo,False)
-        if sred>sblue:
-            smax=sred
-        else:
-            smax=sblue
+        smax=max(sred,sblue)
         n=max(treeone.keys())
         # print(smax)
         for i in range(n+1):
