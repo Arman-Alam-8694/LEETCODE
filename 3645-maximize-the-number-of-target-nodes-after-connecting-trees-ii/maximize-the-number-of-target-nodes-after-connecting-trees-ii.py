@@ -29,6 +29,7 @@ class Solution:
                 for child in tree[node]:
                     if child not in seen:
                         queue.append((child,"blue" if prevcolor=="red" else "red"))
+                        seen.add(child)
 
             if save:
                 return redcnt,bluecnt
