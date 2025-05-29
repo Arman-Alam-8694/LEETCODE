@@ -29,13 +29,16 @@ class Solution:
                 for child in tree[node]:
                     if child not in seen:
                         queue.append((child,"blue" if prevcolor=="red" else "red"))
-            return redcnt,bluecnt
+            if save:
+                return redcnt,bluecnt
+            else:
+                return max(redcnt,bluecnt)
            
         r,b=colour(0,treeone,True)
         fast={"red":r,"blue":b}
         result=[]
-        sred,sblue=colour(0,treetwo,False)
-        smax=max(sred,sblue)
+        smax=colour(0,treetwo,False)
+        # smax=max(sred,sblue)
         n=max(treeone.keys())
         # print(smax)
         for i in range(n+1):
