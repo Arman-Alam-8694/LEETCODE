@@ -17,8 +17,8 @@ class Solution:
             bluecnt=0
             while queue:
                 node,prevcolor=queue.popleft()
-                if node in seen:
-                    continue
+                # if node in seen:
+                #     continue
                 seen.add(node)
                 if prevcolor=="red":
                     redcnt+=1
@@ -29,6 +29,7 @@ class Solution:
                 for child in tree[node]:
                     if child not in seen:
                         queue.append((child,"blue" if prevcolor=="red" else "red"))
+
             if save:
                 return redcnt,bluecnt
             else:
