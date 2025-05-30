@@ -1,31 +1,25 @@
 class Solution:
     def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:
-        result=float("inf")
-        nodeone=defaultdict(int)
-        nodetwo=defaultdict(int)
-        def find_path(node,cost,path,seen):
-            if node==-1:
-                return 
-            if node in seen:
-                return 
-            seen.add(node)
-            path[node]=cost
-            return find_path(edges[node],cost+1,path,seen)
+        def get_distances(start):
+            dist = {}
+            steps = 0
+            while start != -1 and start not in dist:
+                dist[start] = steps
+                steps += 1
+                start = edges[start]
+            return dist
         
-        find_path(node1,0,nodeone,set())
-        find_path(node2,0,nodetwo,set())
-        answer=float("inf")
-        for u,a in nodetwo.items():
-            if u in nodeone:
-                temp=max(a,nodeone[u])
-                if temp<result:
-                    answer=u
-                    result=temp
-                elif temp==result:
-                    answer=min(answer,u)   
-        return answer if answer!=float("inf") else -1
-            
+        dist1 = get_distances(node1)
+        dist2 = get_distances(node2)
         
-
-
+        result = float('inf')
+        answer = -1
         
+        for node in range(len(edges)):
+            if node in dist1 and node in dist2:
+                max_dist = max(dist1[node], dist2[node])
+                if max_dist < result or (max_dist == result and node < answer):
+                    result = max_dist
+                    answer = node
+                    
+        return answer
