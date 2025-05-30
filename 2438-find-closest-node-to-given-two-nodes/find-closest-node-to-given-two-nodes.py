@@ -15,8 +15,8 @@ class Solution:
         result = float('inf')
         answer = -1
         
-        for node in range(len(edges)):
-            if node in dist1 and node in dist2:
+        for node in dist1.keys():
+            if node in dist2:
                 max_dist = max(dist1[node], dist2[node])
                 if max_dist < result or (max_dist == result and node < answer):
                     result = max_dist
