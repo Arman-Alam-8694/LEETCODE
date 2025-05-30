@@ -14,10 +14,15 @@ class Solution:
         
         result = float('inf')
         answer = -1
-        
-        for node in dist1.keys():
-            if node in dist2:
-                max_dist = max(dist1[node], dist2[node])
+        if len(dist1)<=len(dist2):
+            first=dist1
+            second=dist2
+        else:
+            first=dist2
+            second=dist1        
+        for node in first.keys():
+            if node in second:
+                max_dist = max(first[node], second[node])
                 if max_dist < result or (max_dist == result and node < answer):
                     result = max_dist
                     answer = node
