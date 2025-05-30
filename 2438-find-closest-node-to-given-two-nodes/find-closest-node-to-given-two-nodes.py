@@ -15,24 +15,14 @@ class Solution:
         find_path(node1,0,nodeone,set())
         find_path(node2,0,nodetwo,set())
         answer=float("inf")
-        if len(nodeone)<len(nodetwo):
-            for u,a in nodeone.items():
-                if u in nodetwo:
-                    temp=max(a,nodetwo[u])
-                    if temp<result:
-                        answer=u
-                        result=temp
-                    elif temp==result:
-                        answer=min(answer,u)
-        else:
-            for u,a in nodetwo.items():
-                if u in nodeone:
-                    temp=max(a,nodeone[u])
-                    if temp<result:
-                        answer=u
-                        result=temp
-                    elif temp==result:
-                        answer=min(answer,u)   
+        for u,a in nodetwo.items():
+            if u in nodeone:
+                temp=max(a,nodeone[u])
+                if temp<result:
+                    answer=u
+                    result=temp
+                elif temp==result:
+                    answer=min(answer,u)   
         return answer if answer!=float("inf") else -1
             
         
