@@ -2,14 +2,14 @@ class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         n = len(board)
         target = n * n
-        min_steps = [float('inf')]
 
         def numtocord(num):
-            r = (num - 1) // n
-            c = (num - 1) % n
-            if r % 2 == 1:
-                c = n - 1 - c
-            return n - 1 - r, c
+            r,c=divmod(num-1,n)
+            col=c
+            row=n-1-r
+            if r&1:
+                col=n-1-col
+            return row,col
 
         result=[float("inf")]
         # @cache
