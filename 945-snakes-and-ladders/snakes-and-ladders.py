@@ -40,7 +40,7 @@ class Solution:
 
         queue=deque([(1,0)])
         seen=set()
-        seen.add(1)
+        # seen.add(1)
         while queue:
             num,step=queue.popleft()
             if num==target:
