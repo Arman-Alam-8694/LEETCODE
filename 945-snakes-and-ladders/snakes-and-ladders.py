@@ -2,40 +2,37 @@ class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         n = len(board)
         target = n * n
-        min_steps = [float('inf')]  # Acts like a global minimum holder
+        min_steps = [float('inf')]
 
-        # Helper to convert square number to (row, col)
-        def get_pos(num):
+        def numtocord(num):
             r = (num - 1) // n
             c = (num - 1) % n
             if r % 2 == 1:
                 c = n - 1 - c
             return n - 1 - r, c
 
-        visited = {}
-
-        def dfs(square, steps):
-            if square in visited and visited[square] <= steps:
-                return  # Already reached this square in fewer steps
-            if steps >= min_steps[0]:
-                return  # Prune: already exceeded current best
-            visited[square] = steps
-
-            if square == target:
-                min_steps[0] = min(min_steps[0], steps)
+        result=[float("inf")]
+        # @cache
+        seen=defaultdict(int)
+        def simulate(num,steps):
+            if num in seen and steps>=seen[num]:
                 return
+            seen[num]=steps
+            if num==target:
+                return 
+                
+            start=num+1
+            end=min(num+6,target)
+            for i in range(start,end+1):
+                tr,tc=numtocord(i)
+                if board[tr][tc]==-1:
+                    simulate(i,steps+1)
+                else:
+                    simulate(board[tr][tc],steps+1)
+            return 
 
-            for i in range(1, 7):
-                next_square = square + i
-                if next_square > target:
-                    continue
-                r, c = get_pos(next_square)
-                if board[r][c] != -1:
-                    next_square = board[r][c]
-                dfs(next_square, steps + 1)
-
-        dfs(1, 0)
-        return min_steps[0] if min_steps[0] != float('inf') else -1
+        steps=simulate(1,0)
+        return seen.get(target,-1)
 
 
 
