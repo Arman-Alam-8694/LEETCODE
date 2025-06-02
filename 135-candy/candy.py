@@ -38,7 +38,7 @@ class Solution:
                 result+=prev
                 start=end
                 hanlde=None
-            print(f"current={end},start={start},result={result},rpev={prev}")
+            # print(f"current={end},start={start},result={result},rpev={prev}")
         return result
 
 
