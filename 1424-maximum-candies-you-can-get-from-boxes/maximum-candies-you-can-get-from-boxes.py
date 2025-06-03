@@ -1,36 +1,31 @@
-from typing import List
-
 class Solution:
-    def maxCandies(self, status: List[int], candies: List[int],
-                   keys: List[List[int]], containedBoxes: List[List[int]],
-                   initialBoxes: List[int]) -> int:
-        result = 0
-        seen = set(initialBoxes)
-        used = [False] * 1000
-        has_key = [False] * 1000
+    def maxCandies(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]], initialBoxes: List[int]) -> int:
+        result=0
+        queue=deque([])
+        seen=set()
+        for i in initialBoxes:
+            queue.append(i)
+            seen.add(i)
+        keyy=[0]*1000
+        used=[0]*1000
+        while queue:
+            boxx=queue.popleft()
+            if used[boxx]:
+                continue
 
-        def dfs(box):
-            nonlocal result
-            # Skip if already used or cannot be opened
-            if used[box] or (status[box] == 0 and not has_key[box]):
-                return
+            if status[boxx] or keyy[boxx]:
+                result+=candies[boxx]
+                used[boxx]=1
 
-            used[box] = True
-            result += candies[box]
+                for x in containedBoxes[boxx]:
+                    if x not in seen:
+                        queue.append(x)
+                        seen.add(x)
+                    elif keyy[x] and used[y]==0:
+                        queue.append(x)
 
-            # Add keys and try to use them
-            for key in keys[box]:
-                has_key[key] = True
-                # Try opening this box if we already have it
-                if key in seen:
-                    dfs(key)
-
-            # Explore all contained boxes
-            for new_box in containedBoxes[box]:
-                seen.add(new_box)
-                dfs(new_box)
-
-        for box in initialBoxes:
-            dfs(box)
-
+                for y in keys[boxx]:
+                    keyy[y]=1
+                    if y in seen and used[y]==0:
+                        queue.append(y)
         return result
