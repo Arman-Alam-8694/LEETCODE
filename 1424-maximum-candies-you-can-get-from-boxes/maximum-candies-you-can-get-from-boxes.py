@@ -21,7 +21,7 @@ class Solution:
                     if x not in seen:
                         queue.append(x)
                         seen.add(x)
-                    elif keyy[x] and used[y]==0:
+                    elif (keyy[x] or status[x]) and used[y]==0:
                         queue.append(x)
 
                 for y in keys[boxx]:
