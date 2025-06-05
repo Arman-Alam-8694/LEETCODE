@@ -61,16 +61,15 @@ class Solution:
                 chartoslot[j]=cur_slot
                 cur_slot+=1
 
-        # print(listt)
-        # print(chains)
-        # print(chartoslot)
+        print(listt)
+        print(chains)
+        print(chartoslot)
         visited=set()
         for i,k in chains.items():
             if i not in visited:
                 for j in k:
                     listt[i]=min(listt[i],listt[j])
                     listt[j]=min(listt[i],listt[j])
-            visited.add(i)
 
         result=[]
         for i in baseStr:
