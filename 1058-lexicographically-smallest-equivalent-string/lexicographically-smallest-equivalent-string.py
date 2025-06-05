@@ -25,7 +25,7 @@ class Solution:
         cur_slot=0
         chains=defaultdict(set)
         for i,j in zip(s1,s2):
-            print(i,j)
+            # print(i,j)
             temp1="z"
             temp2="z"
   
@@ -61,9 +61,9 @@ class Solution:
                 chartoslot[j]=cur_slot
                 cur_slot+=1
 
-        print(listt)
-        print(chains)
-        print(chartoslot)
+        # print(listt)
+        # print(chains)
+        # print(chartoslot)
         visited=set()
         for i,k in chains.items():
             if i not in visited:
