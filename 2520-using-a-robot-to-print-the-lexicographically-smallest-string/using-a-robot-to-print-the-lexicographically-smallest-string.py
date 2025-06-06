@@ -1,8 +1,6 @@
 class Solution:
     def robotWithString(self, s: str) -> str:
         position=defaultdict(int)
-        
-
         n=len(s)
         for i in range(n):
             position[s[i]]=i
@@ -10,7 +8,9 @@ class Solution:
         result=[]
         stack=[]
         start=0
-        for elem in "abcdefghijklmnopqrstuvwxyz":
+        new=sorted(position.keys(),key=lambda x:x)
+        # print(new)
+        for elem in new:
             while stack and stack[-1]<=elem:
                 t=stack.pop()
                 result.append(t)
@@ -21,9 +21,5 @@ class Solution:
                 else:
                     stack.append(s[i])
             start=i+1
-            # print(stack,start)
-
-
-    
         return "".join(result)
 
