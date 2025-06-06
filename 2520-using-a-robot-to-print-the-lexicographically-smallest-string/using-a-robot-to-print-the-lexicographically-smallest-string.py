@@ -28,7 +28,6 @@ class Solution:
                         stack.append(s[i])
                 start=i+1
 
-        stack.reverse()
-        final=result+stack
-        return "".join(final)
+    
+        return "".join(result)
 
