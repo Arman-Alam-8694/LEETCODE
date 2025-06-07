@@ -28,9 +28,9 @@ class Solution:
                     smallest=new
                 char_idx[new].append(i)
         # print(skip)
-        result=[]
+        result=""
         for i in range(n):
             if i not in skip:
-                result.append(s[i])
-        return "".join(result)
+                result+=s[i]
+        return result
         
