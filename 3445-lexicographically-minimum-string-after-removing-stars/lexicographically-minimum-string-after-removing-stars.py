@@ -10,7 +10,7 @@ class Solution:
         for i in range(n):
             if s[i]=="*":
                 skip.add(i)
-                # print(f"before smallest{smalles/t},char_idx {char_idx[smallest]}")
+                # print(f"before smallest{smallest},char_idx {char_idx[smallest]}")
                 t=char_idx[smallest].pop()
                 skip.add(t)
                 # print(f"after pop smallest{smallest},char_idx {char_idx[smallest]}")
@@ -28,9 +28,9 @@ class Solution:
                     smallest=new
                 char_idx[new].append(i)
         # print(skip)
-        result=""
+        result=[]
         for i in range(n):
             if i not in skip:
-                result+=s[i]
-        return result
+                result.append(s[i])
+        return "".join(result)
         
