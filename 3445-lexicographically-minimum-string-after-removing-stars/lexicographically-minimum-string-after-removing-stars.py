@@ -1,3 +1,6 @@
+#BETTER SOLUTION WITH o(N) 
+
+
 # class Solution:
 #     def clearStars(self, s: str) -> str:
 #         char_idx=[[] for _ in range(27)]
