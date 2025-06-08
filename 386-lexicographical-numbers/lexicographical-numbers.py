@@ -23,7 +23,7 @@ class Solution:
             if start*10<=n:
                 start=start*10
             else:
-                while start%10==9 or start==n:
+                while start%10==9 or start>=n:
                     start=start//10
                 start+=1
         return result
