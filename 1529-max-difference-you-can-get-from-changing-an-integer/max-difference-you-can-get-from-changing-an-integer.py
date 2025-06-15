@@ -1,7 +1,6 @@
 class Solution:
     def maxDiff(self, num: int) -> int:
         temp=str(num)
-        # mapp=Counter(temp)
         max_change=None
         min_change=None
         idx=0
@@ -15,7 +14,6 @@ class Solution:
                 max_change=temp[idx]
             if min_change is None:
                 if temp[idx]!="0" and temp[0]!=temp[idx] and can_take_zero:
-                    # print(mapp)
                     min_change=temp[idx]
                     to_change_zero=True
                 elif temp[idx]!="1" and temp[idx]!="0":
@@ -27,7 +25,6 @@ class Solution:
                 break
             mapp[temp[idx]]+=1
             idx+=1
-        print(min_change,max_change)
         max_number=""
         min_number=""
         for i in temp:
@@ -42,7 +39,7 @@ class Solution:
                     min_number+="1"
             else:
                 min_number+=i
-        print(max_number, min_number)
+
         max_number=int(max_number)
         min_number=int(min_number)
         return max_number-min_number
