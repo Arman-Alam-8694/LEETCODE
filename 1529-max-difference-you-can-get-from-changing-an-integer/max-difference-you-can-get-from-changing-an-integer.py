@@ -8,7 +8,6 @@ class Solution:
         to_change_one=False
         to_change_zero=False
         can_take_zero=False
-        mapp=defaultdict(int)
         while idx<n:
             if max_change is None and temp[idx]!="9":
                 max_change=temp[idx]
@@ -23,7 +22,6 @@ class Solution:
                     can_take_zero=True
             if max_change is not None and min_change is not None:
                 break
-            mapp[temp[idx]]+=1
             idx+=1
         max_number=""
         min_number=""
