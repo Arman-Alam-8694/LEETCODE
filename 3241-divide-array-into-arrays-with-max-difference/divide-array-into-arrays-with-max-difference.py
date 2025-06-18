@@ -1,13 +1,13 @@
 class Solution:
     def divideArray(self, nums: List[int], k: int) -> List[List[int]]:
         nums.sort()
-        result=[]
+        result=[[]]
         temp=[]
         for i in nums:
-            temp.append(i)
-            if temp and temp[-1]-temp[0]>k:
+            result[-1].append(i)
+            if result[-1] and result[-1][-1]-result[-1][0]>k:
                 return []
-            if len(temp)==3:
-                result.append(temp[:])
-                temp=[]
+            if len(result[-1])==3:
+                result.append([])
+        result.pop()
         return result
