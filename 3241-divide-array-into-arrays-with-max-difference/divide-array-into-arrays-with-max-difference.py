@@ -9,6 +9,7 @@ class Solution:
         nums=[]
         for i in range(len(store)):
             nums.extend([i]*store[i])
+        #i tried
         
 
         result=[[]]
