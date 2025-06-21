@@ -21,6 +21,7 @@
 #         return answer
     
 from collections import Counter
+from bisect import bisect_right
 
 class Solution:
     def minimumDeletions(self, word: str, k: int) -> int:
@@ -29,32 +30,24 @@ class Solution:
         listt.sort()
         n = len(listt)
 
-        # Compute prefix sum
+        # Compute prefix sum of sorted frequencies
         prefix = [0] * (n + 1)
         for i in range(n):
             prefix[i + 1] = prefix[i] + listt[i]
 
         answer = float('inf')
-
         for left in range(n):
+            # Find the first index where listt[right] > listt[left] + k
             threshold = listt[left] + k
+            right = bisect_right(listt, threshold)
 
-            # Manual binary search to find the first index where listt[i] > threshold
-            low, high = left, n
-            while low < high:
-                mid = (low + high) // 2
-                if listt[mid] <= threshold:
-                    low = mid + 1
-                else:
-                    high = mid
-            right = low  # First index where listt[right] > threshold
-
-            # Compute deletions
+            # Deletions on the left of current group
             left_discard = prefix[left]
+            # Elements to adjust on the right to reduce their count to threshold
             right_part = prefix[n] - prefix[right]
             adjust = right_part - (threshold * (n - right))
-
+            
+            # Update minimum answer
             answer = min(answer, left_discard + adjust)
 
         return answer
-
