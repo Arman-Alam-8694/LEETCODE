@@ -19,7 +19,11 @@
 
 
 #         return answer
-    
+
+
+#ABOVE IS THE TWO POINTER APPROACH 
+#IN THIS CASE THE BISECT_RIGHT THING WORKS FASTER BECAUSE OF C IMPLEMENTATION 
+
 from collections import Counter
 from bisect import bisect_right
 
