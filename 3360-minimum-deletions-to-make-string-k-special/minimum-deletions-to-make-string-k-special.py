@@ -8,8 +8,6 @@ class Solution:
         prefix=[0]*(n+1)
         for i in range(n):
             prefix[i+1]=prefix[i]+listt[i]
-        print(listt)
-        print(prefix)
         answer=float("inf")
         right=0
         for left in range(n):
