@@ -1,7 +1,6 @@
 class Solution:
     def minimumDeletions(self, word: str, k: int) -> int:
         freq=Counter(word)
-        # prefix=[]
         listt=[i if i!=0 else None for i in freq.values()]
         listt.sort()
         n=len(listt)
