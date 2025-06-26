@@ -1,30 +1,32 @@
 class Solution:
     def minDays(self, bloomDay: List[int], m: int, k: int) -> int:
-        def ispossible(days):
+        left,right=0,max(bloomDay)
+
+        def possible(days):
             flowers=0
-            bouquets=0
+            pots=0
             for i in bloomDay:
                 if i<=days:
                     flowers+=1
+                    if flowers==k:
+                        pots+=1
+                        flowers=0
                 else:
-                    bouquets+=flowers//k
                     flowers=0
-            
-            bouquets+=flowers//k
-            return bouquets>=m
+            print(pots,days)
+            return pots>=m
 
 
-
-        n=len(bloomDay)
-        if n<(m*k):
+        if m*k>len(bloomDay):
             return -1
-        left=min(bloomDay)
-        right=max(bloomDay)
+        answer=-1
         while left<=right:
             mid=(left+right)//2
-            if ispossible(mid):
+            if possible(mid):
+                answer=mid
                 right=mid-1
             else:
                 left=mid+1
-        return left
+        return answer
+        
         
