@@ -13,7 +13,7 @@ class Solution:
                     if cur_sum>limit:
                         return False
            
-            print(limit,partition)
+            # print(limit,partition)
             return partition<=k-1
 
 
