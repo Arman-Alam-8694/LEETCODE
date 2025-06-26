@@ -30,7 +30,6 @@ class Solution:
 
         count = 0
         sm=0
-        bits=k.bit_length()
         for i,b in enumerate(s[::-1]):
             if b=="1":
                 if sm+(1<<count)<=k:
