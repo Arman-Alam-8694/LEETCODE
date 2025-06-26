@@ -13,7 +13,7 @@ class Solution:
                         flowers=0
                 else:
                     flowers=0
-            print(pots,days)
+            # print(pots,days)
             return pots>=m
 
 
