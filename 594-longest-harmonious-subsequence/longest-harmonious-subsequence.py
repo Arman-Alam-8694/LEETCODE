@@ -12,12 +12,13 @@ class Solution:
         #     left+=1
 
         dictt=defaultdict(int)
+        left=0
         for right in range(n):
-            if nums[right]-1 in dictt:
-                idx=dictt[nums[right]-1]
-                answer=max(answer,right-idx+1)
-            if nums[right] not in dictt:
-                dictt[nums[right]]=right
+            while left<right and nums[right]-1>nums[left]:
+                left+=1
+            if nums[left]==nums[right]-1:
+                answer=max(answer,right-left+1)
+          
         return answer
 
         # return result
