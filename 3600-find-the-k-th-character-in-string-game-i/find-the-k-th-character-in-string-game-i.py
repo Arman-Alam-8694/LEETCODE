@@ -7,6 +7,6 @@ class Solution:
                 new=(ord(i)+1)%(ord("z")+1)
                 temp+=chr(new)
             word=word+temp
-            print(word)
+            # print(word)
         return word[k-1]
         
