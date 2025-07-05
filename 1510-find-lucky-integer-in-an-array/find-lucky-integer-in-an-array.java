@@ -5,12 +5,12 @@ class Solution {
             map.put(arr[i],map.getOrDefault(arr[i],0)+1);
         }
         
-        // List<Map.Entry<Integer>>map_entry=map.entrySet()
+        Set<Map.Entry<Integer,Integer>> map_entry=map.entrySet();
         int result=-1;
-        Set<Integer> map_keys=map.keySet();
-        for(Integer i:map_keys){
-            if (map.get(i)==i){
-                result=Math.max(result,i);
+        // Set<Integer> map_keys=map.keySet();
+        for(Map.Entry<Integer,Integer> i:map_entry){
+            if (i.getValue().equals(i.getKey())){
+                result=Math.max(result,i.getKey());
             }
         }
         return result;
