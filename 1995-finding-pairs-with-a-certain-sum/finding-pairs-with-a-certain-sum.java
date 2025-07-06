@@ -1,7 +1,7 @@
 class FindSumPairs {
 
     int[] nums1,nums2;
-    Map<Integer,Integer> map1=new HashMap<>();
+    Map<Integer,Integer> map1=new TreeMap<>();
     Map<Integer,Integer> map2=new HashMap<>();
     public FindSumPairs(int[] nums1, int[] nums2) {
         this.nums1=nums1;
@@ -31,10 +31,14 @@ class FindSumPairs {
         int result=0;
         Set<Integer> set=this.map1.keySet();
         for(Integer e:set){
+            if(e>tot){
+                break;
+            }
             Integer target=tot-e;
             if(e<=tot && this.map2.containsKey(target)){
                 result+=this.map2.get(target)*this.map1.get(e);
             }
+          
             
         }
         return result;
