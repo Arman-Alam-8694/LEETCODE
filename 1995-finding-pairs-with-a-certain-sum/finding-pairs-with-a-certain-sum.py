@@ -5,7 +5,9 @@ class FindSumPairs:
         self.nums1=nums1
         self.nums2=nums2
         self.map1=Counter(nums1)
-        self.map2=Counter(nums2)
+        self.mapp1=sorted(self.map1.keys())
+        
+        self.map2=Counter(self.nums2)
         
 
     def add(self, index: int, val: int) -> None:
@@ -22,12 +24,14 @@ class FindSumPairs:
 
     def count(self, tot: int) -> int:
         self.answer=0
-        for i,j in self.map1.items():
+        for i in self.mapp1:
             if i<=tot:
                 target=tot-i
                 if target in self.map2:
                    
-                    self.answer+=j*self.map2[target]
+                    self.answer+=self.map1[i]*self.map2[target]
+            else:
+                break
         return self.answer
 
         
