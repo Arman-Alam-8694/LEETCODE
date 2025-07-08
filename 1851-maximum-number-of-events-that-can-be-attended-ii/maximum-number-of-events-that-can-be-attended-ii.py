@@ -1,28 +1,14 @@
-from bisect import bisect_left
-from functools import lru_cache
-
 class Solution:
     def maxValue(self, events: List[List[int]], k: int) -> int:
-        # Sort by start time
         events.sort()
-        n = len(events)
-        
-        # Build list of start times for binary search
-        start_times = [e[0] for e in events]
-
-        @lru_cache(None)
-        def dp(i, remaining):
-            if i == n or remaining == 0:
-                return 0
-            
-            # Option 1: Skip event i
-            skip = dp(i + 1, remaining)
-            
-            # Option 2: Take event i
-            # Find next event starting after events[i][1]
-            next_i = bisect_left(start_times, events[i][1] + 1)
-            take = events[i][2] + dp(next_i, remaining - 1)
-            
-            return max(skip, take)
-        
-        return dp(0, k)
+        start_days=[e[0] for e in events]
+        n=len(events)
+        dp=[[0]*(k+1) for _ in range(n+1)]
+        for i in range(n-1,-1,-1):
+            start,end,value=events[i]
+            for j in range(1,k+1):
+                #no-take
+                dp[i][j]=dp[i+1][j]
+                next_index=bisect_left(start_days,end+1)
+                dp[i][j]=max(dp[i][j],value+dp[next_index][j-1])
+        return dp[0][k]
