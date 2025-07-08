@@ -8,7 +8,7 @@ class Solution:
         while i<n or min_heap:
             if not min_heap:
                 day=events[i][0]
-            while i<n and events[i][0]<=day and events[i][1]>=day:
+            while i<n and (events[i][0]<=day and events[i][1]>=day):
                 heapq.heappush(min_heap,events[i][1])
                 i+=1
             while min_heap and min_heap[0] < day:
