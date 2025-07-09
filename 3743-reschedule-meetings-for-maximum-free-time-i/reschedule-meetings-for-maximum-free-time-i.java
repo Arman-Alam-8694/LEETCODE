@@ -45,8 +45,8 @@ class Solution {
         for(int i=1;i<n;i++){
             prefix_sum[i]=prefix_sum[i-1]+free_space.get(i);
         }
-        System.out.println(free_space);
-        System.out.println(Arrays.toString(prefix_sum));
+        // System.out.println(free_space);
+        // System.out.println(Arrays.toString(prefix_sum));
         int result=0;
         if(free_space.size()<=k){
             return prefix_sum[prefix_sum.length-1];
