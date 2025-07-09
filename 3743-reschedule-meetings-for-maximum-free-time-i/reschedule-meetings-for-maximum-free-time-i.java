@@ -26,39 +26,45 @@
         
 
 
+import java.util.*;
+
 class Solution {
     public int maxFreeTime(int eventTime, int k, int[] startTime, int[] endTime) {
-        int n =startTime.length;
-        List<Integer> free_space=new ArrayList<>();
-        int prev=0;
-        for(int i=0;i<n;i++){
-            free_space.add(startTime[i]-prev);
-            prev=endTime[i];
+        int n = startTime.length;
+        int[] freeSpace = new int[n + 1];  // At most n+1 gaps
+        int idx = 0;
+        int prev = 0;
 
+        // Step 1: Build free space array
+        for (int i = 0; i < n; i++) {
+            freeSpace[idx++] = startTime[i] - prev;
+            prev = endTime[i];
         }
-        if (prev<eventTime){
-            free_space.add(eventTime-prev);
+        if (prev < eventTime) {
+            freeSpace[idx++] = eventTime - prev;
         }
-        n =free_space.size();
-        int[] prefix_sum=new int[n];
-        prefix_sum[0]=free_space.get(0);
-        for(int i=1;i<n;i++){
-            prefix_sum[i]=prefix_sum[i-1]+free_space.get(i);
+
+        // Resize freeSpace to actual length
+        int[] gaps = Arrays.copyOf(freeSpace, idx);
+
+        // Step 2: Build prefix sum array
+        int[] prefixSum = new int[idx];
+        prefixSum[0] = gaps[0];
+        for (int i = 1; i < idx; i++) {
+            prefixSum[i] = prefixSum[i - 1] + gaps[i];
         }
-        // System.out.println(free_space);
-        // System.out.println(Arrays.toString(prefix_sum));
-        int result=0;
-        if(free_space.size()<=k){
-            return prefix_sum[prefix_sum.length-1];
+
+        // Step 3: Max free time window of size k+1
+        if (idx <= k) {
+            return prefixSum[idx - 1];
         }
-        for(int i=0;i<prefix_sum.length-k;i++){
-            int neww=prefix_sum[i+k]-(i!=0?prefix_sum[i-1]:0);
-            result=Math.max(result,neww);
+
+        int result = 0;
+        for (int i = 0; i + k < idx; i++) {
+            int currentSum = prefixSum[i + k] - (i > 0 ? prefixSum[i - 1] : 0);
+            result = Math.max(result, currentSum);
         }
-        
+
         return result;
-
-
-        
     }
 }
