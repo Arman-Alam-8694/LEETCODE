@@ -7,12 +7,12 @@ class Solution:
             prev_start=endTime[i]
         if prev_start<eventTime:
             free_space.append(eventTime-prev_start)
-        print(free_space)
+        # print(free_space)
         prefix_sum=[0]*len(free_space)
         prefix_sum[0]=free_space[0]
         for i in range(1,len(free_space)):
             prefix_sum[i]=free_space[i]+prefix_sum[i-1]
-        print(prefix_sum)
+        # print(prefix_sum)
 
         result=0
         if len(free_space)<=k:
