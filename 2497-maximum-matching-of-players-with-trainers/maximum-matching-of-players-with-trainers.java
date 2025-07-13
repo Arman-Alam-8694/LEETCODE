@@ -15,8 +15,8 @@
 
 class Solution {
     public int matchPlayersAndTrainers(int[] players, int[] trainers) {
-        Arrays.sort(players);
-        Arrays.sort(trainers);
+        Arrays.parallelSort(players);
+        Arrays.parallelSort(trainers);
         System.out.println(Arrays.toString(players));
         int t=trainers.length-1;
         int result=0;
