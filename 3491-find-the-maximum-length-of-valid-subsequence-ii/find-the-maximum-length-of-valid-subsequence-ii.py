@@ -6,7 +6,5 @@ class Solution:
             num%=k
             for prev in range(k):
                 dp[num][prev]=dp[prev][num]+1
-        for i in range(k):
-            for j in range(k):
-                answer=max(answer,dp[i][j])
+                answer=max(answer,dp[num][prev])
         return answer
