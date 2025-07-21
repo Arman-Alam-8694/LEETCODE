@@ -1,17 +1,22 @@
 class Solution:
     def makeFancyString(self, s: str) -> str:
-        count=1
-        chr=None
-        result=[]
-        i=0
+        answer=[s[0]]
         prev=None
+        cnt=0
         for i in s:
-            if prev==i:
-                count+=1
+            cnt+=1
+            if prev is not None:
+                if i==prev and cnt==3:
+                    cnt-=1
+
+                elif i!=prev:
+                    answer.append(i)
+                    prev=i
+                    cnt=1
+                else:
+                    answer.append(i)
             else:
-                count=1
-            prev=i
-            if count<3:
-                result.append(prev)
-        return "".join(result)
+                prev=i
+
+        return "".join(answer)
         
