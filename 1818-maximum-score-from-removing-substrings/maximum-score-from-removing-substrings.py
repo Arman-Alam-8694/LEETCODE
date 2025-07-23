@@ -1,36 +1,21 @@
 class Solution:
     def maximumGain(self, s: str, x: int, y: int) -> int:
-
-        def helper(pat1,pat2,xx,yy):
-            score=0
-            stack=[]
-            for i in s:
-                if stack and stack[-1]+i==pat1:
+        def remove_pattern(s, a, b, score):
+            stack = []
+            total = 0
+            for ch in s:
+                if stack and stack[-1] == a and ch == b:
                     stack.pop()
-                    score+=xx
+                    total += score
                 else:
-                    stack.append(i)
-            second=[]
-            for i in stack:
-                if second and second[-1]+i==pat2:
-                    second.pop()
-                    score+=yy
-                else:
-                    second.append(i)
-            return score
+                    stack.append(ch)
+            return ''.join(stack), total
         
-        if x>=y:
-            xx=x
-            pat1="ab"
-            pat2="ba"
-            yy=y
+        if x >= y:
+            s, score1 = remove_pattern(s, 'a', 'b', x)
+            _, score2 = remove_pattern(s, 'b', 'a', y)
         else:
-            xx=y
-            yy=x
-            pat2="ab"
-            pat1="ba"
+            s, score1 = remove_pattern(s, 'b', 'a', y)
+            _, score2 = remove_pattern(s, 'a', 'b', x)
         
-        return helper(pat1,pat2,xx,yy)
-
-            
-
+        return score1 + score2
