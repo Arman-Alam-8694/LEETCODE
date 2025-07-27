@@ -14,9 +14,8 @@ class Solution:
                     break
                 right+=1
         
-            if nums[i-1]!=nums[i] and left<i and i<right :
-                if (nums[left]>nums[i] and nums[right]>nums[i]) or (nums[left]<nums[i] and nums[right]<nums[i]):
-                    answer+=1
+            if (nums[left]>nums[i] and nums[right]>nums[i]) or (nums[left]<nums[i] and nums[right]<nums[i]):
+                answer+=1
                 left=i
         return answer
 
