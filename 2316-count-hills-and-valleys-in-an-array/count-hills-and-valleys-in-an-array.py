@@ -9,16 +9,13 @@ class Solution:
                 continue
             if right<i:
                 right=i+1
-            while nums[i-1]!=nums[i] and right<n:
+            while nums[i-1]!=nums[i] and right<n-1:
                 if nums[right]!=nums[i]:
                     break
                 right+=1
         
-            if nums[i-1]!=nums[i] and left<i and i<right and right<n:
-                # print(left,i,right)
-                # print(nums[left],nums[i],nums[right])
+            if nums[i-1]!=nums[i] and left<i and i<right :
                 if (nums[left]>nums[i] and nums[right]>nums[i]) or (nums[left]<nums[i] and nums[right]<nums[i]):
-                    # print(nums[left],nums[i],nums[right])
                     answer+=1
                 left=i
         return answer
