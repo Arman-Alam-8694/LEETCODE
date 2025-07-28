@@ -1,19 +1,28 @@
 class Solution:
     def countMaxOrSubsets(self, nums: List[int]) -> int:
-        maxx=0
-        count={0:1}
+        max_or=0
         for i in nums:
-            current={}
-            for k,v in count.items():
-                new=i|k
-                maxx=max(maxx,new)
-                if new in current:
-                    current[new]+=v
-                else:
-                    current[new]=v
-            for k,v in current.items():
-                if k in count:
-                    count[k]+=v
-                else:
-                    count[k]=v
-        return count[maxx]
+            max_or|=i
+
+
+        print(max_or)
+        counts=0
+        n=len(nums)
+        def recur(idx,cur_cal,max_or):
+            nonlocal counts
+            
+            if idx>=n:
+                if cur_cal==max_or:
+                    # print('jdoifd')
+                    counts+=1
+                return 
+            
+            recur(idx+1,cur_cal,max_or)
+            recur(idx+1,cur_cal|nums[idx],max_or)
+
+
+        recur(0,0,max_or)
+        return counts
+        
+
+        
