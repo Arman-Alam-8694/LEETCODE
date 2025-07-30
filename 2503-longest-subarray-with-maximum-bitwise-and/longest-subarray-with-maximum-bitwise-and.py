@@ -7,7 +7,8 @@ class Solution:
             if i==max_and:
                 temp+=1
             else:
+                result=max(result,temp)
                 temp=0
-            result=max(result,temp)
+        result=max(result,temp)
         return result
         
