@@ -1,10 +1,10 @@
 import java.util.*;
+import java.math.BigInteger;
 
 class Solution {
     public int[] productQueries(int n, int[][] queries) {
         long mod = 1_000_000_007L;
 
-        // Step 1: Get powers of 2 from binary representation
         String binary = Integer.toBinaryString(n);
         List<Integer> powers = new ArrayList<>();
         int cur = 0;
@@ -15,16 +15,24 @@ class Solution {
             cur++;
         }
 
-        // Step 2: Process each query directly
+        // Prefix with BigInteger
+        BigInteger[] prefix = new BigInteger[powers.size()];
+        prefix[0] = BigInteger.valueOf(powers.get(0));
+        for (int i = 1; i < powers.size(); i++) {
+            prefix[i] = prefix[i - 1].multiply(BigInteger.valueOf(powers.get(i)));
+        }
+
         int[] answer = new int[queries.length];
         for (int q = 0; q < queries.length; q++) {
             int l = queries[q][0];
             int r = queries[q][1];
-            long product = 1;
-            for (int i = l; i <= r; i++) {
-                product = (product * powers.get(i)) % mod;
+            BigInteger product;
+            if (l == 0) {
+                product = prefix[r];
+            } else {
+                product = prefix[r].divide(prefix[l - 1]);
             }
-            answer[q] = (int) product;
+            answer[q] = product.mod(BigInteger.valueOf(mod)).intValue();
         }
 
         return answer;
