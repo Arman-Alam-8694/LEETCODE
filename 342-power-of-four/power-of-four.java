@@ -1,5 +1,6 @@
 class Solution {
     public boolean isPowerOfFour(int n) {
+        if(n<=0){return false;}
         String bin =Integer.toBinaryString(n);
         int ones=0;
         int zeroes=0;
