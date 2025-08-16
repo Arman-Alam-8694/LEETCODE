@@ -1,12 +1,13 @@
 class Solution {
     public int maximum69Number (int num) {
-        StringBuilder nums = new StringBuilder(String.valueOf(num));
+        String s = String.valueOf(num);   // convert int → String
+        int idx = s.indexOf('6');         // find first '6'
 
-        int idx = nums.indexOf("6");  // find first '6'
         if (idx != -1) {
-            nums.setCharAt(idx, '9'); // replace with '9'
+            // replace only the first '6'
+            s = s.substring(0, idx) + '9' + s.substring(idx + 1);
         }
 
-        return Integer.valueOf(nums.toString());
+        return Integer.parseInt(s);       // convert back to int
     }
 }
