@@ -40,19 +40,20 @@ class Solution:
                 # print(answer)
                 # print(nextr,nextc)
                 start=[nextr,nextc]
-                if nextc<0 and nextr>=row:
+                # if nextc<0 and nextr>=row:
                     
-                    start=[nextr-1,nextc+2]
-                    break
-                elif nextc<0:
-                    
-                    start=[nextr,nextc+1]
-                    break
-                elif nextr>=row:
+                #     start=[nextr-1,nextc+2]
+                #     break
+                
+                if nextr>=row:
                     # print(nextr,nextc)
                     # print("in this one")
                     start=[nextr-1,nextc+2]
                     # print(start)
+                    break
+                elif nextc<0:
+                    
+                    start=[nextr,nextc+1]
                     break
 
         return answer
