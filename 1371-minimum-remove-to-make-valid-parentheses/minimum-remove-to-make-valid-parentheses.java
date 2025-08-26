@@ -2,32 +2,34 @@ import java.util.*;
 
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        Stack<Integer> stack = new Stack<>();
-        Set<Integer> removeSet = new HashSet<>();
+        Stack<List<Object>> stack = new Stack<>();
+        List<Integer> extra = new ArrayList<>();
 
-        // Step 1: find all invalid indices
+        // Step 1: Traverse the string
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
             if (c == '(') {
-                stack.push(i); // store index of '('
+                // push (char, index) as list
+                stack.push(Arrays.asList(c, i));
             } 
             else if (c == ')') {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // valid pair found
+                if (!stack.isEmpty() && (char) stack.peek().get(0) == '(') {
+                    stack.pop(); // valid pair, remove
                 } else {
-                    removeSet.add(i); // extra ')'
+                    extra.add(i); // unmatched ')'
                 }
             }
         }
 
-        // Step 2: add any remaining '(' indices to removeSet
+        // Step 2: add any leftover '(' indices from the stack
         while (!stack.isEmpty()) {
-            removeSet.add(stack.pop());
+            extra.add((int) stack.pop().get(1)); // get index of '('
         }
 
-        // Step 3: build result skipping invalid indices
+        // Step 3: build final string, skipping invalid indices
         StringBuilder result = new StringBuilder();
+        Set<Integer> removeSet = new HashSet<>(extra);
         for (int i = 0; i < s.length(); i++) {
             if (!removeSet.contains(i)) {
                 result.append(s.charAt(i));
