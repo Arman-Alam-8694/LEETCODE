@@ -5,7 +5,7 @@ class Solution {
         for(int[] param:dimensions){
             int l=param[0];
             int b=param[1];
-            double d=Math.sqrt(l*l+b*b);
+            double d=l*l+b*b;
             if(d>max_diagonal){
                 area=l*b;
                 max_diagonal=d;
