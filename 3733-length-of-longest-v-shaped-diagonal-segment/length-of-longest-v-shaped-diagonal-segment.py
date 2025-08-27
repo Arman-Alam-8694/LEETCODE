@@ -11,24 +11,20 @@ class Solution:
 
         visiting = set()
 
-        # diagonal directions in clockwise order
-        dirs = [(-1, 1), (1, 1), (1, -1), (-1, -1)]  # UR, DR, DL, UL
+      
+        dirs = [(-1, 1), (1, 1), (1, -1), (-1, -1)]  
 
         @cache
         def recur(r, c, d, turn):
-            """
-            Start from (r,c) which is either 2 or 0.
-            d = current diagonal direction (0..3).
-            turn = 1 if still allowed to turn once clockwise, else 0.
-            """
-            state = (r, c, d)
+           
+            state = (r, c)
             if state in visiting:
-                return 0  # avoid infinite loops
+                return 0 
             visiting.add(state)
 
             curr = grid[r][c]
             need = 0 if curr == 2 else 2
-            best = 1  # count current cell
+            best = 1  
 
             # continue straight
             dr, dc = dirs[d]
@@ -44,14 +40,14 @@ class Solution:
                 if inb(nr2, nc2) and grid[nr2][nc2] == need:
                     best = max(best, 1 + recur(nr2, nc2, nd, 0))
 
-            visiting.remove(state)   # ✅ important: allow reuse in other paths
+            visiting.remove(state)  
             return best
 
         # start only from 1 → diagonally into 2
         for i in range(row):
             for j in range(col):
                 if grid[i][j] == 1:
-                    ans = max(ans, 1)  # at least just '1'
+                    ans = max(ans, 1) 
                     for d, (dr, dc) in enumerate(dirs):
                         ni, nj = i + dr, j + dc
                         if inb(ni, nj) and grid[ni][nj] == 2:
