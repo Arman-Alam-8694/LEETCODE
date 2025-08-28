@@ -1,60 +1,53 @@
+import java.util.*;
+
 class Solution {
     public int[][] sortMatrix(int[][] grid) {
         int row = grid.length;
         int col = grid[0].length;
 
-        // process diagonals starting from first row (r = 0, c = col-1..0) -> ascending
+        // Top-right diagonals (row = 0, c = col-1..0) → ascending
         for (int c = col - 1; c > 0; c--) {
-            List<Integer> collect = new ArrayList<>();
-            int r = 0;
-            int tc = c;
-
-            while (r < row && tc < col) {
-                collect.add(grid[r][tc]);
-                r++;
-                tc++;
-            }
-
-            // sort ascending
-            Collections.sort(collect);
-
-            r = 0;
-            tc = c;
-            int idx = 0;
-            while (r < row && tc < col) {
-                grid[r][tc] = collect.get(idx);
-                r++;
-                tc++;
-                idx++;
-            }
+            processDiagonal(grid, 0, c, true); // ascending
         }
 
-        // process diagonals starting from first column (c = 0, r = 1..row-1) -> descending
+        // Bottom-left diagonals (col = 0, r = 1..row-1) → descending
         for (int r = 0; r < row; r++) {
-            List<Integer> collect = new ArrayList<>();
-            int rc = r;
-            int c = 0;
-
-            while (rc < row && c < col) {
-                collect.add(grid[rc][c]);
-                rc++;
-                c++;
-            }
-
-            // sort descending
-            collect.sort(Collections.reverseOrder());
-
-            rc = r;
-            c = 0;
-            int idx = 0;
-            while (rc < row && c < col) {
-                grid[rc][c] = collect.get(idx);
-                rc++;
-                c++;
-                idx++;
-            }
+            processDiagonal(grid, r, 0, false); // descending
         }
 
         return grid;
+    }
+
+    // Helper to collect, sort, and write back a diagonal
+    private void processDiagonal(int[][] grid, int r, int c, boolean ascending) {
+        int row = grid.length;
+        int col = grid[0].length;
+
+        List<Integer> collect = new ArrayList<>();
+
+        // Collect diagonal
+        int i = r, j = c;
+        while (i < row && j < col) {
+            collect.add(grid[i][j]);
+            i++;
+            j++;
+        }
+
+        // Sort based on order
+        if (ascending) {
+            Collections.sort(collect);
+        } else {
+            collect.sort(Collections.reverseOrder());
+        }
+
+        // Write back
+        i = r;
+        j = c;
+        int idx = 0;
+        while (i < row && j < col) {
+            grid[i][j] = collect.get(idx++);
+            i++;
+            j++;
+        }
     }
 }
