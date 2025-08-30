@@ -19,16 +19,10 @@ class Solution {
                 for(int tr=r;tr<r+3;tr++){
                     for(int tc=c;tc<c+3;tc++){
                         char value=board[tr][tc];
-                        // System.out.println(tr);
-                        // System.out.println(tc);
-                        
-                        // System.out.println(value);
+                       
                         if(value!='.'){
                             if(rows.get(tr).contains(value) | cols.get(tc).contains(value)|curr.contains(value)){
-                                // System.out.println(tr);
-                                // System.out.println(tc);
-                                // System.out.println(rows);
-                                // System.out.println(cols);
+                         
                                 return false;
                             }
                             rows.get(tr).add(value);
