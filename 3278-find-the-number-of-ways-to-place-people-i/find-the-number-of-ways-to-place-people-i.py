@@ -8,4 +8,6 @@ class Solution:
                 if y>P[j][1]>=P[i][1]:
                     ans+=1
                     y=P[j][1]
+                if y==P[i][1]:
+                    break
         return ans
