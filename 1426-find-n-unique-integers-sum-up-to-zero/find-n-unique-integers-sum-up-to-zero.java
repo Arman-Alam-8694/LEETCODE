@@ -11,9 +11,7 @@ class Solution {
             left+=1;
             right-=1;
         }
-        if(left==right){
-            answer[left]=0;
-        }
+      
         return answer;
 
         
