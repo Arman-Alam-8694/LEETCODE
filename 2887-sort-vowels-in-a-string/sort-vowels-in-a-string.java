@@ -14,17 +14,17 @@ class Solution {
         Collections.sort(chhar);
         System.out.println(chhar);
         int pointer=0;
-        String answer="";
+        StringBuilder answer=new StringBuilder();
         for(int i=0;i<s.length();i++){
             if((indexx.size()>pointer) && (indexx.get(pointer)==i)){
-                answer+=chhar.get(pointer);
+                answer.append(chhar.get(pointer));
                 pointer+=1;
             }else{
-                answer+=s.charAt(i);
+                answer.append(s.charAt(i));
             }
 
         }
-        return answer;
+        return answer.toString();
 
        
 
