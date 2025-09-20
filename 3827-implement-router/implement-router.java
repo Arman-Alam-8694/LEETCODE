@@ -1,91 +1,151 @@
 import java.util.*;
 
-class Router {
+public class Router {
 
-    class Packet {
+    private static class Packet {
         int src, dst, ts;
-        public Packet(int s, int d, int t) {
-            src = s; dst = d; ts = t;
-        }
+        Packet(int s, int d, int t) { src = s; dst = d; ts = t; }
     }
 
-    int memoryLimit;
-    Queue<Packet> queue; // global FIFO
-    Set<String> seen; // to check duplicates
-    Map<Integer, ArrayList<Integer>> destMap; // destination -> timestamps
+    private final int memoryLimit;
+    private final Deque<Packet> fifo;                 // global FIFO
+    private final Set<String> seen;                   // duplicate check
+    private final Map<Integer, ArrayList<Integer>> destTimestamps; // dst -> timestamps list
+    private final Map<Integer, Integer> destHead;     // dst -> index of first valid element
+
+    // compaction threshold (tune as needed)
+    private static final int COMPACT_THRESHOLD = 1024;
 
     public Router(int memoryLimit) {
         this.memoryLimit = memoryLimit;
-        queue = new LinkedList<>();
-        seen = new HashSet<>();
-        destMap = new HashMap<>();
+        this.fifo = new ArrayDeque<>();
+        this.seen = new HashSet<>();
+        this.destTimestamps = new HashMap<>();
+        this.destHead = new HashMap<>();
     }
 
     public boolean addPacket(int source, int destination, int timestamp) {
-        String key = source + "," + destination + "," + timestamp;
+        String key = makeKey(source, destination, timestamp);
         if (seen.contains(key)) return false;
 
         // Evict oldest if memory full
-        if (queue.size() == memoryLimit) {
-            Packet old = queue.poll();
-            String oldKey = old.src + "," + old.dst + "," + old.ts;
+        if (fifo.size() == memoryLimit) {
+            Packet old = fifo.pollFirst();
+            String oldKey = makeKey(old.src, old.dst, old.ts);
             seen.remove(oldKey);
 
-            ArrayList<Integer> list = destMap.get(old.dst);
-            list.remove(0); // remove oldest timestamp
-            if (list.isEmpty()) destMap.remove(old.dst);
+            // Advance the head index for that destination
+            ArrayList<Integer> list = destTimestamps.get(old.dst);
+            int head = destHead.getOrDefault(old.dst, 0);
+
+            // It's safe to assume list.get(head) == old.ts because adds are in FIFO order.
+            // But to be defensive, we still check bounds.
+            if (list != null && head < list.size()) {
+                destHead.put(old.dst, head + 1);
+                // if list is exhausted, remove structures
+                if (head + 1 >= list.size()) {
+                    destTimestamps.remove(old.dst);
+                    destHead.remove(old.dst);
+                } else {
+                    // compact occasionally to reclaim memory
+                    if (head + 1 >= COMPACT_THRESHOLD && head + 1 >= list.size() / 2) {
+                        compactList(old.dst);
+                    }
+                }
+            }
         }
 
         // Add new packet
         Packet p = new Packet(source, destination, timestamp);
-        queue.offer(p);
+        fifo.addLast(p);
         seen.add(key);
 
-        destMap.putIfAbsent(destination, new ArrayList<>());
-        destMap.get(destination).add(timestamp); // append at end (timestamps increasing)
+        destTimestamps.putIfAbsent(destination, new ArrayList<>());
+        destHead.putIfAbsent(destination, 0);
+        destTimestamps.get(destination).add(timestamp);
+
         return true;
     }
 
     public int[] forwardPacket() {
-        if (queue.isEmpty()) return new int[0];
-        Packet p = queue.poll();
-        String key = p.src + "," + p.dst + "," + p.ts;
+        if (fifo.isEmpty()) return new int[0];
+
+        Packet p = fifo.pollFirst();
+        String key = makeKey(p.src, p.dst, p.ts);
         seen.remove(key);
 
-        ArrayList<Integer> list = destMap.get(p.dst);
-        list.remove(0); // remove oldest timestamp
-        if (list.isEmpty()) destMap.remove(p.dst);
+        ArrayList<Integer> list = destTimestamps.get(p.dst);
+        int head = destHead.getOrDefault(p.dst, 0);
+
+        if (list != null && head < list.size()) {
+            destHead.put(p.dst, head + 1);
+            if (head + 1 >= list.size()) {
+                destTimestamps.remove(p.dst);
+                destHead.remove(p.dst);
+            } else {
+                if (head + 1 >= COMPACT_THRESHOLD && head + 1 >= list.size() / 2) {
+                    compactList(p.dst);
+                }
+            }
+        }
 
         return new int[]{p.src, p.dst, p.ts};
     }
 
     public int getCount(int destination, int startTime, int endTime) {
-        if (!destMap.containsKey(destination)) return 0;
-        ArrayList<Integer> list = destMap.get(destination);
+        ArrayList<Integer> list = destTimestamps.get(destination);
+        if (list == null) return 0;
+        int head = destHead.getOrDefault(destination, 0);
+        int n = list.size();
+        if (head >= n) return 0;
 
-        // Binary search for lower and upper bounds
-        int left = lowerBound(list, startTime);
-        int right = upperBound(list, endTime);
-        return right - left;
+        // search in [head, n-1]
+        int left = lowerBound(list, head, n - 1, startTime);
+        int right = upperBound(list, head, n - 1, endTime);
+        return Math.max(0, right - left);
     }
 
-    private int lowerBound(ArrayList<Integer> list, int target) {
-        int l = 0, r = list.size();
-        while (l < r) {
-            int m = l + (r - l) / 2;
-            if (list.get(m) >= target) r = m;
-            else l = m + 1;
-        }
-        return l;
+    // ---------- helpers ----------
+
+    private String makeKey(int s, int d, int t) {
+        return s + "," + d + "," + t;
     }
 
-    private int upperBound(ArrayList<Integer> list, int target) {
-        int l = 0, r = list.size();
-        while (l < r) {
-            int m = l + (r - l) / 2;
-            if (list.get(m) > target) r = m;
-            else l = m + 1;
+    // binary search for first index i in [l..r] with list.get(i) >= target
+    private int lowerBound(ArrayList<Integer> list, int l, int r, int target) {
+        int low = l, high = r + 1; // [low, high)
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) >= target) high = mid;
+            else low = mid + 1;
         }
-        return l;
+        return low;
+    }
+
+    // binary search for first index i in [l..r] with list.get(i) > target
+    private int upperBound(ArrayList<Integer> list, int l, int r, int target) {
+        int low = l, high = r + 1; // [low, high)
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) > target) high = mid;
+            else low = mid + 1;
+        }
+        return low;
+    }
+
+    // compact the arraylist for a destination by removing consumed prefix
+    private void compactList(int dst) {
+        ArrayList<Integer> list = destTimestamps.get(dst);
+        Integer headObj = destHead.get(dst);
+        if (list == null || headObj == null) return;
+        int head = headObj;
+        if (head == 0) return; // nothing to compact
+
+        // copy tail into new list
+        ArrayList<Integer> newList = new ArrayList<>(list.size() - head);
+        for (int i = head; i < list.size(); i++) newList.add(list.get(i));
+
+        destTimestamps.put(dst, newList);
+        destHead.put(dst, 0);
     }
 }
