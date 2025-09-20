@@ -1,61 +1,72 @@
 import java.util.*;
 
 class Spreadsheet {
-
-    Map<String, Integer> map = new HashMap<>();
+    List<int[]> sheet = new ArrayList<>();
 
     public Spreadsheet(int rows) {
-        // rows are not used in HashMap approach, but we keep the constructor
+        for (int i = 0; i < rows; i++) {
+            int[] r = new int[26];
+            sheet.add(r);
+        }
     }
 
     public void setCell(String cell, int value) {
-        map.put(cell, value);
+        char col = cell.charAt(0);
+        char temp = 'A';
+        
+        StringBuilder sb = new StringBuilder();
+        for (int k = 1; k < cell.length(); k++) {
+            sb.append(cell.charAt(k));
+        }
+        int realCol = col - temp;
+        int realRow = Integer.parseInt(sb.toString());
+        
+        sheet.get(realRow - 1)[realCol] = value;
     }
 
     public void resetCell(String cell) {
-        map.remove(cell);
+        char col = cell.charAt(0);
+        char temp = 'A';
+        
+        StringBuilder sb = new StringBuilder();
+        for (int k = 1; k < cell.length(); k++) {
+            sb.append(cell.charAt(k));
+        }
+        int realCol = col - temp;
+        int realRow = Integer.parseInt(sb.toString());
+        
+        sheet.get(realRow - 1)[realCol] = 0;
     }
 
     public int getValue(String formula) {
-        // Expect formula like "=A1+5" or "=10+B2"
-        int io = formula.indexOf('+');
-
-        // First operand (skip '=' at start)
-        StringBuilder sb1 = new StringBuilder();
-        for (int i = 1; i < io; i++) {
-            sb1.append(formula.charAt(i));
-        }
-        String cell1 = sb1.toString();
-
-        // Second operand
-        StringBuilder sb2 = new StringBuilder();
-        for (int i = io + 1; i < formula.length(); i++) {
-            sb2.append(formula.charAt(i));
-        }
-        String cell2 = sb2.toString();
-
-        int val1;
-        if (Character.isLetter(cell1.charAt(0))) { // Cell reference
-            val1 = map.getOrDefault(cell1, 0);
-        } else { // Integer literal
-            val1 = Integer.parseInt(cell1);
+        // Remove '=' at the start if present
+        if (formula.charAt(0) == '=') {
+            formula = formula.substring(1);
         }
 
-        int val2;
-        if (Character.isLetter(cell2.charAt(0))) {
-            val2 = map.getOrDefault(cell2, 0);
-        } else {
-            val2 = Integer.parseInt(cell2);
-        }
+        String[] parts = formula.split("\\+");
+        int result = 0;
 
-        return val1 + val2;
+        for (String part : parts) {
+            part = part.trim();
+            if (Character.isLetter(part.charAt(0))) {
+                // It's a cell reference
+                char col = part.charAt(0);
+                char temp = 'A';
+
+                StringBuilder sb = new StringBuilder();
+                for (int k = 1; k < part.length(); k++) {
+                    sb.append(part.charAt(k));
+                }
+                int realCol = col - temp;
+                int realRow = Integer.parseInt(sb.toString());
+                
+                result += sheet.get(realRow - 1)[realCol];
+            } else {
+                // It's a number
+                result += Integer.parseInt(part);
+            }
+        }
+        return result;
     }
 }
-
-/**
- * Your Spreadsheet object will be instantiated and called as such:
- * Spreadsheet obj = new Spreadsheet(rows);
- * obj.setCell(cell,value);
- * obj.resetCell(cell);
- * int param_3 = obj.getValue(formula);
- */
