@@ -13,9 +13,6 @@ public class Router {
     private final Map<Integer, ArrayList<Integer>> destTimestamps; // dst -> timestamps list
     private final Map<Integer, Integer> destHead;     // dst -> index of first valid element
 
-    // compaction threshold (tune as needed)
-    private static final int COMPACT_THRESHOLD = 1024;
-
     public Router(int memoryLimit) {
         this.memoryLimit = memoryLimit;
         this.fifo = new ArrayDeque<>();
@@ -34,23 +31,16 @@ public class Router {
             String oldKey = makeKey(old.src, old.dst, old.ts);
             seen.remove(oldKey);
 
-            // Advance the head index for that destination
-            ArrayList<Integer> list = destTimestamps.get(old.dst);
+            ArrayList<Integer> oldList = destTimestamps.get(old.dst);
             int head = destHead.getOrDefault(old.dst, 0);
 
-            // It's safe to assume list.get(head) == old.ts because adds are in FIFO order.
-            // But to be defensive, we still check bounds.
-            if (list != null && head < list.size()) {
+            // Advance the head index for that destination
+            if (oldList != null && head < oldList.size()) {
                 destHead.put(old.dst, head + 1);
-                // if list is exhausted, remove structures
-                if (head + 1 >= list.size()) {
+                if (head + 1 >= oldList.size()) {
+                    // list exhausted -> remove structures
                     destTimestamps.remove(old.dst);
                     destHead.remove(old.dst);
-                } else {
-                    // compact occasionally to reclaim memory
-                    if (head + 1 >= COMPACT_THRESHOLD && head + 1 >= list.size() / 2) {
-                        compactList(old.dst);
-                    }
                 }
             }
         }
@@ -82,10 +72,6 @@ public class Router {
             if (head + 1 >= list.size()) {
                 destTimestamps.remove(p.dst);
                 destHead.remove(p.dst);
-            } else {
-                if (head + 1 >= COMPACT_THRESHOLD && head + 1 >= list.size() / 2) {
-                    compactList(p.dst);
-                }
             }
         }
 
@@ -131,21 +117,5 @@ public class Router {
             else low = mid + 1;
         }
         return low;
-    }
-
-    // compact the arraylist for a destination by removing consumed prefix
-    private void compactList(int dst) {
-        ArrayList<Integer> list = destTimestamps.get(dst);
-        Integer headObj = destHead.get(dst);
-        if (list == null || headObj == null) return;
-        int head = headObj;
-        if (head == 0) return; // nothing to compact
-
-        // copy tail into new list
-        ArrayList<Integer> newList = new ArrayList<>(list.size() - head);
-        for (int i = head; i < list.size(); i++) newList.add(list.get(i));
-
-        destTimestamps.put(dst, newList);
-        destHead.put(dst, 0);
     }
 }
