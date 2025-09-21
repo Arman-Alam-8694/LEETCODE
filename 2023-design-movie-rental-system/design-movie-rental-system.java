@@ -2,40 +2,12 @@ import java.util.*;
 
 class MovieRentingSystem {
 
-    // Class to represent a movie copy (rented or unrented)
-    static class Rental {
-        int price, shop, movie;
-
-        public Rental(int price, int shop, int movie) {
-            this.price = price;
-            this.shop = shop;
-            this.movie = movie;
-        }
-
-        // equals() and hashCode() are still required for safe remove
-        @Override
-        public boolean equals(Object o) {
-            if (!(o instanceof Rental)) return false;
-            Rental r = (Rental) o;
-            return this.price == r.price && this.shop == r.shop && this.movie == r.movie;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(price, shop, movie);
-        }
-    }
-
     Map<String, Integer> getPrice = new HashMap<>();
+    Map<Integer, TreeSet<int[]>> movieToShop = new HashMap<>();
+
     
-    // Unrented copies per movie, sorted by price -> shop
-    Map<Integer, TreeSet<Rental>> movieToShop = new HashMap<>();
-    
-    // Rented movies, sorted by price -> shop -> movie
-    TreeSet<Rental> rented = new TreeSet<>(
-        Comparator.comparingInt((Rental r) -> r.price)
-                  .thenComparingInt(r -> r.shop)
-                  .thenComparingInt(r -> r.movie)
+    TreeSet<int[]> rented = new TreeSet<>(
+        (a, b) -> a[0] != b[0] ? a[0] - b[0] : (a[1] != b[1] ? a[1] - b[1] : a[2] - b[2])
     );
 
     public MovieRentingSystem(int n, int[][] entries) {
@@ -45,10 +17,9 @@ class MovieRentingSystem {
             getPrice.put(key, price);
 
             movieToShop.putIfAbsent(movie, new TreeSet<>(
-                Comparator.comparingInt((Rental r) -> r.price)
-                          .thenComparingInt(r -> r.shop)
+                (a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]
             ));
-            movieToShop.get(movie).add(new Rental(price, shop, movie));
+            movieToShop.get(movie).add(new int[]{price, shop});
         }
     }
 
@@ -57,9 +28,10 @@ class MovieRentingSystem {
         if (!movieToShop.containsKey(movie)) return res;
 
         int count = 0;
-        for (Rental r : movieToShop.get(movie)) {
-            res.add(r.shop);
-            if (++count == 5) break;
+        for (int[] p : movieToShop.get(movie)) {
+            res.add(p[1]);
+            count++;
+            if (count == 5) break;
         }
         return res;
     }
@@ -67,27 +39,26 @@ class MovieRentingSystem {
     public void rent(int shop, int movie) {
         String key = shop + "," + movie;
         int price = getPrice.get(key);
-        Rental r = new Rental(price, shop, movie);
 
-        rented.add(r);
-        movieToShop.get(movie).remove(r); // safe because of equals() & hashCode()
+        rented.add(new int[]{price, shop, movie});
+        movieToShop.get(movie).remove(new int[]{price, shop});
     }
 
     public void drop(int shop, int movie) {
         String key = shop + "," + movie;
         int price = getPrice.get(key);
-        Rental r = new Rental(price, shop, movie);
 
-        rented.remove(r); // safe because of equals() & hashCode()
-        movieToShop.get(movie).add(r);
+        rented.remove(new int[]{price, shop, movie});
+        movieToShop.get(movie).add(new int[]{price, shop});
     }
 
     public List<List<Integer>> report() {
         List<List<Integer>> res = new ArrayList<>();
         int count = 0;
-        for (Rental r : rented) {
-            res.add(Arrays.asList(r.shop, r.movie));
-            if (++count == 5) break;
+        for (int[] p : rented) {
+            res.add(Arrays.asList(p[1], p[2])); 
+            count++;
+            if (count == 5) break;
         }
         return res;
     }
