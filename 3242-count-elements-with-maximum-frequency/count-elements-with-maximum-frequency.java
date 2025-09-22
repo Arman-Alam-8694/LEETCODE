@@ -1,12 +1,13 @@
 class Solution {
     public int maxFrequencyElements(int[] nums) {
-        Map<Integer,Integer> freq=new HashMap<>();
+        // Map<Integer,Integer> freq=new HashMap<>();
+        int[] freq=new int[101];
         int max=0;
         int answer=0;
         for(int e:nums){
-            int already=freq.getOrDefault(e,0);
+            int already=freq[e];
             already+=1;
-            freq.put(e,already);
+            freq[e]=already;
             if(already>max){
                 max=already;
                 answer=0;
@@ -14,9 +15,7 @@ class Solution {
             }else if(already==max){
                 answer+=max;
 
-
-            }
-            
+            } 
         }
         return answer;
         
