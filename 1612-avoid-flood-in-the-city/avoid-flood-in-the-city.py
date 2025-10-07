@@ -13,15 +13,15 @@ class Solution:
                 next_rain[lake].append(i)
         
         full_lakes = set()
-        heap = []  # (nextRainDay, lake)
+        heap = []  
         
         for i, lake in enumerate(rains):
             if lake > 0:
                 if lake in full_lakes:
-                    return []  # flood!
+                    return []  
                 full_lakes.add(lake)
                 next_rain[lake].pop(0)
-                if next_rain[lake]:  # if it rains again
+                if next_rain[lake]: 
                     heapq.heappush(heap, (next_rain[lake][0], lake))
                 ans.append(-1)
             else:
