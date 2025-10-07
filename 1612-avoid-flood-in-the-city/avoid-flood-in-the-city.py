@@ -7,7 +7,7 @@ class Solution:
         ans = []
         next_rain = defaultdict(list)
         
-        # Precompute all rain days for each lake
+  
         for i, lake in enumerate(rains):
             if lake > 0:
                 next_rain[lake].append(i)
