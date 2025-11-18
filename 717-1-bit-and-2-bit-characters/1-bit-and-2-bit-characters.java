@@ -25,9 +25,11 @@ class Solution {
                 
             }else{
                 if(bits[start]==0){
-                    return true;
+                    start+=1;
+                }else{
+                    return false;
                 }
-                return false;
+             
             }
            
        
