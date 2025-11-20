@@ -3,7 +3,6 @@ class Solution:
         sortt=sorted(intervals,key=lambda a:(a[1],-a[0]))
         answer=[]
         a,b=-1,-1
-        print(sortt)
         for i in sortt:
             if a==-1 and b==-1:
                 a=i[1]-1
@@ -37,6 +36,6 @@ class Solution:
                     
 
                 
-        print(answer)
+       
         return len(answer)
         
