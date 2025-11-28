@@ -8,9 +8,9 @@ class Solution:
                 temp=values[curr]
                 for i in path[curr]:
                     if not visited[i]:
-                        print("double",i)
+                    
                         temp+=dfs(i)
-                    print("first",curr)
+                
                     visited[i]=True
                 visited[curr]=True
                 if temp%k==0:
