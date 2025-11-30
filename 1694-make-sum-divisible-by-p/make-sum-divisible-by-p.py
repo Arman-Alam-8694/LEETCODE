@@ -15,9 +15,6 @@ class Solution:
             slen=n-(i)
             flen=n-slen
             temp=p-second
-            print(i)
-            print(second,first)
-            print(slen,flen)
             if first==0:
                 maxx=max(maxx,flen)
             if second==0 and 0 in mapp:
