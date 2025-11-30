@@ -1,16 +1,17 @@
 class Solution:
     def minSubarray(self, nums: List[int], p: int) -> int:
         n=len(nums)
-        parray=[0]*(n+1)
-        for i in range(n):
-            parray[i+1]=parray[i]+nums[i]
-        total=parray[n]
+        # parray=[0]*(n+1)
+        # for i in range(n):
+        #     parray[i+1]=parray[i]+nums[i]
+        total=sum(nums)
         if total%p==0:
             return 0
         mapp={}
         maxx=0
+        psum=0
         for i in range(n):
-            second=(total-parray[i])%p
+            second=(total-psum)%p
             first=(total-second)%p
             slen=n-(i)
             flen=n-slen
@@ -27,6 +28,7 @@ class Solution:
             else:
                 mapp[first]=flen
 
+            psum+=nums[i]
         return n-maxx if maxx!=0 else -1
 
 
