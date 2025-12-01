@@ -6,7 +6,7 @@ class Solution:
         left=min(batteries)
         batteries.sort()
         total=sum(batteries[:-n])
-        # print(total)
+       
         answer=float("inf")
 
 
@@ -18,7 +18,7 @@ class Solution:
                 if limit<batteries[i]:
                     continue
                 cur+=(limit-batteries[i])
-            print(limit,cur)
+           
             return cur<=total
 
         while left<=right:
@@ -28,6 +28,6 @@ class Solution:
                 left=mid+1
             else:
                 right=mid-1
-        print(answer)
+      
         return answer if answer!=float("inf") else 0
 
