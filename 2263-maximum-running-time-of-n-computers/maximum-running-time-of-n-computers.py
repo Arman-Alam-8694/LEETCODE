@@ -1,65 +1,65 @@
-import heapq
-
 class Solution:
     def maxRunTime(self, n: int, batteries: List[int]) -> int:
         batteries.sort()
         
-        # 1. The Stack is a list of batteries (we do NOT sum them yet)
-        stack = batteries[:-n]
+        total_len = len(batteries)
         
-        # 2. The Consumers: largest N batteries in a heap
-        consumer = batteries[-n:]
-        heapq.heapify(consumer)
+        # 1. Pointers Setup
+        # The Consumers start at index (total_len - n)
+        consumer_start_index = total_len - n
         
-        # We hold 'loose' energy here that we've taken from the stack but haven't used yet
+        # The Stack ends at index (total_len - n - 1)
+        stack_ptr = consumer_start_index - 1
+        
+        # Variable to hold loose energy we grabbed from the stack pointer
         current_spare_energy = 0
         
-        # Initial State
-        current_min = heapq.heappop(consumer)
-        batch_size = 1
-        
-        while consumer:
-            next_min = consumer[0]
+        # 2. Iterate through the consumers (Sorted Array replaces the Heap)
+        # We stop before the last element because we always peek at i+1
+        for i in range(consumer_start_index, total_len - 1):
             
-            # DISTINCT LOGIC: 
-            # If the next computer is same height, just add to batch and continue
-            if next_min == current_min:
-                heapq.heappop(consumer)
-                batch_size += 1
+            current_val = batteries[i]
+            next_val = batteries[i+1]
+            
+            # DISTINCT LOGIC:
+            # If current and next are same, we just continue.
+            # (Implicitly, the batch size grows because 'i' moves forward)
+            if current_val == next_val:
                 continue
             
+            # Batch Size:
+            # Current index 'i' minus the start gives us how many items are in the current valley
+            # e.g., if we are at index 0 and start is 0, batch is 1.
+            batch_size = (i - consumer_start_index) + 1
+            
             # GAP LOGIC:
-            # We found a gap. We need this much energy to level up the whole batch.
-            diff = next_min - current_min
+            diff = next_val - current_val
             needed = diff * batch_size
             
-            # "TEST OUT A METHOD" LOGIC:
-            # We don't have a total sum. We have a 'stack' list.
-            # While we don't have enough energy in our hand, go fetch more batteries from stack.
-            while current_spare_energy < needed and stack:
-                current_spare_energy += stack.pop() # Take one battery from the pile
+            # "TEST OUT A METHOD" LOGIC (On Demand Fetching):
+            # While we need energy and the stack pointer is valid, grab batteries!
+            while current_spare_energy < needed and stack_ptr >= 0:
+                current_spare_energy += batteries[stack_ptr]
+                stack_ptr -= 1
             
-            # NOW check if we have enough
+            # Check if we have enough
             if current_spare_energy >= needed:
-                # We have enough! Pay the cost.
+                # Pay the cost to jump to the next level
                 current_spare_energy -= needed
-                # Level up!
-                current_min = next_min
-                # Important: We essentially merged with the next_min, so we add it to batch
-                heapq.heappop(consumer)
-                batch_size += 1
+                # We continue to the next loop, effectively merging with next_val
             else:
-                # Stack is empty and we still don't have enough energy.
-                # Use whatever we have left in 'current_spare_energy'
-                return current_min + (current_spare_energy // batch_size)
-
-        # FINAL STEP:
-        # If heap is empty, we flattened all N computers to the top level.
-        # We might still have batteries left in the stack list!
+                # Not enough energy to make the full jump.
+                # Use whatever is left to raise the current batch partially.
+                return current_val + (current_spare_energy // batch_size)
         
-        # 1. Add remaining loose energy
-        while stack:
-            current_spare_energy += stack.pop()
+        # 3. FINAL STEP:
+        # If we exit the loop, we are at the level of the largest battery (batteries[-1]).
+        # But we might still have untouched batteries in the stack!
+        
+        # Simply loop the remaining stack pointer
+        while stack_ptr >= 0:
+            current_spare_energy += batteries[stack_ptr]
+            stack_ptr -= 1
             
-        # 2. Distribute it evenly
-        return current_min + (current_spare_energy // n)
+        # Distribute remaining energy among ALL n computers
+        return batteries[-1] + (current_spare_energy // n)
