@@ -32,7 +32,7 @@ class Solution:
         g.sort()
         p.sort()
         r.sort()
-        print(e,g,p,r)
+        
         return e+g+p+r
                 
 
