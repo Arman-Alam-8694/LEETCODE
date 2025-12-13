@@ -2,7 +2,7 @@ class Solution:
     def validateCoupons(self, code: List[str], businessLine: List[str], isActive: List[bool]) -> List[str]:
         result=[]
         n=len(code)
-        b=["electronics","grocery","pharmacy","restaurant"]
+        b={"electronics","grocery","pharmacy","restaurant"}
         e=[]
         g=[]
         p=[]
