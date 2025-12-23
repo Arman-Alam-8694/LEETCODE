@@ -1,24 +1,36 @@
 class Solution:
     def maxTwoEvents(self, events: List[List[int]]) -> int:
-        # Create a list to store the pair (end time, value) for events
-        pq = []
+        heap=[]
+        # heapq.heapify(heap)
+        # while heap:
+        #     h=heapq.heappop(heap)
+        #     print(h)
+        # return 0
+        events.sort(key=lambda x:(x[0],x[1]))
+        n=len(events)
+        best=0
+        maxx=0
+        maxx_end=float(inf)
+        for s,e,v in events:
+        
+            
+            while heap and heap[0][0]<s:
+                te,ts,tv=heapq.heappop(heap)
+                best=max(best,v+tv)
+                
+                if tv>maxx:
+                    maxx=tv
+                    maxx_end=te
+                elif tv==maxx and te<maxx_end:
+                    maxx_end=te
 
-        # Sort the events by their start time
-        events.sort(key=lambda x: x[0])
+            heapq.heappush(heap,(e,s,v))
+            best=max(best,v)
+            if maxx_end<s:
+                best=max(best,v+maxx)
+        
+        return best
 
-        max_val = 0
-        max_sum = 0
 
-        for event in events:
-            # Pop all valid events from the priority queue and take their maximum
-            while pq and pq[0][0] < event[0]:
-                max_val = max(max_val, pq[0][1])
-                heapq.heappop(pq)
 
-            # Calculate the maximum sum by adding the current event's value and the best previous event's value
-            max_sum = max(max_sum, max_val + event[2])
-
-            # Push the current event's end time and value into the heap
-            heapq.heappush(pq, (event[1], event[2]))
-
-        return max_sum
+        
