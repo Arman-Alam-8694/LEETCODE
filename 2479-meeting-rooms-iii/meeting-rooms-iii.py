@@ -1,40 +1,46 @@
 class Solution:
     def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
-        meetings.sort()
-    
-        # min-heap to keep track of available rooms
-        available_rooms = list(range(n))
-        heapq.heapify(available_rooms)
-        
-        # min-heap to keep track of ongoing meetings as (end_time, room)
-        busy_rooms = []
-
-        # count how many meetings each room has hosted
-        room_usage = [0] * n
-
-        for start, end in meetings:
-            duration = end - start
-
-            # Free up rooms that are done before current meeting's start
-            while busy_rooms and busy_rooms[0][0] <= start:
-                end_time, room = heapq.heappop(busy_rooms)
-                heapq.heappush(available_rooms, room)
-
-            if available_rooms:
-                # Assign room with smallest number
-                room = heapq.heappop(available_rooms)
-                heapq.heappush(busy_rooms, (end, room))
+        rooms=[0]*n
+        meetings.sort(key=lambda x:x[0])
+        heap=[i for i in range(n)]
+        # print(heap)
+        heapq.heapify(heap)
+        current=[]
+        cur_time=0
+        for start,end in meetings:
+            cur_time=max(cur_time,start)
+            # print("test.",start,end)
+            
+            while current and cur_time>=current[0][0]:
+                tend,rm,tstart=heapq.heappop(current)
+                heapq.heappush(heap,rm)
+            if heap:
+                # print("here",(start,end))
+                rm=heapq.heappop(heap)
+                heapq.heappush(current,(cur_time+(end-start),rm,cur_time))
+                # print((cur_time+(end-start),rm,cur_time))
+                rooms[rm]+=1
+            
             else:
-                # Delay meeting: take the room that gets free the earliest
-                end_time, room = heapq.heappop(busy_rooms)
-                heapq.heappush(busy_rooms, (end_time + duration, room))
-                # simulate delayed start
-
-            room_usage[room] += 1
-
-        # Find the room with max usage (if tie, smallest index)
-        max_meetings = max(room_usage)
+                while current and (not heap):
+                    cur_time=current[0][0]
+                    while current and cur_time>=current[0][0]:
+                        tend,rm,tstart=heapq.heappop(current)
+                        heapq.heappush(heap,rm)
+                if heap:
+                    rm=heapq.heappop(heap)
+                    heapq.heappush(current,(cur_time+(end-start),rm,cur_time))
+                    # print("second",(start,end),"current",cur_time)
+                    # print((cur_time+(end-start),rm,cur_time))
+                    rooms[rm]+=1
+        ans=0
+        rmm=0
+        # print(rooms)
         for i in range(n):
-            if room_usage[i] == max_meetings:
-                return i
+            if rooms[i]>ans:
+                rmm=i
+                ans=rooms[i]
+        return rmm
+
+
         
