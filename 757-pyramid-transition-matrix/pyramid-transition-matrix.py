@@ -1,43 +1,55 @@
 from typing import List
-from collections import defaultdict
 
 class Solution:
     def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
         # Build transition map
-        trans = defaultdict(list)
+        mapp = {}
         for s in allowed:
-            trans[s[:2]].append(s[2])
+            key = s[:2]
+            if key not in mapp:
+                mapp[key] = []
+            mapp[key].append(s[2])
 
         memo = {}
 
-        def dfs(curr: str) -> bool:
+        def backtrack(stage, i, j, bottom, nxt):
             # Base case
-            if len(curr) == 1:
+            if stage == 1:
                 return True
 
-            # Memo check
-            if curr in memo:
-                return memo[curr]
+            # ✅ Memoization on full row only
+            bottom="".join(bottom)
+            if i == 0 and j == 1 and bottom in memo:
+                return memo[bottom]
 
-            # FAIL-FAST PRUNING
-            for i in range(len(curr) - 1):
-                if curr[i:i+2] not in trans:
-                    memo[curr] = False
-                    return False
+            # ✅ Fail-fast pruning on full row
+            if i == 0 and j == 1:
+                for x in range(len(bottom) - 1):
+                    if bottom[x] + bottom[x + 1] not in mapp:
+                        memo[bottom] = False
+                        return False
 
-            def build(idx: int, nxt: List[str]) -> bool:
-                if idx == len(curr) - 1:
-                    return dfs("".join(nxt))
+            temp = bottom[i] + bottom[j]
 
-                pair = curr[idx:idx+2]
-                for c in trans[pair]:
-                    nxt.append(c)
-                    if build(idx + 1, nxt):
-                        return True
+            if temp in mapp:
+                for ch in mapp[temp]:
+                    nxt.append(ch)
+
+                    # Finished building next row
+                    if j == stage - 1:
+                        if backtrack(stage - 1, 0, 1, nxt, []):
+                            memo[bottom] = True
+                            return True
+                    else:
+                        if backtrack(stage, i + 1, j + 1, bottom, nxt):
+                            return True
+
                     nxt.pop()
-                return False
 
-            memo[curr] = build(0, [])
-            return memo[curr]
+            # Cache result
+            if i == 0 and j == 1:
+                memo[bottom] = False
 
-        return dfs(bottom)
+            return False
+
+        return backtrack(len(bottom), 0, 1, bottom, [])
