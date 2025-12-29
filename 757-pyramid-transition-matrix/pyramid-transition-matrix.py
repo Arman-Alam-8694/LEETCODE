@@ -13,12 +13,14 @@ class Solution:
         memo = {}
 
         def backtrack(stage, i, j, bottom, nxt):
+        
             # Base case
+            bottom="".join(bottom)
             if stage == 1:
+                print(bottom)
                 return True
 
             # ✅ Memoization on full row only
-            bottom="".join(bottom)
             if i == 0 and j == 1 and bottom in memo:
                 return memo[bottom]
 
@@ -38,6 +40,8 @@ class Solution:
                     # Finished building next row
                     if j == stage - 1:
                         if backtrack(stage - 1, 0, 1, nxt, []):
+                            print(bottom)
+                            
                             memo[bottom] = True
                             return True
                     else:
@@ -53,3 +57,5 @@ class Solution:
             return False
 
         return backtrack(len(bottom), 0, 1, bottom, [])
+        
+            
