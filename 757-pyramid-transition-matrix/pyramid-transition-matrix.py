@@ -1,42 +1,43 @@
+from typing import List
+from collections import defaultdict
+
 class Solution:
     def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
-        mapp={}
-        for i in allowed:
-            temp=i[:2]
-            if  temp in mapp:
-                mapp[temp].append(i[2])
-            else:
-                mapp[temp]=[]
-                mapp[temp].append(i[2])
+        # Build transition map
+        trans = defaultdict(list)
+        for s in allowed:
+            trans[s[:2]].append(s[2])
 
-        def backtrack(stage,i,j,bottom,nxt):
-            if stage==1:
+        memo = {}
+
+        def dfs(curr: str) -> bool:
+            # Base case
+            if len(curr) == 1:
                 return True
-            # print(bottom)
-            temp=bottom[i]+bottom[j]
-            if temp in mapp:
-                for k in mapp[temp]:
-                    nxt.append(k)
-                    if stage-1==j:
-                        if backtrack(stage-1,0,1,nxt,[]):
-                            return True
-                        else:
-                            nxt.pop()
-                        
-                    else:
-                        if backtrack(stage,i+1,j+1,bottom,nxt):
-                            return  True
-                        else:
-                            nxt.pop()
-                        
-                        
-            else:
-                # print(stage,bottom,nxt,i,j)
-                return 
 
-        val=backtrack(len(bottom),0,1,bottom,[]) 
-        return val if val!=None else False
+            # Memo check
+            if curr in memo:
+                return memo[curr]
 
+            # FAIL-FAST PRUNING
+            for i in range(len(curr) - 1):
+                if curr[i:i+2] not in trans:
+                    memo[curr] = False
+                    return False
 
+            def build(idx: int, nxt: List[str]) -> bool:
+                if idx == len(curr) - 1:
+                    return dfs("".join(nxt))
 
-        
+                pair = curr[idx:idx+2]
+                for c in trans[pair]:
+                    nxt.append(c)
+                    if build(idx + 1, nxt):
+                        return True
+                    nxt.pop()
+                return False
+
+            memo[curr] = build(0, [])
+            return memo[curr]
+
+        return dfs(bottom)
