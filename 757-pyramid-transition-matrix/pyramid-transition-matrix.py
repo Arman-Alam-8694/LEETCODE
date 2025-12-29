@@ -23,11 +23,11 @@ class Solution:
                 return memo[bottom]
 
             # ✅ Fail-fast pruning on full row
-            # if i == 0 and j == 1:
-            #     for x in range(len(bottom) - 1):
-            #         if bottom[x] + bottom[x + 1] not in mapp:
-            #             memo[bottom] = False
-            #             return False
+            if i == 0 and j == 1:
+                for x in range(len(bottom) - 1):
+                    if bottom[x] + bottom[x + 1] not in mapp:
+                        memo[bottom] = False
+                        return False
 
             temp = bottom[i] + bottom[j]
 
