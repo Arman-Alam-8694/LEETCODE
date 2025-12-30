@@ -8,7 +8,7 @@ class Solution:
         def check_row(x,y):
             temp=-1
             tmin=float("inf")
-            tsum=-1
+            tsum=15
             count=set()
             for i in range(3):
                 ttsum=0
@@ -28,14 +28,13 @@ class Solution:
                     return False,tsum
                 if (i+1)*3!=len(count):
                     return False,tsum
-                if tsum==-1:
-                    tsum=ttsum
-                elif tsum!=ttsum:
+            
+                if ttsum!=15:
                     return False,tsum
             return True,tsum
         def check_col(x,y):
             
-            tsum=-1
+            tsum=15
            
             for i in range(3):
                 ttsum=0
@@ -46,9 +45,7 @@ class Solution:
 
                    
               
-                if tsum==-1:
-                    tsum=ttsum
-                elif tsum!=ttsum:
+                if tsum!=ttsum:
                     return False,tsum
             return True,tsum
 
@@ -58,16 +55,17 @@ class Solution:
             for i in range(3):
                 a=grid[x+i][y+i]
                 first+=a
+            if first!=15:
+                return False,15
             second=0
                 
             for i in range(3):
                 a=grid[x+i][y+2-i]
                 second+=a
-            if first==second:
-                return True,first
-            else:
-                return False,first
-
+            if second!=15:
+                return False,15
+            return True,15
+          
 
         for x in range(row-2):
             for y in range(col-2):
