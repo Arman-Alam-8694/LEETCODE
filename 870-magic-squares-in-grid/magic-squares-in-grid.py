@@ -34,22 +34,18 @@ class Solution:
                     return False,tsum
             return True,tsum
         def check_col(x,y):
-            temp=-1
+            
             tsum=-1
-            count=set()
+           
             for i in range(3):
                 ttsum=0
                 for j in range(3):
-                    temp=max(temp,grid[x+j][y+i])
+                   
                     ttsum+=grid[x+j][y+i]
-                    count.add(grid[x+j][y+i])
+                   
 
-                    if temp>9:
-                        break
-                if temp>9:
-                    return False,tsum
-                if (i+1)*3!=len(count):
-                    return False,tsum
+                   
+              
                 if tsum==-1:
                     tsum=ttsum
                 elif tsum!=ttsum:
