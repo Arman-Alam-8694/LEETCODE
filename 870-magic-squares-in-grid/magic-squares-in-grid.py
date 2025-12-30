@@ -10,6 +10,8 @@ class Solution:
             tmin=float("inf")
             tsum=15
             count=set()
+            if grid[x+1][y+1] != 5:
+                return False,15
             for i in range(3):
                 ttsum=0
                 for j in range(3):
