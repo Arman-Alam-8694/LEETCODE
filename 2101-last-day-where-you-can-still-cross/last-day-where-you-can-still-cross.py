@@ -14,6 +14,8 @@ class Solution:
         def dsu(left,right):
             l=find(left)
             r=find(right)
+            if l==r:
+                return
             if size[l]>size[r]:
                 parent[l]=r
             else:
