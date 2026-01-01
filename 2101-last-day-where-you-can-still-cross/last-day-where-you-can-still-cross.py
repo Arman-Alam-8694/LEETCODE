@@ -15,9 +15,9 @@ class Solution:
             l=find(left)
             r=find(right)
             if size[l]>size[r]:
-                parent[r]=l
-            else:
                 parent[l]=r
+            else:
+                parent[r]=l
             
         dirr=[(0,1),(1,0),(0,-1),(-1,0)]
         for day in range(n-1,-1,-1):
