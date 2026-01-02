@@ -1,14 +1,11 @@
 from collections import Counter
 class Solution:
     def repeatedNTimes(self, nums: List[int]) -> int:
-        mapp=defaultdict(int)
-        val=-1
-        elem=-1
+        mapp={}
         for i in nums:
-            mapp[i]+=1
-            if mapp[i]>val:
-                val=mapp[i]
-                elem=i
-        return elem
+            if i in mapp:
+                return i
+            mapp[i]=1
+        
 
         
