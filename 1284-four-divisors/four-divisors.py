@@ -3,13 +3,11 @@ class Solution:
         ans=0
         n=len(nums)
         def check(x):
-            if x==2:
-                return 0
             temp=x+1
             till=math.ceil(math.sqrt(x))
             found=False
-            store=set()
-            print(x,till)
+            store=set([x,1])
+            # print(x,till)
             for i in range(2,till+1):
                 if x%i==0 and i not in store:
                     if found:
