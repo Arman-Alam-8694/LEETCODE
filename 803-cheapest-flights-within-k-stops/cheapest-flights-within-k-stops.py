@@ -1,33 +1,37 @@
-import heapq
-from typing import List
-
 class Solution:
-    def findCheapestPrice(self, n: int, flights: List[List[int]],
-                          src: int, dst: int, k: int) -> int:
-        k += 1
-
-        adj = [[] for _ in range(n)]
-        for u, v, cost in flights:
-            adj[u].append((v, cost))
-
-        heap = [(0, 0, src)]  
-        best_steps = [float('inf')] * n
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        k+=1
+        heap=[]
+        heap.append((0,0,src))
+        adj=[[] for _ in range(n)]
+        for i,j,c in flights:
+            adj[i].append((j,c))
+        visited=[0]*n
+        # print(adj)
 
         while heap:
-            cost, steps, node = heapq.heappop(heap)
-
-            if steps > k:
-                continue
-
-            if node == dst:
+            cost,step,node=heapq.heappop(heap)
+            if node==dst and step<=k:
                 return cost
-
-            if steps >= best_steps[node]:
+            
+            if not visited[node]:
+            
+                visited[node]=step
+            elif visited[node]>step:
+               
+                visited[node]=step
+            else:
                 continue
-
-            best_steps[node] = steps
-
-            for nei, price in adj[node]:
-                heapq.heappush(heap, (cost + price, steps + 1, nei))
+            if step>=k:
+                continue
+            for nv,c in adj[node]:
+                # print(nv,c)
+                heapq.heappush(heap,(cost+c,step+1,nv))
 
         return -1
+
+            
+            
+
+
+        
