@@ -11,19 +11,16 @@ class Solution:
 
         while heap:
             cost,step,node=heapq.heappop(heap)
-            print(visited[node])
             if node==dst and step<=k:
                 return cost
             
             if not visited[node]:
-                print("here")
+            
                 visited[node]=step
             elif visited[node]>step:
-                print("another")
+               
                 visited[node]=step
             else:
-                print("third"
-                )
                 continue
             if step>=k:
                 continue
