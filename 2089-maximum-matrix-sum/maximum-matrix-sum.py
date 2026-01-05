@@ -25,9 +25,7 @@ class Solution:
 
         total=possum+((negsum)*(-1))
     
-        if neg%2==0:
-            return total
-        elif zero>=(neg%2):
+        if neg%2==0 or zero>=(neg%2):
             return total
         else:
         
