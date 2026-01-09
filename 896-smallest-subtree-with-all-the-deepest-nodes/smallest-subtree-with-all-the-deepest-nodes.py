@@ -39,7 +39,7 @@ class Solution:
                 temp+=dfs(node.left,depth+1)
             if node.right:
                 temp+=dfs(node.right,depth+1)
-            print(node.val , temp,count,max_depth)
+            # print(node.val , temp,count,max_depth)
          
             if temp==count and not ans:
                 ans=node
