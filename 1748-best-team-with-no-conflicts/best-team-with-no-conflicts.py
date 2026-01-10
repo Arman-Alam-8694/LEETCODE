@@ -3,7 +3,7 @@ import sys
 class Solution:
     def bestTeamScore(self, scores: List[int], ages: List[int]) -> int:
         # 1. Increase recursion limit for N = 1000
-        sys.setrecursionlimit(2000)
+        # sys.setrecursionlimit(2000)
         
         # 2. Sort to handle age constraints
         players = sorted(zip(ages, scores))
