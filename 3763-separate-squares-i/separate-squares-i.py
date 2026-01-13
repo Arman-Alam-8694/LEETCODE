@@ -8,7 +8,7 @@ class Solution:
             total_area+=l*l
         target=total_area/2.0
 
-        while end-start>0.000001:
+        while end-start>1e-6:
             mid=(start+end)/2
             tarea=0.0
             for x,y,l in squares:
