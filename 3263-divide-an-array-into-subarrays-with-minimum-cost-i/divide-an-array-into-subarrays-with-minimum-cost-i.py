@@ -12,7 +12,7 @@ class Solution:
             if len(top)==3:
                 break
             start+=1
-        print(top)
+     
         result=0
         left=2
         curr=nums[0]
