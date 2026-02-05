@@ -11,6 +11,7 @@ class Solution:
 
             elif val<0:
                 nxt=(((n-1)-i)-val)%n
+                # nxt=(n+i+val)%n
                 result[i]=nums[(n-1)-nxt]
             else:
                 result[i]=0
