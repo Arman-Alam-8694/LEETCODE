@@ -1,30 +1,16 @@
 class Solution:
     def minimumDeletions(self, s: str) -> int:
-
-        store=[[None,None] for i in range(len(s))]
-        def recurse(i,found):
-            if i==len(s):
-                return 0
-         
-            if found:
-                if store[i][1]!=None:
-                    return store[i][1]
-            else:
-                if store[i][0]!=None:
-                    return store[i][0]
-            res=1+recurse(i+1,found)
+        nxt_found=0
+        nxt_notfound=0
+        for i in range(len(s)-1,-1,-1):
             if s[i]=="a":
-            
-                if not found:
-                    res=min(res,recurse(i+1,False))
+                curr_found=1+nxt_found
+                curr_notfound=nxt_notfound
             else:
-                res=min(res,recurse(i+1,True))
+                curr_found=nxt_found
+                curr_notfound=min(1+nxt_notfound,nxt_found)
+            nxt_found,nxt_notfound=curr_found,curr_notfound
+        return min(nxt_found,nxt_notfound)
 
-          
-            if found:
-                store[i][1]=res
-            else:
-                store[i][0]=res
-            return res
-            
-        return recurse(0,False)
+
+        
