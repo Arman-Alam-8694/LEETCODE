@@ -1,6 +1,6 @@
 class Solution:
     def getHappyString(self, n: int, k: int) -> str:
-        curr=""
+        curr=[]
         items=['a','b','c']
         cnt=0
         def backtrack(curr):
@@ -20,13 +20,16 @@ class Solution:
                 if i!=prev:
                     if len(curr)==n-1:
                         cnt+=1
-                    stored,found=backtrack(curr+i)
+                    curr.append(i)
+                    stored,found=backtrack(curr)
                     if found:
                         return stored,True
+                    curr.pop()
             return "",False
 
-        ans,aa=backtrack(curr)
-        return ans
+        ans,aa=backtrack([])
+        res="".join(ans)
+        return res
                 
 
         
