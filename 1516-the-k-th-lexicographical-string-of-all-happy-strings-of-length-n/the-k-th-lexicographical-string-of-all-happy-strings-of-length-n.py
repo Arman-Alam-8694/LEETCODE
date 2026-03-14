@@ -14,7 +14,7 @@ class Solution:
             else:
                 prev=""
             
-            print(curr,cnt)
+            
             for i in items:
                 
                 if i!=prev:
