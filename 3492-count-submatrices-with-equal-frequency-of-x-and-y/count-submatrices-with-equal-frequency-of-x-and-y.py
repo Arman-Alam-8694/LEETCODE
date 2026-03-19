@@ -3,7 +3,6 @@ class Solution:
         row=len(grid)
         col=len(grid[0])
         store=[[0,0]  for i in range(col)]
-        print(store)
         res=0
 
         def check(curr):
